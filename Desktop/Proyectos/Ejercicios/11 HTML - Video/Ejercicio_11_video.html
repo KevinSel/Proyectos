@@ -1,0 +1,62 @@
+
+
+
+
+
+
+
+
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+
+
+<body>
+    <p>Versión MP4</p>
+    <video id="video" widht="320" widht="180" controls="controls">
+        <source src="/Estructura HTML/vid/ESTO NO ES UN JUEGO - ELXOKAS.mp4" type="video/mp4">
+        No compatible
+    </video>
+    <script>
+        let x = document.getElementById("video");
+        x.play();
+        x.pause();
+    </script>
+    <button onclick="x.play()">Play</button>
+    <button onclick="x.pause()">Pausa</button>
+    <p>Versión Ogg</p>
+    <video id="video2" widht="320" widht="180" controls="controls">
+        <source src="/Estructura HTML/vid/ESTO-NO-ES-UN-JUEGO-ELXOKAS.ogg" type="video/Ogg">
+        No compatible
+    </video>
+    <script>
+        let y = document.getElementById("video2");
+        y.play();
+        y.pause();
+    </script>
+    <button onclick="y.play()">Play</button>
+    <button onclick="y.pause()">Pausa</button>
+    
+    <p>Versión WebM</p>
+    <video id="video3" widht="320" widht="180" controls="controls">
+        <source src="/Estructura HTML/vid/ESTO NO ES UN JUEGO - ELXOKAS.webm" type="video/WebM">
+        No compatible
+    </video>
+    <script>
+        let z = document.getElementById("video3");
+        z.play();
+        z.pause();
+    </script>
+    <button onclick="z.play()">Play</button>
+    <button onclick="z.pause()">Pausa</button>
+<p>mp4 es el único formato que funciona en IE</p>
+<p>ogg no se muestra como video. Probablemente culpa del lugar de donde lo descargué</p>
+
+</body>
+</html>

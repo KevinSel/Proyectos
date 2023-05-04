@@ -1,0 +1,289 @@
+ <!DOCTYPE html>
+
+<!-- Es necesario actualizar la sección estructura para reflejar cambios respecto a nav y el índice -->
+
+
+
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Todo aplicado</title>
+    <link rel='stylesheet' href='/Proyectos/Todo aplicado/style.css'>
+</head>
+<body>
+
+    <!-- Índice -->
+<aside class="ind">
+        <h1 id="ind">Índice</h1>
+        <a href="#eje"><h2>Ejercicios</h2></a>
+            <h2>1. Git</h2>
+            <h2>2. HTML</h2>
+            <details>
+                <summary> 
+                    <h3><a href="#2.1">2.1 Estructura HTML</a></h3>
+                </summary>
+                    <p><a href="#2.1.1">Body</a><br>
+                        <a href="#2.1.2">Main</a><br>
+                        <a href="#2.1.3">Header</a><br>
+                        <a href="#2.1.4">Nav</a><br>
+                        <a href="#2.1.5">Section</a><br>
+                        <a href="#2.1.6">Article</a><br>
+                        <a href="#2.1.7">Aside</a><br>
+                        <a href="#2.1.8">Footer</a><br>
+                        </p>
+            </details>           
+            <h3><a href="#2.2">2.2 html, head y meta etiquetas</a></h3>
+            <h3><a href="#2.3">2.3 Elementos de texto</a></h3>
+                <p>
+                <a href="#2.3.1">Headers</a><br>
+                <a href="#2.3.2">Párrafos, salto de linea</a><br>
+                <a href="#2.3.3">Caracteres especiales</a><br>
+                <a href="#2.3.4">Formato de texto</a><br>
+                <a href="#2.3.5">Preformatos</a><br>
+                </p>
+            <h3><a href="#2.4">2.4 Links</a></h3>
+                <p>
+                <a href="#2.4.1">Tipos de links</a><br>
+                <a href="#2.4.2">Links y elementos visuales</a><br>
+                <a href="#2.4.3">Id</a>                            </p>
+            <h3><a href="#2.5">2.5 Elementos visuales</a></h3>
+                <p>
+                <a href="#2.5.1">Imágenes</a><br>
+                <a href="#2.5.2">Figuras</a><br>
+                <a href="#2.5.3">Botones</a><br>
+                <a href="#2.5.4">Iframes</a><br>
+                <a href="#2.5.5">Separadores</a><br>
+                <a href="#2.5.6">Details</a><br>
+                <a href="#2.5.7">Meter</a><br>
+                <a href="#2.5.8">Progress</a><br>
+                </p>
+            <h3 ><a href="#2.6">2.6 Time</a></h3>
+            <h3><a href="#2.7">2.7 Video</a></h3>
+            <h3><a href="#2.8">2.7 Audio</a></h3>                        
+            <h3><a href="#2.8">2.8 Object y embed</a></h3>
+            <h3><a href="#2.9">2.9 Formularios</a></h3>
+            <h2>3. CSS</h2>
+            <h3><a href="#3.1">3.1 styles</a></h3>
+                <p>
+                <a href="#3.1.1">color</a><br>
+                <a href="#3.1.2">background-color</a>
+                </p>
+            <h3><a href="#3.2">Prioridad</a></h3>
+</aside>
+
+<main>
+
+<!-- TEST AREA -->
+<!-- TEST AREA -->
+
+<!-- Introducción -->
+    
+
+    <section>
+        
+        <p>
+            &nbsp;Los objetivos del documento son aplicar conocimientos dados en el curso en una página web,
+            profundizar sobre estos, hacer demostraciones y comentarios.<br><br>
+            &nbsp;La estrucutra de la página utilizara los recursos proporcionados por HTML. El índice debe permanecer 
+            idealmente a un costado de la página en todo momento, dentro de una etiqueta aside. Se hará uso de las
+            etiquetas body, main, section y header para organizar los contenidos a los cuales se puede acceder desde el índice.
+            Las etiquetas nav, footer, se utilizaran solo con propositos demostrativos. Article se usara para guardar ejercicios.<br><br>
+            &nbsp;Se usaran ids y links extensivamente para navegar por el documento. Se usará CSS u otros elementos para decorar la página,
+            pero no se hará mención de estos en las demostraciones ni en las piezas de código fuera de su respectiva sección.
+        </p>
+        <p>
+
+        </p>
+        <p>
+          
+        </p>
+    </section>
+
+
+
+<!-- Secciones -->
+    <header><h1>1. Git</h1></header>
+    <header><h1>2. HTML</h1></header>
+    <section> <h2 id="2.1">2.1 Estructura</h2>
+        <p>Son etiquetas que ayudan a estructurar el diseño de la web. Tienen reglas acerca de su uso adecuado y de interacción con otras etiquetas estructurales. <br>
+            La mayoria soporta atributos globales como style, en caso contrario se indicará.
+        </p>
+        <figure>
+            <img src="/Estructura HTML/img/estructura.png" alt="est" style="width:800px;height:450px;"></img>
+            <figcaption>Estructura de la página</figcaption>
+        </figure> 
+        <h3 id="2.1.1">body</h3>
+            <p>La etiqueta body posee el contenido del documento html, debe haber un solo body.</p>
+        <h3 id="2.1.2">main</h3>
+            <p>
+            Posee el contenido principal del documento, debe haber un solo main que desciende de body y no puede descender de etiquetas article, aside, footer, header o nav.<br>
+            No debe contener nada que se repita en otros sitios del proyecto web como información de contacto, copyright, logos, barras de busqueda, etc. 
+            </p>
+        <h3 id="2.1.3">header</h3>
+            <p>Usualmente posee contenido introductorio o links de navegación, etiquetas heading y/o logo. No puede ser utilizado dentro de una etiqueta footer, adress o header.</p>
+        <h3 id ="2.1.4">nav</h3>
+            <p>Contiene links de navegación como menus, tablas de contenido o índices. El índice se encuentra aquí dentro.</p>
+        <h3 id="2.1.5">section</h3>
+            <p>Una sección del documento. Cada link dentro de x.x en el índice corresponde a un section.</p>
+        <h3 id="2.1.6">article</h3>
+            <p>Una parte del documento que se entiende en si mismo. La parte de ejercicios esta en un article, podria ser su propio documento html.</p>
+        <h3 id="2.1.7">aside</h3>
+            <p>Contiene contenido tangencial al documento, suele aparecer al costado del navegador. El índice esta contenido en un aside en esta página. </p>
+        <h3 id="2.1.8">footer</h3>
+            <p>Pié de página de un documento o sección.</p>
+    </section>
+    <section> <h2 id="2.2">2.2. HTML, head y meta etiquetas</h2>
+            <p>La etiqueta HTML debe englobar todo el documento. Puede ser utilizada para especificar el idioma del documento: <code>&lt;html lang="es"&gt;</code></p><br>
+            <p>El elemento head contiene metadata; título, caracteres, styles, etc</p><br>
+            <p><code>&lt;meta charset="UTF-8"&gt;</code> Hace el documento compatible con caraceteres "UTF-8" (Unicode). Otros set de caracteres no son recomendados.</p><br>
+            <p><code>&lt;name="viewport" content="width=device-width, initial-scale=1"&gt;</code> Ajusta el zoom de la web al abrirla. Necesario para compatibilidad con mobiles</p><br>
+            <p>El atributo name y content pueden ser usados para usados para guardar keywords, autor, descripción, etc.</p>
+    </section>
+    <section> <h2 id="2.3">2.3. Elementos de texto</h2>
+        <h3 id="2.3.1">Headers</h3>
+        <p><code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code> definen headings de más a menos importante. Idealmente solo usar un h1 por documento y anidarlos de forma adecuada.</p>
+            <h1><mark style="color:rgb(255,0,0);background-color:rgb(0,0,0);">Un header h1</mark></h1>   
+            <h2><mark style="color:rgb(220, 0, 60);background-color: rgb(60,0,60);">Un header h2</mark></h2>
+            <h3><mark style="color:rgb(170, 0, 110);background-color: rgb(110,0,110);">Un header h3</mark></h3>
+            <h4><mark style="color:rgb(110, 0, 170);background-color: rgb(170,0,170);">Un header h4</mark></h4>
+            <h5><mark style="color:rgb(60, 0, 220);background-color: rgb(220,0,220);">Un header h5</mark></h5>
+            <h6><mark style="color:rgb(0, 0, 255);background-color: rgb(255,0,255);">Un header h6</mark></h6>
+            <details><summary>Código</summary>
+                <p>CSS Omitido</p>
+                <p><code>&lt;h1&gt;</code>Un header h1<code>&lt;h1&gt;</code></p>
+                <p><code>&lt;h1&gt;</code>Un header h2 <code>&lt;h1&gt;</code></p>
+                <p><code>&lt;h1&gt;</code>Un header h3<code>&lt;h1&gt;</code></p>
+                <p><code>&lt;h1&gt;</code>Un header h4<code>&lt;h1&gt;</code></p>
+                <p><code>&lt;h1&gt;</code>Un header h5<code>&lt;h1&gt;</code></p>
+                <p><code>&lt;h1&gt;</code>Un header h6<code>&lt;h1&gt;</code></p>
+            </details>
+        <h3 id="2.3.2">Párrafos, salto de linea</h3>
+            <p>
+                El elemento p define un párrafo. Los navegadores agregar un espacio antes y despues de uno.<br>
+                La etiqueta &lt;br&gt; hace saltos de linea.
+            </p>
+        <h3 id="2.3.3">Caracteres especiales</h3>
+            <p>
+                El caracter &amp; puede ser utilizado para escribir caracteres especiales. Es útil en particular para escribir caracteres <br>
+                que en HTML se usan para código: &gt;&lt;&nbsp;&amp;&quot;&apos;.
+            </p>
+            <details><summary>Código</summary>
+                <code>&amp;gt;&amp;lt;&amp;nbsp;&amp;amp;&amp;quot;&amp;apos;</code>
+            </details>
+        <h3 id="2.3.4">Formato de texto</h3>
+        <p>
+            <b>Resaltado</b><code>&lt;b&gt;</code><br> 
+            <strong>Otro tipo</strong><code>&lt;strong&gt;</code><br>
+            <i>Cursive</i><code>&lt;i&gt;</code><br>
+            <em>Cursive2</em><code>&lt;em&gt;</code><br>
+            <mark>Resaltado</mark><code>&lt;mark&gt;</code> <br>
+            <small>chiquito</small><code>&lt;small&gt;</code><br>
+            <del>no</del><code>&lt;del&gt;</code><br>
+            <ins>¿Qué?</ins><sub>subrayado</sub><sup>superindice</sup><code>&lt;ins&gt;</code>,<code>&lt;sub&gt;</code> y <code>&lt;sup&gt;</code><br>
+            <q>El código se escribe en azul.</q><code>&lt;q&gt;</code><br>
+            <blockquote>-Alan Turing.</blockquote><code>&lt;blockquote&gt;</code><br>
+            <abbr>abrev.</abbr><code>&lt;abbr&gt;</code><br>
+            <address>test@prueba.com</address><code>&lt;adress&gt;</code><br>
+            <cite>No sé </cite><code>&lt;cite&gt;</code><br>
+            <bdo dir="rtl">Al revés</bdo><code>&lt;bdo dir="rtl"&gt;</code>
+        </p>
+            <details><summary>Código</summary>
+            </details>
+        <h3 id="2.3.5">Preformatos</h3>
+            <p>Los preformatos son formatos de texto predeterminados</p>s
+    </section>
+    <section> <h2 id="2.4">2.4. Links</h2>
+        <h3 id="2.4.1">Tipos de links</h3>
+            La etiqueta a define un hyperlink, que es usado como método de enlace.
+            <p>Atributos</p>
+            <li>href="url"</li>
+            <li>download="filename"</li>
+            <li>target=... global,parent,top,self. Indica donde abrir el enlace.</li>
+        <h3 id="2.4.2">Links y elementos visuales</h3>
+            <p>Se puede utilizar una imagen como un link.</p>
+            <a href="https://google.com" target="_blank">
+                <img src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png" alt="Google"  style="width:100px;height:100px;"><br>
+            </a>
+            <p>Se puede utilizar un botón como un link.</p>
+            <a href="/" target="_blank">
+                <button id="bot" style="color:white;background-color:rgb(255, 255, 0);
+                width:100px;height:100px;border-radius:50%;
+                border:none;cursor:pointer;
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
+                </button>
+            </a>
+            <details><summary>Código</summary>
+                <code>
+                &lt;a href="ruta" target="_blank"&gt; Imagen/botón&lt;/a&gt;
+                </code>
+            </details>
+        <h3 id="2.4.3">Id</h3>
+            <p>El id es un atributo global, entre otras cosas, se puede utilizar como ancla para un link.</p>
+    </section>
+    <section> <h2 id="2.5">2.5. Elementos visuales</h2>
+        <h3 id="2.5.1">Imágenes</h3>
+            Etiqueta img con src como source. Se debe usar el atributo alt por accesibilidad junto a una descripcion. Atributos height y width no de css se deben usar.
+            Loading=(eager/lazy) da condiciones de cuando se debe cargar.
+        <h3 id="2.5.2">Figuras</h3>
+        La etiqueta Figure puede usarse junto con el atributo Figcaption para agregar una descripción a una figura.
+        <h3 id="2.5.3">Botones</h3>
+            Etiqueta button. Se puede usar en formularios con type, en vez de input. Se le puede poner texto dentro.
+            <a href="https://www.cdph.ca.gov/Programs/EPO/PublishingImages/nuclear_blast.jpg" target="_blank"><button style="color:white;background-color:rgb(252, 0, 0);
+            width:100px;height:100px;border-radius:50%;
+            border:none;cursor:pointer;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);">
+            NO TOCAR</button><a>
+        <h3 id="2.5.4">Iframes</h3>
+            <p>
+                Es usado para poner otra pagina. Tiene src y title (Buena practica).
+                 Un iframe puede ser usado como el target de un link.
+            </p>
+
+             <iframe name="iframeg" src="" width="1500" height="315" style="border:0;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+             <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.536725284348!2d2.1361771746729508!3d41.38414897130022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4987c34a1f2c5%3A0xe0acefdd7f68a4b3!2sCarrer%20de%20Caballero%2C%2076%2C%2008029%20Barcelona!5e0!3m2!1ses!2ses!4v1682673167019!5m2!1ses!2ses" target="iframeg"><h2>ABRIR/RESETEAR MAPA</h2></a>
+        <h3 id="2.5.5">Separadores</h3>
+        La etiqueta hr pone un separador que puede ser estilizado con css
+        <hr style="height:15px;width:20%;margin-left:5px;border-color:red;background-color:blue;">
+        <h3 id="2.5.6">Details</h3>
+        <details>Esto es details<summary>¿Qué es details?</summary></details>
+        <details><summary>Código</summary>
+            <code>&lt;details&gt;Esto es details&lt;summary&gt;¿Qué es details?&lt;/summary&gt;&lt;/details&gt;</code>
+        </details>
+
+        <h3 id="2.5.7">Meter</h3>
+        <meter id="disk_c" value="2" min="0" max="10">2 out of 10</meter><br>  Usar label es BUENA PRACTICA. No usar como progress.
+        <meter id="disk_d" high="0.8" low="0.7" value="0.7">60%</meter> 
+        atributos: high/low para especificar valor alto/bajo, max y min, value, optimum.
+        <h3 id="2.5.8">Progress</h3> atributos max, value. LABEL. 
+        <progress id="file" value="32" max="100"> 32% </progress>
+    </section>
+    <section><h2 id="2.6">2.6. Time</h2>
+        <time datetime="2008-02-14 20:00">"Aca se escribe el tiempo, o el nombre de una fecha, o lo que sea"</time> El atributo datetime="time" da informacion al navegador.
+    </section>
+    <section><h2 id="2.7">2.7. Video</h2>
+    </section>
+    <section><h2 id="2.8">2.8 Object y embed</h2>
+    </section>
+    <section><h2 id="2.9">2.9 Formularios</h2>
+    </section>
+    <header><h1>3. CSS</h1></header>
+
+
+
+<!-- Ejercicios -->
+    <article id="eje">
+        <p> Este artículo contiene una lista de ejercicios</p>
+        Ejercicios
+            <a href="/Estructura HTML/ejercicios/GIT Proyecto.pptx" target="_blank">Ejercicio GIT</a><br>
+            <a href="/Estructura HTML/ejercicios/Ejercicio_05.html" target="_blank">Ejercicio 05</a><br>
+            <a href="/Estructura HTML/ejercicios/Ejercicio_11_video.html" target="_blank">Ejercicio video</a><br>
+            <a href="/Estructura HTML/ejercicios/Ejercicio_12_audio.html" target="_blank">Ejercicio audio</a><br>
+            <a href="/Estructura HTML/ejercicios/Insercion de un iframe.html" target="_blank">Ejercicio iframe google</a><br>
+            <a href="/Estructura HTML/ejercicios/Ejercicio_14.html" target="_bank">Ejercicio 14</a><br>
+            <a href="/Estructura HTML/ejercicios/Formulario_html/index.html" target="_blank">Formulario</a><br>
+    </article>
+
+</main>
+<footer></footer>
+</body>
+</html>

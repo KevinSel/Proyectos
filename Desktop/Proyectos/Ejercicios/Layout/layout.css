@@ -1,0 +1,33 @@
+/* LAYOUT CSS, MODIFICAR SI NECESARIO */
+body{
+    margin:0px;
+    margin-top:10px;
+    padding:0px;
+    background-color:black}
+
+.layout{
+    border-bottom-style:solid;
+    border-bottom-width: 10px;
+    padding:10px;
+    background-color:rgb(241, 221, 177);
+    margin-left:auto;
+    margin-right:auto;
+    width: 70%;
+    text-align:center;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.layout.cod{
+    color:rgb(73, 73, 255);
+    text-align:left;
+    border-color:black;
+}
+
+.layout h2{
+    text-align:center;
+    color:black;}
+
+.layout span{
+    color:black;
+}
+/* -----------------------------------------------FIN DE CSS LAYOUT--------------------------------------------------- */
