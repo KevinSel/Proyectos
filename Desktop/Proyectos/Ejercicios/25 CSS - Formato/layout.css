@@ -57,8 +57,9 @@ body{
 .fondoverde .violeta{
     color:violet
 }
-.subrayar{
+#subrayar{
     text-decoration:line-through;
+    color:yellow;
 }
 
 
