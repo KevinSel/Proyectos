@@ -2,50 +2,53 @@
 <html lang="en">
     <head> 
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles.css" />
         <title>Georgia</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     </head>
 
     <body>
-
+        
+    <main>
       <h1 id="title">Georgia visa form</h1>
         <p id="description">Thank you for being interested in our country</p>
 
-        <form id="survey-form">
+        <form id="survey-form" action='' method="">
 
 
 
-        <fieldset>
-            <label id="name-label">Name<input id="name" type="text" placeholder="Name" required></label>
-            <label id="email-label">Email<input id="email" type="email" placeholder="Email" required></label>
-            <label id="number-label">Age<input id="number" type="number" min="13" max="150" placeholder="Age" required></label>
-        <label> Application type <select id="dropdown">
-            <option>Select an option</option>
-            <option>My dad/mom is Georgian</option>
-            <option>I have a lot of money</option>
-            <option>I beg you, let me in!</option>
-            <select>
-            </label>
+        <fieldset name="personal-information">
+            <label id="name-label" for="name">Name<input id="name" type="text" placeholder="Name" required></label>
+            <label id="email-label" for="email">Email<input id="email" type="email" placeholder="Email" required></label>
+            <label id="number-label" for="number">Age<input id="number" type="number" min="13" max="150" placeholder="Age" required></label>
         </fieldset>
-        <fieldset>
-        <p class="informp">Application speed</p>
-        <label><input name="options" type="radio" value="1" checked>Fiscal paradise</label>
-        <label><input name="options" type="radio" value="2">Ireland</label>
-        <label><input name="options" type="radio" value="3">Reasonable</label>
-        <label><input name="options" type="radio" value="4">Bureaucratic hell</label>
-        <label><input name="options" type="radio" value="5">Argentina</label>
+        <fieldset name="aplication">
+
+        <label for="dropdown"> <h2 class="informp">Application tpye</h2> <select id="dropdown">
+            <option value="">Select an option</option>
+            <option value="1">My dad/mom is Georgian</option>
+            <option value="2">I have a lot of money</option>
+            <option value="3">I beg you, let me in!</option> </select>
+        </label>
+        <h2 class="informp">Application speed</h2>
+        <label for="opt1"><input id="opt1" name="options" type="radio" value="1" checked>Fiscal paradise</label>
+        <label for="opt2"><input id="opt2" name="options" type="radio" value="2">Ireland</label>
+        <label for="opt3"><input id="opt3" name="options" type="radio" value="3">Reasonable</label>
+        <label for="opt4"><input id="opt4" name="options" type="radio" value="4">Bureaucratic hell</label>
+        <label for="opt5"><input id="opt5" name="options" type="radio" value="5">Argentina</label>
         </fieldset>
-        <fieldset>
+        <fieldset name="more-personal">
         <p class="informp">What do you know about Georgia?</p>
-        <label><input name="cb" type="checkbox" value ="cb1">It's in the Caucasus</label>
-        <label><input type="checkbox" value="cb2">Their flag is a big plus and 4 small pluses</label>
-        <label><input type="checkbox" value="cb3">They speak Georgian</label>
-        <label><input type="checkbox" value="cb4">It is ungoogable</label>
-        <label><input type="checkbox" value="cb5" required>It is not an US state</label>
+        <label for="cb1"><input id="cb1" type="checkbox" value ="cb1">It's in the Caucasus</label>
+        <label for="cb2"><input id="cb2" type="checkbox" value="cb2">Their flag is a big plus and 4 small pluses</label>
+        <label for="cb3"><input id="cb3" type="checkbox" value="cb3">They speak Georgian</label>
+        <label for="cb4"><input id="cb4" type="checkbox" value="cb4">It is ungoogable</label>
+        <label for="cb5"><input id="cb5" type="checkbox" value="cb5" required>It is not an US state</label>
         <textarea placeholder="Why do you want to be a Georgian..." rows="7" cols="40"></textarea>
         </fieldset>
-        <input id="submit" type="submit" value="Apply">
+        <input type="submit" value="Apply">
         </form>
+    </main>
         </body>
 <html>
 

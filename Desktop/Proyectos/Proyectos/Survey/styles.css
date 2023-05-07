@@ -1,11 +1,48 @@
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
 body{
   background-color:rgb(241, 116, 116);
+  font-family: Helvetica, sans-serif;
+}
+
+main{
+  width:95%;
+  max-width:900px;
+  margin: 5px auto;
 }
 
 h1, p{
   text-align:center;
   width:70%;
-  margin: 20 auto;
+  margin: 40px auto;
+}
+
+h1{
+  font-size: min(3rem);
+}
+
+label, p{
+  font-size: 1.6rem;
+}
+
+label{
+  margin:10px auto;
+  margin-top:0px;
+  margin-bottom:20px;}
+
+input{
+  height:5%;
+  margin:10px auto;
+  margin-top:5px;
+}
+
+label, input{
+  width:100%;
+  display:block;
 }
 
 .informp{
@@ -15,7 +52,9 @@ h1, p{
 }
 
 fieldset{
-  width:30% ;
+  width:90%;
+  max-width: 90%;
+  min-width: 30%;
   margin: 0 auto;
   padding: 0px 15px;
   border:none;
@@ -28,23 +67,7 @@ fieldset:last-of-type{
   padding-bottom:15px;
 }
 
-label{
-  font-size:1.2rem;
-  width:100%;
-  margin:10px auto;
-  margin-top:0px;
-  margin-bottom:20px;
-  display:block;
-}
 
-input{
-  font-size:1.2rem;
-  width:100%;
-  height:7%;
-  margin:10px auto;
-  margin-top:5px;
-  display:block;
-}
 input[type="submit"]{
   width:30%;
   background-color:rgb(128, 40, 40);
@@ -59,7 +82,7 @@ input[type="radio"],input[type="checkbox"]{
 select{
   margin-top:5px;
   height:7%;
-  font-size:1.2rem;
+  font-size:1.4rem;
   width:100%;
   margin:10px auto;
   display:block;
