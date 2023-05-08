@@ -1,0 +1,14 @@
+{
+  "name": "mi_primer_proyecto",
+  "version": "1.0.0",
+  "description": "un packet",
+  "main": "index.js",
+  "scripts": {
+    "test": "testo"
+  },
+  "keywords": [
+    "try"
+  ],
+  "author": "kev",
+  "license": "ISC"
+}

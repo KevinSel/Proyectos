@@ -19,3 +19,4 @@ function myGreeting4() {
 function myGreeting5() {
   document.getElementById("demo5").innerHTML = "Texto cinco!"
 }
+
