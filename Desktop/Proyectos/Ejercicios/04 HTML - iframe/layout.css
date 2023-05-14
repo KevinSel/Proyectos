@@ -1,0 +1,11 @@
+/* LAYOUT CSS, MODIFICAR SI NECESARIO */
+body{
+    background-color:black}
+.layout{
+    background-color:rgb(241, 221, 177);
+    margin:0 auto;
+    width: 30%;
+    text-align:center;
+    font-family: 'Times New Roman', Times, serif;
+}
+/* -----------------------------------------------FIN DE CSS LAYOUT--------------------------------------------------- */
