@@ -45,5 +45,4 @@ const transferenciaImpuestos = {"imp1":10021,
                                 "imp2":2334,
                                 "imp3":1112}
 
-
-export {gestorGratis,gestorRegular,gestorPremium,clientePremium,clienteGratis,clienteRegular,mensajeCliente,mensajeSistema,mensajeGestor,transfereciaIngresos,transferenciaImpuestos,transferenciaGastos}
+export const data = {gestorGratis,gestorRegular,gestorPremium,clientePremium,clienteGratis,clienteRegular,mensajeCliente,mensajeSistema,mensajeGestor,transfereciaIngresos,transferenciaImpuestos,transferenciaGastos}

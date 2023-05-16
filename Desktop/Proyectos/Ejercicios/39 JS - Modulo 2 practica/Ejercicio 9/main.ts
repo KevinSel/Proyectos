@@ -1,25 +1,23 @@
-
-import * as data from "./data.mjs";
-
+import {data} from "./data.js";
 
 // Objetos declarados en JS transformados en array (Los dejo en formato key/value, es posible extraer solo values,
 //o extraer values y poner algun valor de referencia (id, nombre, origen))
 
-function objToArray(objs){
-    let arr = [];
-    objs.forEach(obj =>
+function objToArray(objs: Object[]){
+    let arr:String[] = [];
+    objs.forEach((obj:any) =>
     {Object.keys(obj).map(key=> {arr.push(key); arr.push(obj[key])})});
     return arr;
 };
 
-let gestores = objToArray([data.gestorGratis,data.gestorRegular,data.gestorPremium]);
-let clientes = objToArray([data.clienteGratis,data.clienteRegular,data.clientePremium]);
-let mensajes = objToArray([data.mensajeCliente,data.mensajeSistema,data.mensajeGestor]);
+let gestores:String[] = objToArray([data.gestorGratis,data.gestorRegular,data.gestorPremium]);
+let clientes:String[] = objToArray([data.clienteGratis,data.clienteRegular,data.clientePremium]);
+let mensajes:String[] = objToArray([data.mensajeCliente,data.mensajeSistema,data.mensajeGestor]);
 
 // Array transformado a JSON
 
-function aJson(arr){
-    let ans = "{"
+function aJson(arr: String[]){
+    let ans:String = "{"
     for (let i = 0; i<arr.length;i+=2){
         ans += `,"${arr[i]}":${JSON.stringify(arr[i+1])}`
     };
@@ -46,12 +44,13 @@ request.send(mensajesJson);
 
 let gestoresText = Object.keys(JSON.parse(gestoresJson)).join(", ");
 
+const abc = document.getElementById("abc");
+if(abc !== null){
 setInterval(() => {
-    document.getElementById("abc").textContent=`Gestores: ${gestoresText}`
+    abc.textContent=`Gestores: ${gestoresText}`
 }, 5000);
 
 setTimeout(() => {setInterval(() => {
-    document.getElementById("abc").textContent="Gestores:"
+    abc.textContent="Gestores:"
 }, 5000);},2500);
-
-
+}
