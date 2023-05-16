@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "data.js",
+  "scripts": {
+  },
+  "author": "",
+  "license": "ISC",
+  "type":"module"
+}
