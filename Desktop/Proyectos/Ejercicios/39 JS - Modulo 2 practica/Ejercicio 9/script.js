@@ -46,12 +46,12 @@ request.send(mensajesJson);
 
 let gestoresText = Object.keys(JSON.parse(gestoresJson)).join(", ");
 
-// setInterval(() => {
-//     document.getElementById("abc").textContent=`Gestores: ${gestoresText}`
-// }, 5000);
+setInterval(() => {
+    document.getElementById("abc").textContent=`Gestores: ${gestoresText}`
+}, 5000);
 
-// setTimeout(() => {setInterval(() => {
-//     document.getElementById("abc").textContent="Gestores:"
-// }, 5000);},2500);
+setTimeout(() => {setInterval(() => {
+    document.getElementById("abc").textContent="Gestores:"
+}, 5000);},2500);
 
 

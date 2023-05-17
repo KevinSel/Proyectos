@@ -38,7 +38,6 @@ let mensajesArray = objToArray([JSON.parse(mensajesJson)]);
 
 // Server request usando AJAX
 
-
 let request = new XMLHttpRequest();
 request.open("POST", "http://localhost:8085/ok", true);
 request.send(mensajesJson);
