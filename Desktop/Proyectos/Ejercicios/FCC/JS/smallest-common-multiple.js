@@ -1,3 +1,11 @@
+//Find the smallest common multiple of the provided parameters that can be evenly divided by both, as well as by all sequential numbers in the range between these parameters.
+
+// The range will be an array of two numbers that will not necessarily be in numerical order.
+
+// For example, if given 1 and 3, find the smallest common multiple of both 1 and 3 that is also evenly divisible by all numbers between 1 and 3. The answer here would be 6.
+
+
+
 function smallestCommons(arr) {
   let max = Math.max(arr[0],arr[1]), min = Math.min(arr[0],arr[1]), mayFactNP = [];
   //Get the list of numbers and possible factors
@@ -16,7 +24,7 @@ let factors = nums.reduce((acc,x)=>{ let factsOfX = [];
   while(x !== 1){ 
     for (let i = 0; i<mayFactP.length; i++){
       if (x%mayFactP[i] == 0){ factsOfX.push(mayFactP[i]); x = x/mayFactP[i]; i--};};}; acc.push(factsOfX); return acc},[]);
-  //Multiply the factors, every prime should multiply the result the biggest number of times is a factor of a singular number.
+  //Multiply the factors, every prime should be multiplied the biggest number of times is a factor of a singular number.
   let scm = mayFactP.reduce((res,x)=>{ let pow = factors.reduce((max,arr)=>{
   let count = 0;
   for(let i = 0; i<arr.length; i++){

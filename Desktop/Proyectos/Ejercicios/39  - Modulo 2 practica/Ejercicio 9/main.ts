@@ -1,4 +1,4 @@
-import {data} from "./data.js";
+import {data} from "./data";
 
 // Objetos declarados en JS transformados en array (Los dejo en formato key/value, es posible extraer solo values,
 //o extraer values y poner algun valor de referencia (id, nombre, origen))
