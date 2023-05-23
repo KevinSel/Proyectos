@@ -1,0 +1,101 @@
+
+body{
+    background-color: antiquewhite;
+    margin:0;
+    font-size:1rem;
+}
+
+#header{
+ position:sticky;
+ top:0;
+ display:flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 10px 0px 10px 0px;
+ background-color:rgb(213, 236, 236);
+}
+
+#header-img{
+    max-width:25%;
+    margin:10px;
+}
+
+#nav-bar{
+    max-width:60%;
+    min-width:50%;
+    display:flex;
+    justify-content: space-evenly;
+}
+
+#nav-bar a{
+    text-decoration: none;
+    font-size:1.3rem;
+    margin: 0 10px 0 10px;
+}
+
+@media (max-width:800px) {
+    #nav-bar a{
+        font-size: 0.8rem;
+    }
+    #header-img{
+        max-width:35%;
+    }
+}
+
+main{
+    width:100%;
+}
+
+section, form {
+    width:70%;
+   margin:0 auto;
+}
+
+section i{
+    float:left;
+}
+
+section h2{
+    padding:0px 50px 0px 50px;
+}
+
+#prices{
+    display:flex;
+    gap:30px;
+}
+
+#prices div{
+    border: 2px solid black;
+    width:320px;
+    height:320px;
+    text-align:center;
+}
+
+#prices div h2{
+    font-size:1.3rem;
+    background-color: rgb(213, 236, 236);
+    margin:0;
+    padding:7px 0 7px 0;
+}
+
+#prices div p:last-of-type{
+    margin-bottom:25px;
+}
+
+
+.price{
+    font-weight: bold;
+    font-size:1.5rem;
+}
+
+.selectProductButton{
+font-size:1.3rem;
+padding:10px 30px 10px 30px;
+border:1px solid grey;
+background-color:orange;
+}
+
+.selectProductButton:hover{
+    background-color: yellow;
+    transition-duration: 0.7s;
+}
