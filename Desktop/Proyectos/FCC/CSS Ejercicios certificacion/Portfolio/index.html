@@ -1,110 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-
-<title>Product landing page</title>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" >
+    <meta charset='utf-8'>
+    <title>Portfolio</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' href='styles.css'>
+    <link rel='stylesheet' href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 </head>
 
-    <header id="header"><img id="header-img" src="https://cdn.freecodecamp.org/testable-projects-fcc/images/product-landing-page-logo.png">
-        <nav id="nav-bar">
-            <a class="nav-link">Features</a>
-            <a class="nav-link">How it works</a>
-            <a class="nav-link">Pricing</a>
-        </nav>
-    </header>
-
-    <main>
-
-        <form>
-            <h2>Handcrafted, home-made masterpieces</h2>
-            <label>
-            <input type="email" id="email"> Email
-            </label>
-            <!-- <input id="submit"> https://www.freecodecamp.com/email-submit -->
-        </form>
-
-        <section>
-            <i class="fa fa-3x fa-fire"></i></i>
-            <h2>Premium Materials</h2>
-            <p>Our trombones use the shiniest brass which is sourced locally. This will increase the longevity of your purchase.
-            </p>
-            <i class="fa fa-3x fa-truck"></i>
-            <h2>Fast Shipping</h2>
-            <p>We make sure you recieve your trombone as soon as we have finished making it. We also provide free returns if you are not satisfied.
-            </p>
-            <i class="fa fa-3x fa-battery-full" aria-hidden="true"></i>
-            <h2>Quality Assurance</h2>
-            <p>For every purchase you make, we will ensure there are no damages or faults and we will check and test the pitch of your instrument.
-            </p>
-        </section>
-
-
-        <section>
-
-            <iframe width="340" height="315"
-            src="https://www.youtube.com/embed/y8Yv4pnO7qc">
-            </iframe>
-
-        </section>
-
-        <section id="prices">
-                
-            <div>
-                <h2>TENOR TROMBONE</h2>
-                <P class="price">$600</P>
-                <p>Lorem ipsum.
-                </p>
-                <p>Lorem ipsum.
-                </p>
-                <p>Lorem ipsum dolor.
-                </p>
-                <p>Lorem ipsum.
-                </p>
-                <button class="selectProductButton">Select</button>
-            </div>
-
-            <div>
-                <h2>BASS TROMBONE</h2>
-                <p class="price">$900</p>
-                <p>Lorem ipsum.</p>
-                <p>Lorem ipsum dolor.</p>
-                <p>Lorem ipsum.</p>
-                <p>Lorem ipsum.</p>
-                <button class="selectProductButton">Select</button>   
-            </div>
-
-            <div>
-                <h2>VALVE TROMBONE</h2>
-                <p class="price">$1200</p>
-                <p>Plays similar to a Trumpet.</p>
-                <p>Great for Jazz Bands</p>
-                <p>Lorem ipsum dolor.</p>
-                <p>Lorem ipsum.</p>
-                <button class="selectProductButton">Select</button>
-            </div>
-
-        </section>
-
-        <footer>
-            <div>
-            <p>Privacy</p>
-            <p>Terms</p>
-            <p>Contact</p>
-            </div>
-            <p>Copyright 2016, Original Trombones</p>
-            <p>This page content is a copy of <a href="https://product-landing-page.freecodecamp.rocks/">https://product-landing-page.freecodecamp.rocks/</a></p>
-
-        </footer>
-
-    </main>
 
 <body>
+    <nav id="navbar">
+        <a href="#welcome-section">About</a>
+        <a href="#projects">Work</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
+    <main>
+        <section id="welcome-section">
+            <h1>Hey I am Mimic</h1>
+            <p>a web developer</p>
+        </section>
 
+        <section id="projects">
+            <h2>These are some of my projects</h2>
+            <div>
+                <div class="tile">
+                    <a class="project-tile" href="https://codepen.io/freeCodeCamp/full/KzXQgy"><img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/tic-tac-toe.png">
+                    <p>Tribute page</p></a>
+                </div>
+                 <div class="tile">
+                    <a class="project-tile" href="https://codepen.io/freeCodeCamp/full/wGqEga"><img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/wiki.png">
+                    <p>Random Quote Machine</p></a>
+                </div>
+                <div class="tile">
+                    <a class="project-tile" href="https://codepen.io/freeCodeCamp/full/mVEJag"><img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/map.jpg">
+                    <p>JavaScrip Calculator</p></a>
+                </div>
+                <div class="tile">
+                    <a class="project-tile" href="https://codepen.io/freeCodeCamp/full/wgGVVX"><img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/calc.png">
+                    <p>Map Data Across the Globe</p></a>
+                </div>
+                <div class="tile">
+                    <a class="project-tile" href="https://codepen.io/freeCodeCamp/full/qRZeGZ"><img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/random-quote-machine.png">
+                    <p>Wikipedia Viewer</p></a>
+                </div>
+                <div class="tile">
+                    <a class="project-tile" href="https://codepen.io/freeCodeCamp/full/zNqgVx"><img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/tribute.jpg">
+                    <p>Tic Tac Toe Game</p></a>
+                </div>
+             </div>
+
+             <button>Show all <span>></span></button>
+
+        </section>
+
+        <section id="contact">
+            <h2>Let's work together...</h2>
+            <p id="coffe">How do you take your coffe?</p>
+
+            <div id="links">
+                <a href="https://www.facebook.com/freecodecamp" id="profile-link" target="_blank"><i class="fab fa-facebook-square"></i>Facebook</a>
+                <a href="https://github.com/freecodecamp"><i class="fab fa-github"></i>GitHub</a>
+                <a href="https://twitter.com/freecodecamp"><i class="fab fa-twitter"></i>Twitter</a>
+                <a><i class="fas fa-at"></i>Send a mail</a>
+                <a><i class="fas fa-mobile-alt"></i>Call me</a>  
+            </div>
+            <hr>
+            <footer>
+                <p>**This is just a fake portfolio. All the projects and contact details given are not real.</p>
+                <p>The content of this page is a copy of <a href="https://personal-portfolio.freecodecamp.rocks/">freeCodeCamp</a>'s page</p>
+            </footer>
+        </section>
+       
+
+    </main>
 </body>
+
 
 </html>

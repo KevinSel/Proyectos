@@ -1,101 +1,193 @@
 
-body{
-    background-color: antiquewhite;
+
+body, main{margin:0;
+padding:0;
+color:white;
+text-align: center;}
+
+#navbar{
+    background-color:rgb(243, 81, 81);
+    height:70px;
+    position:sticky;
+    top:0;
+    display:flex;
+    justify-content: flex-end;
+}   
+
+#navbar a{
+    font-size:1.7rem;
+    padding:20px;
+    text-decoration: none;
+    color:black;
+}
+
+#welcome-section{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(70, 70, 70);
+    height:100vh;
+}
+
+h1{
     margin:0;
-    font-size:1rem;
+    font-size:4rem;
+}
+#welcome-section p{
+    color:red;
+    font-style: italic;
+    font-size:2rem;
 }
 
-#header{
- position:sticky;
- top:0;
- display:flex;
- align-items: center;
- justify-content: space-between;
- padding: 10px 0px 10px 0px;
- background-color:rgb(213, 236, 236);
+
+
+#projects{
+    background-color: rgb(105, 105, 194);
+    padding-bottom:30px;
+    padding-top:30px;
 }
 
-#header-img{
-    max-width:25%;
-    margin:10px;
+#projects h2{
+    text-decoration-line:underline;
+    text-decoration-color: rgb(235, 186, 186);
+    text-decoration-thickness: 2px;
+    margin:50px;
+    margin-top:70px;
+    font-size:2.7rem;
 }
 
-#nav-bar{
-    max-width:60%;
-    min-width:50%;
+#projects div{
+    background-color:rgb(105, 105, 194);
+    width:100%;
+    height: 100%;
     display:flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap:50px;
 }
 
-#nav-bar a{
-    text-decoration: none;
-    font-size:1.3rem;
-    margin: 0 10px 0 10px;
-}
-
-@media (max-width:800px) {
-    #nav-bar a{
-        font-size: 0.8rem;
-    }
-    #header-img{
-        max-width:35%;
-    }
-}
-
-main{
-    width:100%;
-}
-
-section, form {
-    width:70%;
-   margin:0 auto;
-}
-
-section i{
-    float:left;
-}
-
-section h2{
-    padding:0px 50px 0px 50px;
-}
-
-#prices{
-    display:flex;
-    gap:30px;
-}
-
-#prices div{
-    border: 2px solid black;
-    width:320px;
-    height:320px;
-    text-align:center;
-}
-
-#prices div h2{
-    font-size:1.3rem;
-    background-color: rgb(213, 236, 236);
+h2{
     margin:0;
-    padding:7px 0 7px 0;
-}
-
-#prices div p:last-of-type{
-    margin-bottom:25px;
 }
 
 
-.price{
-    font-weight: bold;
-    font-size:1.5rem;
+.tile{
+    max-width:350px;
+    max-height:400px;
 }
 
-.selectProductButton{
-font-size:1.3rem;
-padding:10px 30px 10px 30px;
-border:1px solid grey;
-background-color:orange;
+.project-tile img{
+    width:350px;
+    height:350px;
 }
 
-.selectProductButton:hover{
-    background-color: yellow;
+.tile p{
+    background-color: rgb(70,70,70);
+    color:white;
+    font-size:1.3rem;
+    margin:0;
+    padding:20px;
+}
+.tile a{
+    text-decoration: none;
+    background-color: rgb(70,70,70);
+}
+
+.tile p::before{
+    content: "< ";
+    color:transparent;
+}
+.tile p::after{
+    content: " />";
+    color:transparent;
+}
+
+.tile:hover p::before{
+    color:orange;
     transition-duration: 0.7s;
+}
+.tile:hover p::after{
+    color:orange;
+    transition-duration: 0.7s;
+}
+
+#projects button{
+    color:white;
+    font-size:1.3rem;
+    background-color: rgb(70,70,70);
+    border:0;
+    padding:10px 15px;
+    margin-top:50px;
+    margin-bottom:70px;
+}
+
+#projects button:hover{
+    transition-duration: 0.5s;
+    background-color: rgb(243, 81, 81);
+}
+#projects button:hover span{
+    transition-duration: 1s;
+    margin-left:7px;
+}
+
+
+#contact{
+    background-color: rgb(70,70,70);
+    height: calc(100vh - 70px);
+}
+
+#contact h2{
+    font-size:4rem;
+    padding-top:80px;
+}
+
+#contact #coffe{
+    font-style:italic;
+    font-size:1.3rem;
+    margin-bottom:50px;
+}
+
+#contact hr{
+    margin:0;
+    padding:0;
+    background-color: rgb(243, 81, 81);
+    border:0;
+    height:3px;
+}
+
+#links{
+    font-size:1.5rem;
+    margin-bottom:100px;
+}
+
+#links i{
+    margin-left:25px;
+    margin-right:10px;
+}
+
+#links a{
+    text-decoration:none;
+    color:white;
+}
+
+#links a:hover{
+    display:inline-block;
+    transition-duration:0.5s;
+    transform: translatey(10%) ;
+    color:red;
+}
+
+footer{
+    background-color: rgb(70, 70, 70);
+}
+
+footer p{
+    padding:30px;
+    margin-bottom:0;
+    margin:0;
+}
+@media (max-width:500px) {
+    #contactlinks{
+        font-size:0.5rem;}
 }

@@ -1,0 +1,14 @@
+
+<h1 style="text-align:center;">{{titulo}}</h1>
+<form>
+  Introduce tu nombre: <input type="text" name="nombre" [(ngModel)]="nombre"><br/>
+  Introduce tu apellido: <input type="text" name="apellido" [(ngModel)]="apellido"><br/><br/>
+ <input type="submit" value="Registrate" (click)="registrarUsuario()">
+</form><br/>
+
+<p *ngIf="registrado; else sinRegistrar">{{mensaje}} con el nombre de:
+  {{nombre}} {{apellido}} </p>
+
+<ng-template #sinRegistrar>
+    <p>Nadie registrado</p>
+</ng-template>
