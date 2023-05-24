@@ -3,12 +3,19 @@
 <form>
   Introduce tu nombre: <input type="text" name="nombre" [(ngModel)]="nombre"><br/>
   Introduce tu apellido: <input type="text" name="apellido" [(ngModel)]="apellido"><br/><br/>
+  Introduce tu cargo: <input type="text" name="cargo" [(ngModel)]="cargo"><br/><br/>
  <input type="submit" value="Registrate" (click)="registrarUsuario()">
 </form><br/>
 
 <p *ngIf="registrado; else sinRegistrar">{{mensaje}} con el nombre de:
-  {{nombre}} {{apellido}} </p>
+  {{nombre}} {{apellido}}  y tiene el cargo de <span [ngClass]="{paraDirectores:cargo=='director'}"> {{cargo}}</span> </p>
 
 <ng-template #sinRegistrar>
     <p>Nadie registrado</p>
 </ng-template>
+
+<br>
+<ul>
+ <li *ngFor="let entrada of entradas">{{entrada.titulo}}</li>
+</ul>
+
