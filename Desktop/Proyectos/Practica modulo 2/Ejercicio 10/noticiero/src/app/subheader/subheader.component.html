@@ -1,0 +1,26 @@
+<header class="subheader seccion" *ngIf="stat.enSeccion">
+    <div class="center">
+        <img src="../../../assets/img/iconmic.png">
+        <span>{{stat.seccion | uppercase}}</span>
+    </div>
+    <div class="end">
+        <app-filter-tab></app-filter-tab>
+        <a routerLink="" (click)="goHome()" ><img src="../../../assets/img/iconhome.png"></a>
+    </div>
+</header>
+
+<header class="subheader noticia"  *ngIf="stat.enNoticia">
+    <span>{{stat.titulo | uppercase}}</span>
+    <div class="end">
+        <a routerLink="" (click)="goHome()" ><img src="../../../assets/img/iconhome.png"></a>
+    </div>
+</header>
+
+<header class="subheader home"  *ngIf="stat.enHome">
+    <span>NOTICIAS DEL MOMENTO</span> <app-filter-tab></app-filter-tab>
+</header>
+
+
+
+
+

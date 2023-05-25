@@ -1,0 +1,17 @@
+<header>
+    <div class="inFlex">
+      <img class="imgHeader" src="../assets/img/logo.png">
+      <h1>EMPRESA</h1>
+    </div>
+      <div class="inFlex" id="rightside">
+        <details><summary><img class="imgHeader" src="../assets/img/iconsectWhite.png"></summary>
+        <ul class="secciones">
+            <li *ngFor="let seccion of secciones"><button routerLink="/seccion/{{seccion}}" (click)="goToSeccion(seccion)">{{seccion | uppercase}}</button></li>
+        </ul>
+        </details>
+        <img class="imgHeader" src="../assets/img/perfil.png">
+      </div>    
+  </header>
+
+
+

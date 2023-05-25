@@ -1,0 +1,35 @@
+@media (prefers-reduced-motion: no-preference) {
+    * {
+      scroll-behavior: smooth;
+    }
+  }
+
+
+
+#headFixed{
+  position:fixed;
+  width:100%;
+  background-color:rgb(19,19,32);
+  top:0;
+}
+
+#noticias{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding-top:150px;
+  gap: 16px;}
+
+.contenedorNoticia{
+  margin:0 20px;
+  max-width:350px;
+  display:inline-block;
+
+}
+
+#noticias div img{
+  width:100%;
+  margin: 10px 0;
+}
