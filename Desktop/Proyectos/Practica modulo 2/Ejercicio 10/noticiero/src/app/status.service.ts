@@ -6,6 +6,7 @@ import { noticias, Noticia } from './noticias';
 })
 export class StatusService {
   id = -1;
+  titulo: string = "";
   seccion: string = "";
   enHome = true;
   enNoticia = false;
@@ -17,5 +18,15 @@ export class StatusService {
     this.enNoticia = noticia;
     this.enSeccion = seccion;
   }
+  getNoticiaFromTitle(){
+    let noticia = noticias.filter(noticia => noticia.titulo == this.titulo)
+    if (noticia[0] == undefined) {
+      this.titulo = "Esta noticia no existe";
+      return noticias[0];
+    };
+    return noticias.filter(noticia => noticia.titulo == this.titulo)[0];
+  };
 
 }
+
+

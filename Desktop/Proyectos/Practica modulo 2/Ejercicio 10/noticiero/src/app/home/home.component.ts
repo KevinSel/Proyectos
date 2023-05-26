@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { noticias } from '../noticias';
 import { StatusService } from '../status.service';
 
@@ -9,19 +9,17 @@ import { StatusService } from '../status.service';
 })
 
 
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-  noticias = noticias;
+  noticias = noticias.slice(1);
 
-  goToNoticia(id: number){
-    this.zone.run( () => {
-    this.status.id = id;
-    this.status.enHome = false;
-    this.status.enSeccion = false;
-    this.status.enNoticia = true;})
+ 
+
+  constructor (private status: StatusService){
   }
 
-  constructor (private status: StatusService, private zone: NgZone){
+  ngOnInit(): void {
+    this.status.setStatus(true,false,false)
   }
 
 }

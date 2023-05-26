@@ -1,14 +1,3 @@
-<header class="subheader seccion" *ngIf="enSeccion">
-    <div class="center">
-        <img src="../../../assets/img/iconmic.png">
-        <span>{{ ask | uppercase}}</span>
-    </div>
-    <div class="end">
-        <app-filter-tab></app-filter-tab>
-        <a routerLink="" (click)="goHome()" ><img src="../../../assets/img/iconhome.png"></a>
-    </div>
-</header>
-
 <header class="subheader noticia"  *ngIf="enNoticia">
     <span>{{ titulo | uppercase}}</span>
     <div class="end">
@@ -16,11 +5,17 @@
     </div>
 </header>
 
+<header class="subheader seccion" *ngIf="enSeccion">
+    <div class="center">
+        <img src="../../../assets/img/iconmic.png">
+        <span>{{ seccion | uppercase}}</span>
+    </div>
+    <div class="end">
+        <app-filter-tab></app-filter-tab>
+        <a routerLink="" (click)="goHome()" ><img src="../../../assets/img/iconhome.png"></a>
+    </div>
+</header>
+
 <header class="subheader home"  *ngIf="enHome">
     <span>NOTICIAS DEL MOMENTO</span> <app-filter-tab></app-filter-tab>
 </header>
-
-
-
-
-

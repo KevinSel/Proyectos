@@ -10,6 +10,15 @@ export interface Noticia {
 
 export const noticias:Array<Noticia> = [
     {   
+    id:-100,
+    titulo:"Esta noticia no existe",
+    cuerpo:"-Esta noticia no existe-",
+    resumen:"",
+    seccion:"", 
+    imgSrc:"../assets/img/logo.png",
+    imgAlt:"Error"
+    },
+    {   
     id:0,
     titulo:"soldados corriendo",
     cuerpo:"Cuerpo de la noticia",

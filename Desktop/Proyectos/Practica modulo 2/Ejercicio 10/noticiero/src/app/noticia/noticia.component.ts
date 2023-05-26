@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute  } from '@angular/router';
 import { StatusService } from '../status.service';
-import { noticias } from '../noticias';
 
 
 @Component({
@@ -9,8 +9,23 @@ import { noticias } from '../noticias';
   styleUrls: ['./noticia.component.css']
 })
 export class NoticiaComponent {
+  
+  get noticia_imgSrc() {
+    return this.status.getNoticiaFromTitle().imgSrc
+  }
+  get noticia_imgAlt() {
+    return this.status.getNoticiaFromTitle().imgAlt
+  }
+  get noticia_cuerpo() {
+    return this.status.getNoticiaFromTitle().cuerpo
+  }
 
-  noticia = this.status.noticias[this.status.id];
-  constructor(private status:StatusService) {};
+  constructor(private status: StatusService, private route: ActivatedRoute) {}  
+
+  ngOnInit(){
+    this.status.titulo = this.route.snapshot.params['tit']
+    this.status.setStatus(false,true,false)
+   }
 
 }
+

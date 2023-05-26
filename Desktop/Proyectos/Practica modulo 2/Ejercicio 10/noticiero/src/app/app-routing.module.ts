@@ -5,13 +5,14 @@ import { NoticiaComponent } from './noticia/noticia.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  {path: 'noticia/:tit', component: NoticiaComponent},
   {path: 'seccion/:sec', component: SeccionComponent},
-  {path: 'noticia/:titulo', component: NoticiaComponent},
-  {path: "", component: HomeComponent}
+  { path: '**', component: HomeComponent },
+  
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule] 
+  exports: [RouterModule] ,
 })
 export class AppRoutingModule { }
