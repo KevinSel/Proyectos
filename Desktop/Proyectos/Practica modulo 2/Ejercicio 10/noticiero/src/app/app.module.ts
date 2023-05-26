@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AdDirective } from './ad.directive';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +9,7 @@ import { SubheaderComponent } from './subheader/subheader.component';
 import { FilterTabComponent } from './filter-tab/filter-tab.component';
 import { SeccionComponent } from './seccion/seccion.component';
 import { NoticiaComponent } from './noticia/noticia.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -20,7 +20,8 @@ import { NoticiaComponent } from './noticia/noticia.component';
     FilterTabComponent,
     SeccionComponent,
     NoticiaComponent,
-    AdDirective
+    HomeComponent,
+  
   ],
   imports: [
     BrowserModule,

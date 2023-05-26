@@ -12,7 +12,6 @@ export class HeaderComponent {
     this.status.enHome = false;
     this.status.enNoticia = false;
     this.status.enSeccion = true;
-    this.status.titulo = "";
     this.status.seccion = seccion;
     console.log(this.status)
   }

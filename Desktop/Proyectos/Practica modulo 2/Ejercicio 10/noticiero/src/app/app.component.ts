@@ -1,7 +1,4 @@
-import { Component } from '@angular/core';
-import { noticias } from './noticias';
-import { CommonModule } from '@angular/common';
-import { StatusService } from './status.service';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -12,19 +9,5 @@ import { StatusService } from './status.service';
 
 
 export class AppComponent {
-
-  noticias = noticias;
-
-  goToNoticia(titulo: string){
-    this.status.enHome = false;
-    this.status.enSeccion = false;
-    this.status.enNoticia = true;
-    this.status.titulo = titulo;
-    this.status.seccion = "";
-    console.log(this.status)
-  }
-
-  constructor (private status: StatusService){
-  }
-
+  
 }

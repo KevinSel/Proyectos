@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
+import { noticias, Noticia } from './noticias';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatusService {
-
+  id = -1;
+  seccion: string = "";
   enHome = true;
   enNoticia = false;
   enSeccion = false;
-  titulo = "Algun titulo"
-  seccion = "Alguna seccion"
+  noticias:Noticia[] = noticias
   constructor() { }
   setStatus(home: boolean, noticia: boolean, seccion: boolean ):void {
     this.enHome = home;
     this.enNoticia = noticia;
     this.enSeccion = seccion;
-  }
-  getData(){
-    return {enHome:this.enHome, enNoticia:this.enNoticia, enSeccion:this.enSeccion, titulo:this.titulo, seccion:this.seccion,}
   }
 
 }

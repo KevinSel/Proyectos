@@ -4,22 +4,12 @@
 
   <app-header></app-header>
 
-  <router-outlet adHost></router-outlet>
+  <app-subheader></app-subheader>
 
 </div>
 
 <main>
 
-<section id="noticias">
-
- <article class="contenedorNoticia" *ngFor="let noticia of noticias">
-  <div class="imgNoticiaContainer">
-    <a routerLink="/noticia/{{noticia.titulo}}" (click)="goToNoticia(noticia.titulo)">
-      <img [src]=noticia.imgSrc [alt]=noticia.imgAlt>
-    </a>
-  </div><span class="textoNoticia">{{noticia.resumen}}</span>
-</article> 
-
-</section>
+  <router-outlet></router-outlet>
 
 </main>

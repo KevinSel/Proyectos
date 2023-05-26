@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { StatusService } from '../status.service';
+import { noticias } from '../noticias';
+
 
 @Component({
   selector: 'app-noticia',
@@ -8,10 +10,7 @@ import { StatusService } from '../status.service';
 })
 export class NoticiaComponent {
 
-  fun = this.status.setStatus(true,false,false);
+  noticia = this.status.noticias[this.status.id];
+  constructor(private status:StatusService) {};
 
-  
-  constructor(private status: StatusService) {};
-
-  
 }
