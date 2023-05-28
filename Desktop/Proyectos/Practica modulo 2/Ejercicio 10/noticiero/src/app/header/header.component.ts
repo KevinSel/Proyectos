@@ -7,14 +7,8 @@ import { StatusService } from '../status.service';
 })
 
 export class HeaderComponent {
-  secciones = ["media","economia","politica","deportes","ciencia"]
-  goToSeccion(seccion: string){
-    this.status.enHome = false;
-    this.status.enNoticia = false;
-    this.status.enSeccion = true;
-    this.status.seccion = seccion;
-    console.log(this.status)
-  }
   
+  secciones = ["opinion","economia","politica","deporte","ciencia"]
+
   constructor(private status: StatusService) {}
 }

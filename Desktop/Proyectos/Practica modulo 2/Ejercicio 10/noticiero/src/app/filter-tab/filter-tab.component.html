@@ -1,2 +1,30 @@
-<details><summary>Filtros</summary><ul><li>Sección</li><li>Fecha</li><li>Autor</li></ul>
-</details>
+<div class="drop">Filtros 
+    <ul class="dropContent">
+        <li class="drop" *ngIf=!enSeccion>Sección 
+            <ul class="dropContent" id="listaFiltros">
+                <li><label for="todas"   >Todas   </label><input type="radio" id="todas"    name="seccion" value="todas"    (change)=updateSeccion(todas) checked></li>
+                <li><label for="opinion" >Opinion </label><input type="radio" id="opinion"  name="seccion" value="opinion"  (change)=updateSeccion(opinion)></li>
+                <li><label for="economia">Economia</label><input type="radio" id="economia" name="seccion" value="economia" (change)=updateSeccion(economia)></li>
+                <li><label for="politica">Politica</label><input type="radio" id="politica" name="seccion" value="politica" (change)=updateSeccion(politica)></li>
+                <li><label for="deporte" >Deporte </label><input type="radio" id="deporte"  name="seccion" value="deporte"  (change)=updateSeccion(deporte)></li>
+                <li><label for="ciencia" >Ciencia </label><input type="radio" id="ciencia"  name="seccion" value="ciencia"  (change)=updateSeccion(ciencia)></li>
+            </ul>
+        </li>
+        <li class="drop">Fecha
+            <ul class="dropContent" id="listaFiltros">
+                <li><input type="date" value="fecha" name="fecha" id="fecha"  [(ngModel)]="fecha" (change)=update()></li>
+            </ul>
+        </li>
+        <li class="drop"> Autor
+            <ul class="dropContent" id="listaFiltros">
+                <li><label for="Jonathan Granado">Jonathan Granado</label><input type="checkbox" id="Jonathan Granado" [(ngModel)]="jonathanGranado" ></li>
+                <li><label for="Noemi Segarra"   >Noemi Segarra   </label><input type="checkbox" id="Noemi Segarra"    [(ngModel)]="noemiSegarra"    ></li>
+                <li><label for="Jone Figueras"   >Jone Figueras   </label><input type="checkbox" id="Jone Figueras"    [(ngModel)]="joneFigueras"    ></li>
+                <li><label for="Mirian Fuertes"  >Mirian Fuertes  </label><input type="checkbox" id="Mirian Fuertes"   [(ngModel)]="mirianFuertes"   ></li>
+            </ul>   
+        </li>
+        <li id="buttonListItem" (click)=limpiar()>
+            <button>Limpiar</button>
+        </li>
+    </ul>
+</div>

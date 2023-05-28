@@ -13,23 +13,8 @@
   top:0;
 }
 
-#noticias{
-  display:flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding-top:150px;
-  gap: 16px;}
-
-.contenedorNoticia{
-  margin:0 20px;
-  max-width:350px;
-  display:inline-block;
-
+main{
+  background-color: rgb(19,19,32);
+  color:white;
 }
 
-#noticias div img{
-  width:100%;
-  margin: 10px 0;
-}

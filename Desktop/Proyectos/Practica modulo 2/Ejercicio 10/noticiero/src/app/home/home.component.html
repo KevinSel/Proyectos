@@ -1,11 +1,20 @@
 <section id="noticias">
 
-    <article class="contenedorNoticia" *ngFor="let noticia of noticias">
-     <div class="imgNoticiaContainer">
-       <a [routerLink]="['/noticia', noticia.titulo]">
-         <img [src]=noticia.imgSrc [alt]=noticia.imgAlt>
-       </a>
-     </div><span class="textoNoticia">{{noticia.resumen}}</span>
+    <article class="contenedorNoticia" *ngFor="let noticia of noticias" >
+    <div *ngIf="noticia.trend && !filtrado">
+      <div class="imgNoticiaContainer">
+        <a [routerLink]="['/noticia', noticia.titulo]">
+          <img [src]=noticia.imgSrc [alt]=noticia.imgAlt>
+        </a>
+      </div><span class="textoNoticia">{{noticia.resumen}}</span>
+    </div>
+    <div *ngIf="filtrado">
+      <div class="imgNoticiaContainer">
+        <a [routerLink]="['/noticia', noticia.titulo]">
+          <img [src]=noticia.imgSrc [alt]=noticia.imgAlt>
+        </a>
+      </div><span class="textoNoticia">{{noticia.resumen}}</span>
+    </div>
    </article> 
    
    </section>
