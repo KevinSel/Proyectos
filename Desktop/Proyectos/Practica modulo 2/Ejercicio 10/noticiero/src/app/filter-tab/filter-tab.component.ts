@@ -9,6 +9,13 @@ import { StatusService } from '../status.service';
 
 
 export class FilterTabComponent {
+  get isLightMode(){
+    return this.status.isLightMode;
+  }
+  changeMode(){
+    this.status.isLightMode = !this.status.isLightMode;
+  }
+  
   todas = "todas"; opinion = "opinion"; politica = "politica"; deporte = "deporte"; economia = "economia"; ciencia = "ciencia"; 
   valuesSeccion = {
     todas :    true,
@@ -20,10 +27,13 @@ export class FilterTabComponent {
   };
 
   fecha = "";
-  jonathanGranado  = false;
-  noemiSegarra     = false;
-  joneFigueras     = false;
-  mirianFuertes    = false;
+
+  valuesAutor = {
+  jonathanGranado  : true,
+  noemiSegarra     : true,
+  joneFigueras     : true,
+  mirianFuertes    : true,
+  }
 
   keys = Object.keys(this.valuesSeccion);
 
@@ -31,8 +41,8 @@ export class FilterTabComponent {
     this.keys.map( x => { this.valuesSeccion[x as keyof typeof this.valuesSeccion] = false} );
     this.valuesSeccion[toCheck as keyof typeof this.valuesSeccion] = true;
     this.update();
-    console.log(this.status.secciones)
   }
+
 
   update(){
     this.status.clearFilter();
@@ -42,10 +52,10 @@ export class FilterTabComponent {
     this.status.filtroSeccion.deporte = this.valuesSeccion.deporte;
     this.status.filtroSeccion.ciencia = this.valuesSeccion.ciencia;
     this.status.filtroSeccion.economia = this.valuesSeccion.economia;
-    this.status.filtroSeccion.jonathanGranado = this.jonathanGranado;
-    this.status.filtroSeccion.noemiSegarra = this.noemiSegarra;
-    this.status.filtroSeccion.joneFigueras = this.joneFigueras;
-    this.status.filtroSeccion.mirianFuertes = this.mirianFuertes;
+    this.status.filtroAutor.jonathanGranado = this.valuesAutor.jonathanGranado;
+    this.status.filtroAutor.noemiSegarra = this.valuesAutor.noemiSegarra;
+    this.status.filtroAutor.joneFigueras = this.valuesAutor.joneFigueras;
+    this.status.filtroAutor.mirianFuertes = this.valuesAutor.mirianFuertes;
     this.status.filtrar();
   }
 
@@ -58,12 +68,13 @@ export class FilterTabComponent {
   this.status.filtrado=false;
   this.updateSeccion("todas")
   this.fecha = "";
-  this.jonathanGranado = false;
-  this.noemiSegarra = false;
-  this.joneFigueras = false;
-  this.mirianFuertes = false;
+  this.valuesAutor.jonathanGranado = true;
+  this.valuesAutor.noemiSegarra = true;
+  this.valuesAutor.joneFigueras = true;
+  this.valuesAutor.mirianFuertes = true;
  }
 
  constructor (private status:StatusService){}
 
 }
+

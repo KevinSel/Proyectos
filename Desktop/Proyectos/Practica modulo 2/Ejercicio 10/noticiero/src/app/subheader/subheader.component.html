@@ -1,21 +1,21 @@
-<header class="subheader noticia"  *ngIf="enNoticia">
+<header class="subheader noticia" [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}"  *ngIf="enNoticia">
     <span>{{ titulo | uppercase}}</span>
     <div class="end">
-        <a routerLink="" (click)="goHome()" ><img src="../../../assets/img/iconhome.png"></a>
+        <a routerLink="" (click)="goHome()" ><img src="../../../assets/img/homeLogoB.svg" class="imgSeccion"></a>
     </div>
 </header>
 
-<header class="subheader seccion" *ngIf="enSeccion">
+<header class="subheader seccion" [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}" *ngIf="enSeccion">
     <div class="center">
-        <img src="../../../assets/img/iconmic.png">
+        <img src={{imgUrl}} class="imgSeccion">
         <span>{{ seccion | uppercase}}</span>
     </div>
     <div class="end">
         <app-filter-tab></app-filter-tab>
-        <a routerLink="" (click)="goHome()" ><img src="../../../assets/img/iconhome.png"></a>
+        <a routerLink="" (click)="goHome()" ><img src="../../../assets/img/homeLogoB.svg" class="imgSeccion"></a>
     </div>
 </header>
 
-<header class="subheader home"  *ngIf="enHome">
+<header class="subheader home" [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}" *ngIf="enHome">
     <span>NOTICIAS DEL MOMENTO</span> <app-filter-tab></app-filter-tab>
 </header>

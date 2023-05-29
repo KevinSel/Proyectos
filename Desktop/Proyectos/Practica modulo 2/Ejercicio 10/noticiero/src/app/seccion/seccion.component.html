@@ -1,11 +1,16 @@
-<section id="noticias">
+<section id="noticias" [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">
 
     <article class="contenedorNoticia" *ngFor="let noticia of noticias">
-     <div class="imgNoticiaContainer">
-       <a [routerLink]="['/noticia', noticia.titulo]">
-         <img [src]=noticia.imgSrc [alt]=noticia.imgAlt>
-       </a>
-     </div><span class="textoNoticia">{{noticia.resumen}}</span>
+      <div class="noticia">
+        <a [routerLink]="['/noticia', noticia.titulo]">
+          <div class="imgNoticiaContainer">
+            <img [src]=noticia.imgSrc [alt]=noticia.imgAlt>
+          </div>
+          <span class="textoNoticia">{{noticia.resumen}}</span>
+        </a>
+      </div>
    </article> 
    
 </section>
+
+

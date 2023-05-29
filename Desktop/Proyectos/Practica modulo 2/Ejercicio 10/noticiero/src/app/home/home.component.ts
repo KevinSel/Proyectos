@@ -9,7 +9,13 @@ import { StatusService } from '../status.service';
 
 
 export class HomeComponent implements OnInit {
-
+  
+  get isLightMode(){
+    return this.status.isLightMode;
+  }
+  changeMode(){
+    this.status.isLightMode = !this.status.isLightMode;
+  }
   get noticias(){
     if (this.status.noticiasFiltradas[0] == undefined){
       this.status.seccion = "Esta seccion no existe o no tiene contenido";
@@ -29,7 +35,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.status.setStatus(true,false,false)
     this.status.clearFilter();
-    this.status.filtrado = false;
   }
 
 }

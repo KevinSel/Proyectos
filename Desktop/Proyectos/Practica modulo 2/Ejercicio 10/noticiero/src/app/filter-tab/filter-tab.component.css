@@ -1,4 +1,21 @@
-
+/* Light */
+.drop{
+  --var-backgroundNm:rgb(19,19,32);
+  --var-colorNm:white;
+  --var-backgroundLm:rgb(227, 224, 202);
+  --var-colorLm:rgb(0, 0, 0);
+}
+.nightMode{
+  color:var(--var-colorNm); 
+  border-color: var(--var-colorNm);
+  background-color:var(--var-backgroundNm);
+}
+.lightMode{
+  color:var(--var-colorLm); 
+  border-color: var(--var-colorLm);
+  background-color:var(--var-backgroundLm);
+}
+/* //// */
 
 .drop{
   display: flex;
@@ -8,47 +25,64 @@
 }
 
 .dropContent{
-    color:white;
     display:none;
     padding:5px;
     margin:0 0 0 -5px;   
     position:absolute;
     list-style-type:none;
-    background-color:rgb(19,19,32);
     text-align:left;
   }
 
   .drop:hover>.dropContent{
     display:block;
   }
-  .dropContent>li:hover{
+  /* .dropContent>li:hover{
     color:rgb(19,19,32);
     background-color: white;
-  }
-  .dropContent>li{
-    padding-top:5px;
-    padding-bottom:5px;
-    display:flex;
-    justify-content: space-between;
-  }
+  } */
+
   #listaFiltros{
     margin:-4px 0 0 85%;
-    padding-left:10px;
   }
   input[type="checkbox"]{
     margin-left:7px;
   }
   button{
+    border:0;
     margin:0;
     min-height:100%;
-    border:none;
     border-radius: 2px;
     background-color:rgb(228, 212, 126) ;
-    color:black;
-  }
-  #buttonListItem{
-    background-color: rgb(19,19,32);
   }
   button:focus{
     background-color:rgb(243, 222, 100);
+  }
+  .dropContent{
+    padding:0;
+    transform: translateX(-3%);
+    border: 1px solid;
+  }
+  .dropContent>li{
+    margin:3px;
+    padding:3px;
+    border: 1px solid;
+    display:flex;
+    justify-content: space-between;
+  }
+  .dropContent li.lightMode:hover{
+    background-color: var(--var-backgroundNm);
+    color:white;
+  }
+  .dropContent li.nightMode:hover{
+    background-color: white;
+    color:black;
+  }
+
+  @media (max-width:900px){
+    .dropContent{
+      transform: translateX(-93%);
+    }
+    .move{
+      transform: translateX(-45px)
+    }
   }

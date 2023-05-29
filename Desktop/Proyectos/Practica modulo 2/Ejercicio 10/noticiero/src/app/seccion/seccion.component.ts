@@ -11,17 +11,20 @@ import { StatusService } from '../status.service';
 
 
 export class SeccionComponent implements OnInit{
-
+  get isLightMode(){
+    return this.status.isLightMode;
+  }
+  changeMode(){
+    this.status.isLightMode = !this.status.isLightMode;
+  }
   get noticias(){
+    console.log(this.status.noticiasFiltradas)
     if (this.status.noticiasFiltradas[0] == undefined){
-      this.status.seccion = "Esta seccion no existe o no tiene contenido";
       return [this.status.noticias[0]];
     } else {
     return this.status.noticiasFiltradas
    }
   }
-
-
 
   constructor(private status: StatusService, private route: ActivatedRoute) {}  
 
@@ -31,7 +34,8 @@ export class SeccionComponent implements OnInit{
     this.route.paramMap.subscribe(
       (params) => {
         const sec = params.get('sec');
-        this.status.seccion = sec!;
+        if(!["economia","politica","deporte","ciencia","opinion"].includes(sec!)){this.status.seccion = "Esta seccion no existe"}
+        else {this.status.seccion = sec!};
         this.status.clearFilter();
     })
 

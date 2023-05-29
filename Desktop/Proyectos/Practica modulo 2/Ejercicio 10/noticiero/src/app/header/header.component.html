@@ -1,16 +1,23 @@
-<header>
+<header [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">
     <div class="inFlex">
-      <img class="imgHeader" src="../assets/img/logo.png">
+      <img class="imgHeader" src="../assets/img/logo.svg"  [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">
       <h1>EMPRESA</h1>
     </div>
       <div class="inFlex" id="rightside">
         <div class="drop">
-          <img class="imgHeader" src="../assets/img/iconsectWhite.png">
-          <ul class="secciones">
-              <li *ngFor="let seccion of secciones" class="seccionItemList"><button [routerLink]="['/seccion', seccion]">{{seccion | uppercase}}</button></li>
+          <img class="imgHeader" src="../assets/img/barraLogoB.svg"  [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">
+          <ul class="dropContent"  [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">
+              <li *ngFor="let seccion of secciones" class="seccionItemList"><button [routerLink]="['/seccion', seccion]" [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">{{seccion | uppercase}}</button></li>
           </ul>
         </div>
-        <img class="imgHeader" src="../assets/img/perfil.png">
+        <div class="drop">
+          <img class="imgHeader" src="../assets/img/perfil.png" [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">
+            <ul class="dropContent perfil"  [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">
+              <li><button [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">Perfil</button></li>
+              <li><button [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}" (click)=changeMode()>Nightmode</button></li>
+              <li><button [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">Cerrar sesión</button></li>
+            </ul>
+        </div>
       </div>    
   </header>
 

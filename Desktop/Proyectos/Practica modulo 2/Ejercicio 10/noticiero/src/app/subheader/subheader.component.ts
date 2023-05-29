@@ -8,6 +8,13 @@ import { StatusService } from '../status.service';
 
 export class SubheaderComponent{
 
+  get isLightMode(){
+    return this.status.isLightMode;
+  }
+  changeMode(){
+    this.status.isLightMode = !this.status.isLightMode;
+  }
+
   get enHome():boolean {
     return this.status.enHome;
   }
@@ -22,6 +29,11 @@ export class SubheaderComponent{
   }
   get seccion():string{
     return this.status.seccion;
+  }
+
+  get imgUrl(){
+    
+    return this.status.urls[this.status.seccion as keyof typeof this.status.urls][0];
   }
 
   goHome(){

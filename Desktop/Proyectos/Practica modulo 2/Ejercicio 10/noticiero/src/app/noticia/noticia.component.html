@@ -1,2 +1,13 @@
-<img [src]=noticia_imgSrc [alt]=noticia_imgAlt>
-<p>{{noticia_cuerpo}}</p>
+<section [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">
+
+    <div id="contenedor">
+        <div id="imageAndData">
+            <img [src]=noticia_imgSrc [alt]=noticia_imgAlt id="image">
+                <span class="leftToImg">Fecha: {{noticia_fecha}}</span><br><br>
+                <span class="leftToImg">Autor: {{noticia_autor}}</span><br><br>
+                <span class="leftToImg">Resumen: {{noticia_resumen}}</span><br><br>
+         </div>
+    </div>
+    <span style="white-space: pre-line">{{noticia_cuerpo}}</span>
+
+</section>

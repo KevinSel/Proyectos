@@ -1,23 +1,25 @@
-<section id="noticias">
+<section id="noticias" [ngClass]="{'lightMode': isLightMode, 'nightMode':!isLightMode}">
 
     <article class="contenedorNoticia" *ngFor="let noticia of noticias" >
-    <div *ngIf="noticia.trend && !filtrado">
-      <div class="imgNoticiaContainer">
+      <div *ngIf="noticia.trend && !filtrado">
         <a [routerLink]="['/noticia', noticia.titulo]">
-          <img [src]=noticia.imgSrc [alt]=noticia.imgAlt>
+          <div class="imgNoticiaContainer">
+              <img [src]=noticia.imgSrc [alt]=noticia.imgAlt>
+          </div>
+          <span class="textoNoticia">{{noticia.resumen}}</span>
         </a>
-      </div><span class="textoNoticia">{{noticia.resumen}}</span>
-    </div>
-    <div *ngIf="filtrado">
-      <div class="imgNoticiaContainer">
+      </div>
+      <div *ngIf="filtrado" class="noticia">
         <a [routerLink]="['/noticia', noticia.titulo]">
-          <img [src]=noticia.imgSrc [alt]=noticia.imgAlt>
+          <div class="imgNoticiaContainer">
+            <img [src]=noticia.imgSrc [alt]=noticia.imgAlt>
+          </div>
+          <span class="textoNoticia">{{noticia.resumen}}</span>
         </a>
-      </div><span class="textoNoticia">{{noticia.resumen}}</span>
-    </div>
+      </div>
    </article> 
    
-   </section>
+  </section>
 
 
    

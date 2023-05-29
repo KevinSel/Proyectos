@@ -8,13 +8,22 @@ export class StatusService {
   id = -1;
   noticias:Noticia[] = noticias;
 
+  urls = {
+    opinion:["../../assets/img/opinionLogoW.svg", "../../../assets/img/opinionLogoB.svg"],
+    ciencia:["../../assets/img/cienciaLogoW.svg", "../../assets/img/cienciaLogoB.svg.svg"],
+    economia:["../../../assets/img/economiaLogoW.svg", "../../../assets/img/economiaLogoB.svg"],
+    politica:["../../../assets/img/politicaLogoW.svg", "../../../assets/img/politicaLogoB.svg"],
+    deporte:["../../../assets/img/deporteLogoW.svg", "../../../assets/img/deporteLogoB.svg"],
+  }
+
   //subheader
   titulo: string = "";
   seccion: string = "";
   enHome = true;
   enNoticia = false;
   enSeccion = false;
- 
+  isLightMode = false;
+
   setStatus(home: boolean, noticia: boolean, seccion: boolean ):void {
     this.enHome = home;
     this.enNoticia = noticia;
@@ -44,30 +53,33 @@ export class StatusService {
     economia : false,
   };
   filtroAutor:any = {
-    jonathanGranado : false,
-    noemiSegarra    : false,
-    joneFigueras    : false,
-    mirianFuertes   : false,
+    jonathanGranado : true,
+    noemiSegarra    : true,
+    joneFigueras    : true,
+    mirianFuertes   : true,
   };
   
   secciones: Array<string> = [];
   autores: Array<string> = [];
+  autoresFormateado: Array<string> = [];
   fecha:string = "";
 
   filtrar(){
+     
+    this.noticiasFiltradas = noticias.slice(1);
+
     this.filtrado = true;
 
     Object.keys(this.filtroSeccion).map(seccion => {if (this.filtroSeccion[seccion]){this.secciones.push(seccion)}}) //Actualizar array de secciones
 
+    this.autores = [];
     Object.keys(this.filtroAutor).map(autor => {if (this.filtroAutor[autor]){this.autores.push(autor)}}) // Actualizar array de autores
 
-    this.secciones.map( seccion => {this.noticiasFiltradas = this.noticiasFiltradas.filter(noticia => noticia.seccion == seccion)})
-
-    if (this.autores.length > 0){
-      let autoresFormateado = this.autores.map(autor => {let aux = [autor.slice(0,1).toUpperCase() , autor.slice(1)].join("");// to camelCase
+   
+    this.autoresFormateado = this.autores.map(autor => {let aux = [autor.slice(0,1).toUpperCase() , autor.slice(1)].join("");// to camelCase
                                                          return aux.match(/([A-Z][a-z]+)/g)!.join(" ")}); // to PascalCase
-      autoresFormateado.map( autor => {this.noticiasFiltradas = this.noticiasFiltradas.filter(noticia => noticia.autor == autor!)})
-    ;}
+  
+    this.noticiasFiltradas = this.noticiasFiltradas.filter(noticia => this.autoresFormateado.includes(noticia.autor));
 
     if (this.fecha != "") {
       let aux = this.fecha.match(/(\d+)/g);
@@ -77,6 +89,8 @@ export class StatusService {
 
     };
 
+    this.secciones.map( seccion => {this.noticiasFiltradas = this.noticiasFiltradas.filter(noticia => noticia.seccion == seccion)})
+
   };
  
   //Clear
@@ -84,10 +98,12 @@ export class StatusService {
     this.noticiasFiltradas = noticias.slice(1);
     this.secciones = [];
     this.autores = [];
+    this.autoresFormateado = [];
     this.fecha = "";
     if(this.enSeccion){
       this.secciones.push(this.seccion);
       this.filtrar();
+      return;
     };
     this.filtrado = false;
   };

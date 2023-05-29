@@ -1,3 +1,44 @@
-* {
-    font-size:30rem;
-}
+/* Light */
+section{
+    --var-backgroundNm:rgb(19,19,32);
+    --var-colorNm:white;
+    --var-backgroundLm:rgb(227, 224, 202);
+    --var-colorLm:rgb(0, 0, 0);
+  }
+  .nightMode{
+    color:var(--var-colorNm); 
+    border-color: var(--var-colorNm);
+    background-color:var(--var-backgroundNm);
+  }
+  .lightMode{
+    color:var(--var-colorLm); 
+    border-color: var(--var-colorLm);
+    background-color:var(--var-backgroundLm);
+  }
+  /* //// */
+
+  
+  section{
+    padding-top:130px;
+  }
+
+  #imageAndData{
+    display:flex;
+    align-items:center;
+    flex-wrap: wrap;
+    gap:20px;
+  }
+
+  #image{
+    width:40vw;
+    height:30vw;
+    min-height:150px;
+    min-width:200px;
+    margin:40px;
+  }
+
+  #metadata{
+    display:inline-block;
+    max-width:40%;
+  }
+
