@@ -1,0 +1,240 @@
+9. SELECT nombre, ROUND(precio) FROM producto
+10. SELECT nombre, FLOOR(precio) FROM producto
+11. SELECT fabricante.nombre FROM fabricante INNER JOIN producto ON fabricante.id = producto.id_fabricante
+12. SELECT nombre FROM fabricante WHERE id = ANY(SELECT id_fabricante FROM producto)
+13. SELECT id, nombre FROM fabricante ORDER BY nombre
+14. SELECT id, nombre FROM fabricante ORDER BY nombre DESC
+15 ???
+16. SELECT id, nombre FROM fabricante WHERE id<6
+17. SELECT id, nombre FROM fabricante WHERE 3<id and id<6
+18. SELECT nombre, precio FROM producto ORDER BY precio LIMIT 1
+19. SELECT nombre, precio FROM producto ORDER BY precio DESC LIMIT 1
+20. SELECT * FROM producto WHERE id_fabricante = 2
+21. SELECT nombre, precio FROM producto WHERE precio<=120
+22. SELECT nombre, precio FROM producto WHERE precio>=400
+23. SELECT nombre, precio FROM producto WHERE precio<400 o SELECT nombre, precio FROM producto WHERE NOT(precio>=400)
+24. SELECT *, precio FROM producto WHERE (precio>=80 AND precio<300)
+25. SELECT * FROM producto WHERE precio BETWEEN 60 AND 200
+26. SELECT * FROM producto WHERE precio>200 AND id_fabricante > 6
+27. SELECT * FROM producto WHERE id_fabricante = 1 OR id_fabricante = 3 OR id_fabricante = 5
+28. SELECT * FROM producto WHERE id_fabricante IN (1,3,5)
+29. SELECT *, precio*100 as centimos FROM producto
+30. SELECT nombre FROM fabricante WHERE nombre LIKE 's%'
+31. SELECT nombre FROM fabricante WHERE nombre LIKE '%e'
+32. SELECT nombre FROM fabricante WHERE nombre LIKE '%w%'
+33. SELECT * FROM fabricante WHERE LENGTH(nombre)=4
+34. SELECT nombre FROM producto WHERE nombre LIKE '%Portátil%'
+35. SELECT nombre FROM producto WHERE nombre LIKE '%Monitor%' AND precio<215
+36. ???
+
+Multitabla
+
+1.
+SELECT producto.nombre as producto, precio, fabricante.nombre as fabricante
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+2.
+SELECT producto.nombre as producto, precio, fabricante.nombre as fabricante
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+ORDER BY fabricante.nombre
+3.
+SELECT producto.id as id_producto, producto.nombre, id_fabricante, fabricante.nombre
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+4.
+SELECT producto.nombre as id_producto, precio, fabricante.nombre
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+ORDER BY precio
+LIMIT 1
+5.
+SELECT producto.nombre as id_producto, precio, fabricante.nombre
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+ORDER BY precio DESC
+LIMIT 1
+6.
+SELECT producto.*
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+AND fabricante.nombre LIKE 'Lenovo' 
+7.
+SELECT producto.*
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id 
+AND fabricante.nombre LIKE 'Crucial' AND precio > 200 
+8.
+SELECT producto.*
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+AND (fabricante.nombre LIKE 'Asus' OR fabricante.nombre LIKE 'Seagate' OR fabricante.nombre LIKE 'Hewlett-Packard')
+9.
+SELECT producto.*
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+AND fabricante.nombre IN ('Asus','Seagate','Hewlett-Packard') 
+10.
+SELECT producto.nombre, precio
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+AND fabricante.nombre LIKE '%e' 
+11.
+SELECT producto.nombre, precio
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+AND fabricante.nombre LIKE '%w%' 
+12.
+SELECT producto.nombre, precio, fabricante.nombre
+FROM (producto JOIN fabricante)
+WHERE producto.id_fabricante = fabricante.id
+AND precio >= 180  
+ORDER BY precio / precio DESC ??
+13.
+SELECT nombre, id FROM fabricante WHERE id = ANY(SELECT id_fabricante FROM producto)
+
+Composision externa
+
+1.
+SELECT fabricante.*, producto.nombre
+FROM fabricante LEFT OUTER JOIN producto
+ON producto.id_fabricante = fabricante.id  --> Ejercicio
+2.
+SELECT fabricante.*, producto.nombre 
+FROM fabricante LEFT OUTER JOIN producto 
+ON fabricante.id = producto.id_fabricante
+WHERE producto.nombre IS NULL
+3.
+No es posible, el sistema obliga a asignar un valor si el campo es una llave externa y restringe las acciones en donde se pueda eliminar la conexion.
+
+Consultas resumen
+1. SELECT COUNT(*) FROM producto;
+2. SELECT COUNT(*) FROM fabricante;
+3. SELECT COUNT(DISTINCT id_fabricante) FROM producto;
+4. SELECT AVG(precio) FROM producto;
+5. SELECT MIN(precio) FROM producto;
+6. SELECT MAX(precio) FROM producto;
+7. SELECT nombre, MIN(precio) FROM producto;
+8. SELECT nombre, MAX(precio) FROM producto;
+9. SELECT SUM(precio) FROM producto;
+10.
+SELECT COUNT(id_fabricante)
+FROM producto JOIN fabricante
+WHERE producto.id_fabricante = fabricante.id
+AND fabricante.nombre LIKE 'Asus';
+11.
+SELECT AVG(precio)
+FROM producto JOIN fabricante
+WHERE producto.id_fabricante = fabricante.id
+AND fabricante.nombre LIKE 'Asus';
+12.
+SELECT MIN(precio)
+FROM producto JOIN fabricante
+WHERE producto.id_fabricante = fabricante.id
+AND fabricante.nombre LIKE 'Asus';
+13.
+SELECT MAX(precio)
+FROM producto JOIN fabricante
+WHERE producto.id_fabricante = fabricante.id
+AND fabricante.nombre LIKE 'Asus';
+14.
+SELECT SUM(precio)
+FROM producto JOIN fabricante
+WHERE producto.id_fabricante = fabricante.id
+AND fabricante.nombre LIKE 'Asus';
+15.
+SELECT MIN(precio), MAX(precio), AVG(precio), COUNT(id_fabricante)
+FROM producto JOIN fabricante
+WHERE producto.id_fabricante = fabricante.id
+AND fabricante.nombre LIKE 'Crucial';
+16.
+SELECT fabricante.nombre, COUNT(id_fabricante)
+FROM (producto RIGHT OUTER JOIN fabricante
+ON fabricante.id = id_fabricante)
+GROUP BY id_fabricante
+ORDER BY COUNT(id_fabricante) DESC -- Falta 1??
+17.
+SELECT fabricante.id, fabricante.nombre, COUNT(id_fabricante), MAX(precio), MIN(precio), AVG(precio)
+FROM (producto RIGHT OUTER JOIN fabricante
+ON fabricante.id = id_fabricante)
+GROUP BY id_fabricante
+ORDER BY id
+18. 19.
+SELECT fabricante.nombre,  MAX(precio), MIN(precio), AVG(precio), COUNT(id_fabricante)
+FROM producto RIGHT OUTER JOIN fabricante
+ON fabricante.id = id_fabricante
+GROUP BY id_fabricante
+HAVING AVG(precio)>200
+ORDER BY fabricante.id
+20.
+SELECT COUNT(precio) FROM producto WHERE precio>200
+21.
+SELECT fabricante.nombre,  COUNT(id_fabricante)
+FROM producto RIGHT OUTER JOIN fabricante
+ON fabricante.id = id_fabricante
+WHERE precio>=180
+GROUP BY id_fabricante
+ORDER BY fabricante.id
+22.
+SELECT fabricante.id, AVG(precio)
+FROM producto RIGHT OUTER JOIN fabricante
+ON fabricante.id = id_fabricante
+GROUP BY id_fabricante
+ORDER BY fabricante.id
+23.
+SELECT fabricante.nombre, AVG(precio)
+FROM producto RIGHT OUTER JOIN fabricante
+ON fabricante.id = id_fabricante
+GROUP BY id_fabricante
+ORDER BY fabricante.id
+24.
+SELECT fabricante.nombre, AVG(precio)
+FROM producto RIGHT OUTER JOIN fabricante
+ON fabricante.id = id_fabricante
+GROUP BY id_fabricante
+HAVING AVG(precio)>=150
+ORDER BY fabricante.id
+25.
+SELECT fabricante.nombre
+FROM producto RIGHT OUTER JOIN fabricante
+ON fabricante.id = id_fabricante
+GROUP BY id_fabricante
+HAVING COUNT(fabricante.id)>=2
+ORDER BY fabricante.id
+26.
+SELECT fabricante.nombre, COUNT(fabricante.id)
+FROM producto JOIN fabricante
+ON fabricante.id = id_fabricante
+WHERE precio >= 220
+GROUP BY id_fabricante
+ORDER BY COUNT(fabricante.id) DESC
+27. 
+SELECT fabricante.nombre, COUNT(id_fabricante)
+FROM producto RIGHT JOIN fabricante
+ON fabricante.id = id_fabricante AND precio>=200
+GROUP BY fabricante.nombre
+ORDER BY COUNT(id_fabricante) DESC
+28.
+SELECT fabricante.nombre
+FROM producto RIGHT JOIN fabricante
+ON fabricante.id = id_fabricante
+GROUP BY fabricante.nombre
+HAVING SUM(precio)>1000
+29.
+SELECT producto.nombre, MAX(precio), fabricante.nombre
+FROM producto RIGHT JOIN fabricante
+ON fabricante.id = id_fabricante
+GROUP BY fabricante.nombre
+ORDER BY fabricante.nombre
+
+Subconsultas
+
+1.
+SELECT producto.nombre FROM producto, fabricante
+WHERE id_fabricante = fabricante.id 
+AND fabricante.nombre LIKE 
+	(SELECT fabricante.nombre FROM fabricante WHERE fabricante.nombre LIKE "Lenovo")
+-- Sin subquery
+SELECT producto.nombre FROM producto, fabricante
+WHERE id_fabricante = fabricante.id 
+AND fabricante.nombre LIKE "Lenovo"
