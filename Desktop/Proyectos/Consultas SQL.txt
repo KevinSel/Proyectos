@@ -1,3 +1,11 @@
+1. select nombre from producto
+2. select nombre, precio from producto
+3 ?
+4. select nombre, precio, precio*0.8 from producto
+5. select nombre as nombre_de_producto, precio as euros, precio*0.8 as dolares from producto
+6. select UPPER(nombre)  , precio from producto
+7. select LOWER(nombre)  , precio from producto
+8. select UPPER(nombre), CONCAT(UPPER(SUBSTRING(nombre,1,2)),SUBSTRING(nombre,3,100)) from fabricante
 9. SELECT nombre, ROUND(precio) FROM producto
 10. SELECT nombre, FLOOR(precio) FROM producto
 11. SELECT fabricante.nombre FROM fabricante INNER JOIN producto ON fabricante.id = producto.id_fabricante
@@ -238,3 +246,95 @@ AND fabricante.nombre LIKE
 SELECT producto.nombre FROM producto, fabricante
 WHERE id_fabricante = fabricante.id 
 AND fabricante.nombre LIKE "Lenovo"
+2.
+SELECT producto.nombre FROM producto, fabricante
+WHERE id_fabricante = fabricante.id 
+AND precio = 
+	(SELECT MAX(precio) FROM producto, fabricante 
+	 WHERE id_fabricante = fabricante.id 
+	 AND fabricante.nombre LIKE 'Lenovo')
+3.
+SELECT producto.nombre FROM producto, fabricante
+WHERE id_fabricante = fabricante.id
+AND fabricante.nombre LIKE 'Lenovo' 
+AND precio = 
+	(SELECT MAX(precio) FROM producto, fabricante 
+	 WHERE id_fabricante = fabricante.id 
+	 AND fabricante.nombre LIKE 'Lenovo')
+4.
+SELECT producto.nombre FROM producto, fabricante
+WHERE id_fabricante = fabricante.id
+AND fabricante.nombre LIKE 'Hewlett-Packard' 
+AND precio = 
+	(SELECT MIN(precio) FROM producto, fabricante 
+	 WHERE id_fabricante = fabricante.id 
+	 AND fabricante.nombre LIKE 'Hewlett-Packard')
+5.
+SELECT producto.* FROM producto, fabricante
+WHERE id_fabricante = fabricante.id 
+AND precio >=
+	(SELECT MAX(precio) FROM producto, fabricante 
+	 WHERE id_fabricante = fabricante.id 
+	 AND fabricante.nombre LIKE 'Lenovo')
+6.
+SELECT producto.* FROM producto, fabricante
+WHERE id_fabricante = fabricante.id 
+AND precio >=
+	(SELECT AVG(precio) FROM producto, fabricante 
+	 WHERE id_fabricante = fabricante.id 
+	 AND fabricante.nombre LIKE 'Asus')
+8.
+SELECT producto.* FROM producto, fabricante
+WHERE id_fabricante = fabricante.id 
+AND precio >=
+	ALL ((SELECT precio FROM producto, fabricante 
+	WHERE id_fabricante = fabricante.id))
+
+9.
+SELECT producto.* FROM producto, fabricante
+WHERE id_fabricante = fabricante.id 
+AND precio <=
+	ALL ((SELECT precio FROM producto, fabricante 
+	WHERE id_fabricante = fabricante.id))
+10.
+SELECT fabricante.nombre FROM fabricante
+WHERE fabricante.id = 
+	ANY(SELECT id_fabricante FROM producto)
+11.
+SELECT fabricante.nombre FROM fabricante
+WHERE fabricante.id <> 
+	ALL(SELECT id_fabricante FROM producto)
+12.
+SELECT fabricante.nombre FROM fabricante
+WHERE fabricante.id IN 
+	(SELECT id_fabricante FROM producto)
+13.
+SELECT fabricante.nombre FROM fabricante
+WHERE fabricante.id NOT IN 
+	(SELECT id_fabricante FROM producto)
+14.
+SELECT fabricante.nombre FROM fabricante
+WHERE EXISTS 
+	(SELECT id_fabricante FROM producto WHERE id_fabricante = 	fabricante.id)
+15.
+SELECT fabricante.nombre FROM fabricante
+WHERE NOT EXISTS 
+	(SELECT id_fabricante FROM producto WHERE id_fabricante = 	fabricante.id)
+16.
+SELECT fabricante.nombre, precio FROM fabricante,producto WHERE id_fabricante = fabricante.id 
+AND precio IN 
+	(SELECT MAX(precio) FROM producto GROUP BY id_fabricante)
+17.
+SELECT producto.* from producto, fabricante
+WHERE precio > 
+	(SELECT AVG(precio) FROM producto WHERE fabricante.id = 	id_fabricante) AND fabricante.id = id_fabricante
+18.
+SELECT producto.* FROM producto, fabricante 
+WHERE precio = 
+	(SELECT MAX(precio) FROM producto WHERE fabricante.nombre 	LIKE "Lenovo") 
+19.
+SELECT producto.* FROM producto, fabricante 
+WHERE id_fabricante = fabricante.id
+GROUP BY id_fabricante
+HAVING COUNT(id_fabricante) >=
+	(SELECT COUNT(id_fabricante) FROM producto, fabricante 	WHERE fabricante.id = id_fabricante AND fabricante.nombre 	LIKE "Lenovo")
