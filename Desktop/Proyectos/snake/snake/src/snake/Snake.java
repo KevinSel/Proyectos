@@ -23,6 +23,9 @@ public class Snake extends JComponent {
 	public void setDireccion(int[] direccion) {
 		this.direccion = direccion;
 	}
+	public int[] getDireccion() {
+		return this.direccion;
+	}
 	
 	public void nuevaPieza(int x,int y, int pos) {
 		piezas.add(new Pieza(x,y, pos));
@@ -38,6 +41,7 @@ public class Snake extends JComponent {
 	
 	public void move() {
 		Pieza pieza = piezas.get(0);
+		pieza.setDireccion(direccion);
 		int[] piezaActualPos = pieza.getCoordenada();
 		int[] piezaDelantePos;
 		for(int i = 0; i < longitud; i++) {

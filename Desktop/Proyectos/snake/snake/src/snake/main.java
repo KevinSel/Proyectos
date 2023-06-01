@@ -14,12 +14,13 @@ public class main{
 		// TODO Auto-generated method stub
 		
 		//Frame
-		int xFrame = 600;
-		int yFrame = 600;
+		int xFrame = 800;
+		int yFrame = 800;
 		JFrame f = new JFrame();
-		Juego j = new Juego();
+		final Juego j = new Juego();
 		f.setSize(xFrame,yFrame);
 		f.setTitle("Snake");
+		f.getContentPane().setBackground( Color.WHITE );
 		f.add(j);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
