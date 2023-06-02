@@ -1,51 +1,40 @@
 package practica3;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Gestor extends Persona {
 
-	
-	private int salario = 1500;
-	
+	private int salario;
 	public void aumento(int cantidad) {
 		salario += cantidad;
 	}
 	
-	public Gestor login(String usuario, String contraseña){
-		if(usuario.equals(this.usuario) && contraseña.equals(this.contraseña) && this.cuenta) {
-			System.out.println("Login correcto");
-			return this;
-		} else {
-			return null;
-		}
-	};
+	public void getInfo() {
+		System.out.println("\nGESTOR ID: " + this.id + " Nombre: " + this.nombre + " Usuario: " + this.usuario + " Salario: " + this.salario + "\n");
+	}
 	
-	//get
 	public int getSalario() {
 		return this.salario;
 	}
-	//set
+
 	public void setSalario(Scanner sc) {
 		System.out.println("Ingrese el salario");
-		int salario = sc.nextInt();
+		
+		try {int salario = sc.nextInt();}
+		catch(InputMismatchException e){
+			System.out.println("Debe ingresar un numero");
+			return;
+		}
+		
 		this.salario = salario;
+		System.out.println("Salario actualizado: " + this.salario);
+		
 	};
 	
-	
-	
-	//constructores
-	
-	public Gestor() {
-		super();
-		Banco.gestores.add(this);
-	};
 	public Gestor(String nombre, String usuario, String contraseña) {
 		super(nombre, usuario, contraseña);
+		System.out.println("Gestor: ");
+		this.salario = 1500;
 		Banco.gestores.add(this);
 	}
-	public Gestor(String nombre, String usuario, String contraseña, int salario) {
-		super(nombre, usuario, contraseña);
-		this.salario = salario;
-		Banco.gestores.add(this);
-	}
-	
 }

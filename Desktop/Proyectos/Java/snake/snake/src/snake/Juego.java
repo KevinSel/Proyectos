@@ -11,8 +11,8 @@ public class Juego extends JComponent {
 	
 	public static int escenaXOff = 30;
 	public static int escenaYOff = 30;
-	public static int casilleros = 20;
-	public static int casilleroDim = 25;
+	public static int casilleros = 15;
+	public static int casilleroDim = 30;
 	public static int tickRate = 200;
 	private int puntuacion = 0;
 	private boolean playing = true;
@@ -20,6 +20,7 @@ public class Juego extends JComponent {
 	private Snake snake = new Snake();
 	private Pieza comida = new Pieza(5,5,-1);
 	private Random rand = new Random();
+	private Boolean flag;
 	
 	protected void paintComponent(Graphics g) {
 		
@@ -76,12 +77,25 @@ public class Juego extends JComponent {
 			
 		}
 		if (cabeza.getCoordenada()[0] == comida.getCoordenada()[0] && cabeza.getCoordenada()[1] == comida.getCoordenada()[1]) {
+			
+			do {
+				comida.setCoordenada(new int[] {rand.nextInt(casilleros),rand.nextInt(casilleros)});
+				flag = false;
+				for(Pieza pieza : Snake.piezas) {
+					if (pieza.getCoordenada()[0] == comida.getCoordenada()[0] && pieza.getCoordenada()[1] == comida.getCoordenada()[1]) {
+						flag = true;
+					}
+				}
+			}
+			while(flag);
+			
 			this.puntuacion += 150;
-			snake.resetTick();
-			comida.setCoordenada(new int[] {rand.nextInt(casilleros),rand.nextInt(casilleros)});
-		}
-		for (Pieza pieza : snake.piezas) {
-			if (pieza.getPosicion() != 0 && pieza.getCoordenada()[0] == cabeza.getCoordenada()[0] && pieza.getCoordenada()[1] == cabeza.getCoordenada()[1]) {
+			snake.crecer(cabeza.getCoordenada()[0], cabeza.getCoordenada()[1]);
+
+		};
+		
+		for (Pieza pieza : Snake.piezas) {
+			if (pieza.getPosicion() != 0 && pieza.getCoordenada()[0] == cabeza.getCoordenada()[0] && pieza.getCoordenada()[1] == cabeza.getCoordenada()[1] && pieza.getQueue() == 0) {
 				t.stop();
 				this.playing = false;
 			}
@@ -95,7 +109,6 @@ public class Juego extends JComponent {
   	 			move();
   	 			repaint();
   	 			colision();
-  	 			snake.crecer();
   	 		   } 
   	 		} );
 		}

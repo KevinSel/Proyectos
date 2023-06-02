@@ -2,26 +2,28 @@ package practica3;
 import java.util.Scanner;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int respuesta = -1;
-		int id = -1;
+		int respuesta;
 		String usuario = "";
 		String nombre = "";
 		String contraseña = "";
+		Mensaje mensaje;
+		Transferencia transferencia;
+		Cliente cliente;
+		Gestor gestor = new Gestor("admin","admin","admin");
+		gestor.remover(Banco.gestores);
 		Scanner sc = new Scanner(System.in);
-		Gestor dueño = new Gestor();
-		dueño.registrar("admin","admin");
 		
 		//Objetos de prueba
-		new Gestor("lucas", "lucas", "lucas123", 1000);
-		new Gestor("adelina", "adelina", "adelina123", 2000);
-		new Gestor("adrian", "adrian", "adrian123", 2000);
-		
+		new Gestor("lucas", "lucas", "lucas123");
+		new Gestor("adelina", "adelina", "adelina123");
+		new Gestor("adrian", "adrian", "adrian123");
 		new Cliente("jose", "jose", "jose123", 1500);
 		new Cliente("maria", "maria", "maria123", 1000);
 		new Cliente("laura", "laura", "laura123", 50000);
@@ -38,28 +40,30 @@ public class main {
 			
 			boolean ingresado = false;
 			while(!ingresado) {
+				
 				respuesta = menuNumeros(sc, new String[] {"Cerrar programa", "Iniciar sesion","Registrarse"});		
+				
 				flag:
 				switch (respuesta) {
 				case 0: break program;
 				case 1: 
-						System.out.println("Usuario:");
-						usuario = sc.next();
-						System.out.println("Contraseña:");
-						contraseña = sc.next();
-						for (Cliente user : Banco.clientes) {
-							cuenta = user.login(usuario, contraseña);
-							if (cuenta != null) { ingresado = true; break flag;};
-						}
-						for (Gestor user : Banco.gestores) {
-							cuentaGestor = user.login(usuario, contraseña);
-							if (cuentaGestor != null) { ingresado = true; esGestor = true; break flag;};
-						}
-						System.out.println("Usuario o contraseña incorrecto");
-						break;
-					case 2:
-						registrar(sc,false);
-				}
+					System.out.println("Usuario:");
+					usuario = sc.next();
+					System.out.println("Contraseña:");
+					contraseña = sc.next();
+					for (Cliente user : Banco.clientes) {
+						cuenta = (Cliente) user.login(usuario, contraseña);
+						if (cuenta != null) { ingresado = true; break flag;};
+					}
+					for (Gestor user : Banco.gestores) {
+						cuentaGestor = (Gestor) user.login(usuario, contraseña);
+						if (cuentaGestor != null) { ingresado = true; esGestor = true; break flag;};
+					}
+					System.out.println("Usuario o contraseña incorrecto");
+				break;
+				case 2:
+					registrar(sc,false);
+				};
 			};
 			
 
@@ -74,33 +78,34 @@ public class main {
 						case 0: continue inicio;
 						case 1:	registrar(sc,true); cuentaGestor.aumento(100); break;
 						case 2: 
-							id = idSolicitar(sc);
-							Gestor gestor = Banco.gestores.get(id);
-							System.out.println("ID: " + Banco.gestores.indexOf(Banco.gestores.get(id)) + ", NOMBRE: " + gestor.getNombre() + ", SALARIO: " + gestor.getSalario() + ", USUARIO: " + gestor.getUsuario() + ", REGISTRADO: " + gestor.getCuenta());
+							gestor = (Gestor) getById(sc, Banco.gestores);
+							if (gestor != null) {gestor.getInfo();}
 						break;
 						case 3: 
 							for (Gestor personaLoop : Banco.gestores) {
-								if(Banco.gestores.indexOf(personaLoop)>0) {
-									System.out.println("ID: " + Banco.gestores.indexOf(personaLoop) + ", NOMBRE: " + personaLoop.getNombre() + ", SALARIO: " + personaLoop.getSalario() + ", USUARIO: " + personaLoop.getUsuario() + ", REGISTRADO: " + personaLoop.getCuenta() + "\n");
-								};
+								personaLoop.getInfo();
 							};
 						break;
 						case 4: 
+							gestor = (Gestor) getById(sc, Banco.gestores);
+							if (gestor == null) {
+								System.out.println("Gestor no encontrado");
+								break;
+							}
 							respuesta = menuNumeros(sc, new String[] {"Volver","Actualizar usuario","Actualizar contraseña","Actualizar salario","Eliminar gestor"});
-							id = idSolicitar(sc);
 							switch(respuesta) {
 							case 0: continue inicio;
-							case 1:Banco.gestores.get(id).setNombre(sc); break;
-							case 2:Banco.gestores.get(id).setUsuario(sc); break;
-							case 3:Banco.gestores.get(id).setContraseña(sc); break;
-							case 4:Banco.gestores.get(id).setSalario(sc); break;
-							case 5:Banco.gestores.remove(id);
+							case 1:gestor.setNombre(sc); break;
+							case 2:gestor.setUsuario(sc); break;
+							case 3:gestor.setContraseña(sc); break;
+							case 4:gestor.setSalario(sc); break;
+							case 5:gestor.remover(Banco.gestores);
 							};
 						break;
 						case 5: 
 							System.out.println("Cantidad de gestores a producir de forma masiva: ");
-							int cantidadDeGestores = idSolicitar(sc);
-							agregarGestores(sc, cantidadDeGestores);		
+							respuesta = respuestaCorrecta(sc,999);
+							agregarGestores(sc, respuesta);		
 						};
 					break;	
 					case 2: 
@@ -108,26 +113,24 @@ public class main {
 						switch(respuesta) {
 						case 0: continue inicio;
 						case 1:	registrar(sc,false); cuentaGestor.aumento(200);break;
-						case 2: 
-							System.out.println("Ingrese un ID");
-							id = sc.nextInt();
-							Cliente cliente = Banco.clientes.get(id);
-							System.out.println("ID: " + Banco.clientes.indexOf(Banco.clientes.get(id)) + ", NOMBRE: " + cliente.getNombre() + ", BALANCE: " + cliente.getBalance() + ", USUARIO: " + cliente.getUsuario() + ", REGISTRADO: " + cliente.getCuenta()); 
+						case 2:
+							cliente = (Cliente) getById(sc,Banco.clientes);
+							if (cliente != null) {cliente.getInfo();}
 						break;
 						case 3: 
 							for (Cliente personaLoop : Banco.clientes) {
-								System.out.println("ID: " + Banco.clientes.indexOf(personaLoop) + ", NOMBRE: " + personaLoop.getNombre() + ", BALANCE: " + personaLoop.getBalance() + ", USUARIO: " + personaLoop.getUsuario() + ", REGISTRADO: " + personaLoop.getCuenta() + "\n");
+								personaLoop.getInfo();
 						};break;
 						case 4: 
 							respuesta = menuNumeros(sc,new String[] {"Volver","Actualizar nombre","Actualizar usuario","Actualizar contraseña","Actualizar balance","Eliminar cliente"});
-							id = idSolicitar(sc);	
+							cliente = (Cliente) getById(sc,Banco.clientes);
 							switch(respuesta) {
 							case 0: continue inicio;
-							case 1:Banco.clientes.get(id).setNombre(sc); break;
-							case 2:Banco.clientes.get(id).setUsuario(sc); break;
-							case 3:Banco.clientes.get(id).setContraseña(sc); break;
-							case 4:Banco.clientes.get(id).setBalance(sc); break;
-							case 5:Banco.clientes.remove(id); break;
+							case 1:cliente.setNombre(sc); break;
+							case 2:cliente.setUsuario(sc); break;
+							case 3:cliente.setContraseña(sc); break;
+							case 4:cliente.setBalance(sc); break;
+							case 5:cliente.remover(Banco.clientes); break;
 							};
 						};
 						break;
@@ -137,11 +140,11 @@ public class main {
 						switch(respuesta) {
 						case 0: continue inicio;
 						case 1: 
-							id = idSolicitar(sc);
-							Banco.transferencias.get(id).getInfo(); break;
+							transferencia = (Transferencia) getById(sc, Banco.transferencias);
+							if (transferencia != null) {transferencia.getInfo();}; break;
 						case 2:
-							for (Transferencia transferencia : Banco.transferencias) {
-								transferencia.getInfo();
+							for (Transferencia transferenciaLoop : Banco.transferencias) {
+								transferenciaLoop.getInfo();
 							};
 						}break;
 						case 4: 
@@ -150,12 +153,13 @@ public class main {
 							case 0: continue inicio;
 							case 1: new Mensaje(sc, cuentaGestor); break;
 							case 2: 
-								id = idSolicitar(sc);
-								Banco.mensajes.get(id).getInfo(); 
+								transferencia = (Transferencia) getById(sc, Banco.transferencias);
+								if (transferencia != null) {transferencia.getInfo();}
+
 							break;
 							case 3:
-								for(Mensaje mensaje : Banco.mensajes) {
-									mensaje.getInfo();
+								for(Mensaje mensajeLoop : Banco.mensajes) {
+									mensajeLoop.getInfo();
 								}; 
 							break;
 							case 4: cuentaGestor.verMensajes();
@@ -177,9 +181,9 @@ public class main {
 						case 2: 
 							System.out.println("¿Para quien es?");
 							nombre = sc.next();
-							for(Cliente cliente : Banco.clientes) {
-								if (cliente.getNombre().equals(nombre)) {
-									persona = cliente;
+							for(Cliente clienteLoop : Banco.clientes) {
+								if (clienteLoop.getNombre().equals(nombre)) {
+									persona = clienteLoop;
 									break;
 								}
 							}
@@ -200,7 +204,7 @@ public class main {
 							case 0: continue inicio;
 							case 1: cuenta.setUsuario(sc); break;
 							case 2: cuenta.setContraseña(sc);break;
-							case 3: Banco.clientes.remove(Banco.clientes.indexOf(cuenta)); continue program;
+							case 3: cuenta.remover(Banco.clientes); continue program;
 						};
 					};
 				};
@@ -210,16 +214,16 @@ public class main {
 	};
 	
 	public static int menuNumeros(Scanner sc, String[] opciones) {
-		String menu = "Elige una opcion ingresando un numero\n";
+		String menu = "\nElige una opcion ingresando un numero\n";
 		for(int i = 1; i<opciones.length; i++) {
 			menu += i + " --> " + opciones[i] + "\n";
 		}
 		menu += "0 --> " + opciones[0];
 		System.out.println(menu);
-		return respuestaCorrecta(opciones.length - 1,sc);
+		return respuestaCorrecta(sc,opciones.length - 1);
 	};
 	
-	public static int respuestaCorrecta(int max, Scanner sc){
+	public static int respuestaCorrecta(Scanner sc, int max){
 		
 		boolean numeroValido = false;
 		int respuesta = -1;
@@ -243,51 +247,65 @@ public class main {
 		};
 		return respuesta;
 	};
-	
-	public static int idSolicitar(Scanner sc) {
-		return respuestaCorrecta(999999999,sc);
-	}
 
+	public static Banco getById(Scanner sc, ArrayList<? extends Banco> array) {
+		System.out.println("\nIngrese un ID \n");
+		int id = respuestaCorrecta(sc, 9999999);
+		
+		for (Banco enArray : array) {
+			if (enArray.getId() == id) {
+				return enArray;
+			};
+		};
+		
+		System.out.println("\nNo se ha encontrado un objeto para el ID ingresado.\n");
+		return null;}
+	
+	public static int getId(Banco identificar) {
+		return identificar.getId();
+	}
 	
 	public static boolean registrar(Scanner sc, boolean gestor){
+		
 		System.out.println("Nombre: ");
 		String nombre = sc.next();
 		System.out.println("Usuario: ");
 		String usuario = sc.next();
 		System.out.println("Contraseña: ");
 		String contraseña = sc.next();
+		
 		for (Cliente user : Banco.clientes) {
 			if (user.getUsuario().equals(usuario)) {
 				System.out.println("Usuario ya registrado");
 				return false;
 			}
-		}
+		};
+		
 		for (Gestor user : Banco.gestores) {
 			if (user.getUsuario().equals(usuario)) {
 				System.out.println("Usuario ya registrado");
 				return false;
 			}
 		};
+		
 		if (gestor) {
 			new Gestor(nombre,usuario,contraseña);
 		} else {
-			new Cliente(nombre,usuario,contraseña);
+			new Cliente(nombre,usuario,contraseña, 0);
 		};
 		return true;
 	}
 	
 	public static void  agregarGestores(Scanner sc, int cantidad) {
 		Random rand = new Random();
-		int salario;
 		String nombre;
 		String usuario;
 		String contraseña; 
 		for (int i=0; i<cantidad; i++ ) {
-			salario = rand.nextInt(5000);
 			nombre = "GestorAleatorio" + rand.nextInt(10000);
 			usuario = rand.nextInt(10000) + "GestorAleatorio";
 			contraseña = rand.nextInt(50000) + "¿?¿??TokenDeSeguridadInquebrantable!=·%/()·" + rand.nextInt(50000);
-			new Gestor(nombre, usuario, contraseña, salario);
+			new Gestor(nombre, usuario, contraseña);
 		};
 		
 	};
