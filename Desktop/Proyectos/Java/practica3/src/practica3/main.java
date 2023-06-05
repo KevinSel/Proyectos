@@ -51,15 +51,8 @@ public class main {
 					usuario = sc.next();
 					System.out.println("Contraseña:");
 					contraseña = sc.next();
-					for (Cliente user : Banco.clientes) {
-						cuenta = (Cliente) user.login(usuario, contraseña);
-						if (cuenta != null) { ingresado = true; break flag;};
-					}
-					for (Gestor user : Banco.gestores) {
-						cuentaGestor = (Gestor) user.login(usuario, contraseña);
-						if (cuentaGestor != null) { ingresado = true; esGestor = true; break flag;};
-					}
-					System.out.println("Usuario o contraseña incorrecto");
+					
+					
 				break;
 				case 2:
 					registrar(sc,false);
