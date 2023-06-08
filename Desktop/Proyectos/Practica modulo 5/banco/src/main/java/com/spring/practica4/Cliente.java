@@ -1,4 +1,4 @@
-package practica4;
+package com.spring.practica4;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner; 

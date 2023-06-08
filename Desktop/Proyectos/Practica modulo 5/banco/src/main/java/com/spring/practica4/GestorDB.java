@@ -1,4 +1,4 @@
-package practica4;
+package com.spring.practica4;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

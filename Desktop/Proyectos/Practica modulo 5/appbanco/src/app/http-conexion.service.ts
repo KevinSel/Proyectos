@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Saludo } from './saludo';
+import { Persona } from './persona';
 
 
 @Injectable({
@@ -10,16 +10,16 @@ import { Saludo } from './saludo';
 
 export class HttpConexionService {
 
-  private baseUrl = "http://localhost:8080/greeting";
+  private baseUrl = "http://localhost:8080/";
 
 
   constructor(private http: HttpClient){
 
-  };
+  }; 
 
     
-  getSaludo(){
-    return this.http.get<Saludo>(this.baseUrl);
+  serverPostRequest(urlEnd: String, param: String, param2: String){
+    return this.http.post<any>(`${this.baseUrl}${urlEnd}`, {usuario: param, password: param2});
   }
 
 }

@@ -2,18 +2,24 @@
 
 <section class="logInWindow">
     <header class="logInHeader">¡Bienvenido!</header>
-    <form action="http://localhost:8080/login" method="post">
-        <label>Usuario <br> <input type="text" name="usuario"></label> <br>
+    <form (ngSubmit)="logIn()">
+        <label>Usuario <br> <input type="text" name="usuario" [(ngModel)]="usuario"></label> <br>
         
-        <label>Contraseña <br> <input type="password"></label> <br>
+        <label>Contraseña <br> <input type="password" name="password" [(ngModel)]="password"></label> <br>
         
-        <input type="submit" value="ingresar">
+        <input type="submit" value="ingresar"> <br>
+
+        {{sesion}}
 
     </form>
+
+    <button>Registrarse</button>
+
+    <p>¿Olvidaste tu usuario?</p>
     <p>¿Olvidaste tu contraseña?</p>
 
-    <button (click)="showData()">Registrarse</button>
+   
 
-
+   
 
 </section>

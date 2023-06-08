@@ -1,4 +1,4 @@
-package practica4;
+package com.spring.practica4;
 import java.util.Scanner; 
 
 public class Persona{
@@ -11,23 +11,23 @@ public class Persona{
 	protected int id;
 	
 	
-	protected Boolean esGestor() {
+	public Boolean esGestor() {
 		return esGestor;
 	}
 
-	protected int getId() {
+	public int getId() {
 		return this.id;
 	}
 	
-	protected String getNombre() {
+	public String getNombre() {
 		return this.nombre;
 	};
 	
-	protected String getUsuario() {
+	public String getUsuario() {
 		return this.usuario;
 	};
 	
-	protected String getApellido() {
+	public String getApellido() {
 		return this.apellido;
 	}
 		

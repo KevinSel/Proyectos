@@ -1,10 +1,12 @@
 
-package practica4;
+package com.spring.practica4;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.Scanner;
+
+import com.spring.main.restservice.PersonaController;
 
 public class PersonaDB {
 	
@@ -93,23 +95,31 @@ public class PersonaDB {
 		
 	};
 
-	public static Boolean logIn(String usuario, String password) {
-
+	public static Persona logIn(String usuario, String password) {
+		
 		try {
 			
 			query = "SELECT id, id_gestor,nombre, apellido, usuario, balance FROM cliente\r\n"
 					+ "WHERE usuario LIKE ? AND password LIKE ?";
 			
-			
 			resultados = DbConnection.dbSelect(query, new String[] {usuario,main.SHA3(password)});
 			if (resultados.next()) {
-				return true;
+				return new Cliente(resultados.getInt("id"),
+								   resultados.getInt("id_gestor"),
+								   resultados.getString("nombre"),
+								   resultados.getString("apellido"),
+								   resultados.getString("usuario"),
+								   resultados.getDouble("balance"));
 			} else {
 				query = "SELECT id, nombre, apellido, usuario, salario FROM gestor\r\n"
 						+ "WHERE usuario LIKE ? AND password LIKE ?";
 				resultados = DbConnection.dbSelect(query, new String[] {usuario,main.SHA3(password)});
 				if (resultados.next()) {
-					return true;
+					return new Gestor(resultados.getInt("id"),
+							   resultados.getString("nombre"),
+							   resultados.getString("apellido"),
+							   resultados.getString("usuario"),
+							   resultados.getDouble("salario"));
 				}
 			};
 			
@@ -121,7 +131,7 @@ public class PersonaDB {
 		};
 		
 		System.out.println("\nUsuario o contraseña incorrectos");
-		return false; 	
+		return null; 	
 		
 	};
 	

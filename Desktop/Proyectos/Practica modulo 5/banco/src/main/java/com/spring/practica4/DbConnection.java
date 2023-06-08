@@ -1,4 +1,4 @@
-package practica4;
+package com.spring.practica4;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

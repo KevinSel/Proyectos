@@ -1,4 +1,4 @@
-package practica4;
+package com.spring.practica4;
 import java.util.Scanner;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

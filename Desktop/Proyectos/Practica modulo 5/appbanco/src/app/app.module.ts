@@ -6,18 +6,24 @@ import { AppComponent } from './app.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { HomepageComponent } from './homepage/homepage.component';
+import { RegistroComponent } from './registro/registro.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LogInComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    HomepageComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

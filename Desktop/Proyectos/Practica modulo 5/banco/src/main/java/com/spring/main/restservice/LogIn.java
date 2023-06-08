@@ -1,3 +1,3 @@
 package com.spring.main.restservice;
 
-public record LogIn (boolean uycCorrectos){}
+public record LogIn (String usuario, String password){}
