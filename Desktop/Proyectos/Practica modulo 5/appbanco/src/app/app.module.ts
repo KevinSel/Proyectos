@@ -9,6 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HomepageComponent } from './homepage/homepage.component';
 import { RegistroComponent } from './registro/registro.component';
+import { HeaderComponent } from './header/header.component';
+import { FichasComponent } from './fichas/fichas.component';
+import { InformacionDisplayComponent } from './informacion-display/informacion-display.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { RegistroComponent } from './registro/registro.component';
     LogInComponent,
     PageNotFoundComponent,
     HomepageComponent,
-    RegistroComponent
+    RegistroComponent,
+    HeaderComponent,
+    FichasComponent,
+    InformacionDisplayComponent
   ],
   imports: [
     BrowserModule,

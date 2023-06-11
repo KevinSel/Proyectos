@@ -1,0 +1,14 @@
+/* * {
+    border: 1px solid red;
+}  */
+
+.menuGeneral{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+}
+.contenido{
+    grid-column: 2;
+}
+.botonSeleccionado{
+    color: red;
+}

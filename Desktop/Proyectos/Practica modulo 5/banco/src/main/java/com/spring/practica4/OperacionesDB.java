@@ -2,140 +2,264 @@ package com.spring.practica4;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.spring.main.restservice.OperacionRecord;
 
 public class OperacionesDB {
 	
 	private static String query;
 	private static ResultSet resultados;
 	
-	public static void dBNuevoDeposito(int id, double monto){				
+	public static String dBNuevoDeposito(OperacionRecord deposito){
+		
+		double balance = PersonaDB.getBalanceFromId(deposito.id_emisor());
+		
 		query = "INSERT INTO `deposito` VALUES (NULL, ?, ?, ?)";
-		DbConnection.dbUpdate(query, new String[] {Integer.toString(id),Double.toString(monto), "fecha"});
-	};
-	
-	public static void dBNuevaTransferencia(String receptor, int id_receptor, int id_emisor, double monto){
 		
-		try {
-			query = "SELECT id FROM cliente WHERE usuario LIKE ?";
-			resultados = DbConnection.dbSelect(query, new String[] {receptor});
-			if(resultados.next()) {
-				id_receptor = resultados.getInt("id");
-			} else {
-				System.out.println("Usuario no encontrado");
-				return;
-			};
-			
-			query = "INSERT INTO `transferencia` (`id`,`monto` ,`id_cliente`,`id_receptor`,`fecha`) VALUES (NULL, ?, ?, ?, ?)";
-			DbConnection.dbUpdate(query, new String[] {Double.toString(monto),Integer.toString(id_emisor), Integer.toString(id_receptor),"fecha"});
-			
-			ClienteDB.dbSumarBalance(id_emisor, -monto);
-			ClienteDB.dbSumarBalance(id_receptor, monto);
-			
-			
-		} catch (SQLException e) {	
-			e.printStackTrace();
-		};
-		
+		if (-balance < deposito.monto()) {
+			DbConnection.dbUpdate(query, new String[] {Integer.toString(deposito.id_emisor()),Double.toString(deposito.monto()), "fecha"});
+			sumarBalance(deposito.monto(), deposito.id_emisor());
+			return "{\"respuesta\" : \"Deposito realizado\"}";
+		} else {
+			return "{\"respuesta\" : \"Balance insuficiente\"}";
+		}
 		
 	};
-	
-	public static void dBVerTransferenciaPorId(Scanner sc){
-		int id = main.obtenerIdPorConsola(sc);
-
-		System.out.println("\nTransferencias: ");
-		try {
-			query = "SELECT *, emisor.nombre as nombre_e, emisor.apellido as apellido_e, receptor.nombre as nombre_r, receptor.apellido as apellido_r FROM"
-					+ " transferencia, cliente as emisor, cliente as receptor WHERE id_cliente = emisor.id AND id_receptor = receptor.id AND transferencia.id = ?";
-			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
-			while(resultados.next()) {
-				System.out.println("ID: " + resultados.getInt("id"));
-				System.out.print("Monto: " + resultados.getDouble("monto"));
-				System.out.println("Emisor: " + resultados.getString("nombre_e") + " " + resultados.getString("apellido_e"));
-				System.out.println("Receptor: " + resultados.getString("nombre_r") + " " + resultados.getString("apellido_r"));
-				System.out.println("Monto: " + resultados.getDouble("monto"));}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		}
+		
+	public static String dBNuevaTransferencia(OperacionRecord transferencia){
+		
+		if(!PersonaDB.verificarClientePorId(transferencia.id_receptor())) {return "{\"respuesta\" : \"Receptor no encontrado\"}";}
+		
+		else if(PersonaDB.getBalanceFromId(transferencia.id_emisor()) < transferencia.monto()) {return "{\"respuesta\" : \"Balance insuficiente\"}";}
+		
+		else if(transferencia.monto()<0) {return "{\"respuesta\" : \"No se puede transferir un monto negativo\"}";}
+		
+		query = "INSERT INTO `transferencia` (`id`,`monto` ,`id_cliente`,`id_receptor`,`fecha`) VALUES (NULL, ?, ?, ?, ?)";
+		DbConnection.dbUpdate(query, new String[]   {Double.toString(transferencia.monto()),
+													Integer.toString(transferencia.id_emisor()),
+													Integer.toString(transferencia.id_receptor()),"fecha"});;
+													
+		sumarBalance(-transferencia.monto(), transferencia.id_emisor());
+		sumarBalance(transferencia.monto(), transferencia.id_receptor());
+													
+		return "{\"respuesta\" : \"Transferencia realizada\"}";
 	};
 	
-	public static void dBVerDepositoPorID(Scanner sc){
-		int id = main.obtenerIdPorConsola(sc);
+	public static void sumarBalance(double diferencia, int id) {
+		query = "SELECT balance FROM cliente WHERE id = ?";
+		resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
 		try {
-			query = "SELECT *, nombre, apellido FROM deposito, cliente WHERE deposito.id = ? AND id_cliente = cliente.id";
-			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
-			if(resultados.next()) {
-				System.out.println("ID: " + resultados.getInt("id"));
-				System.out.println("Cliente: " + resultados.getString("nombre") + " " + resultados.getString("apellido"));
-				System.out.println("Monto: " + resultados.getDouble("monto"));
-				System.out.println("Fecha: " + resultados.getString("fecha"));
-			} else {
-				System.out.println("Deposito no encontrado");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		}
-	};
-	
-	public static void dbVerOperacionesCliente(int id) {
-		try {
-			query = "SELECT *, nombre, apellido FROM deposito, cliente WHERE id_cliente = cliente.id AND id_cliente = ?";
-			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
-			System.out.println("\nDepositos: ");
-			while(resultados.next()) {
-				System.out.println("ID: " + resultados.getInt("id"));
-				System.out.println("Cliente: " + resultados.getString("nombre") + " " + resultados.getString("apellido"));
-				System.out.println("Monto: " + resultados.getDouble("monto"));
-				System.out.println("Fecha: " + resultados.getTimestamp("fecha"));
-			}
-			query = "SELECT *, emisor.nombre as nombre_e, emisor.apellido as apellido_e, receptor.nombre as nombre_r, receptor.apellido as apellido_r"
-					+ " FROM transferencia, cliente as emisor, cliente as receptor WHERE id_cliente = emisor.id AND id_receptor = receptor.id AND (id_cliente = ? OR id_receptor = ?)";
-			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id), Integer.toString(id)});
-			System.out.println("\nTransferencias: ");
-			while(resultados.next()) {
-				System.out.println("ID: " + resultados.getInt("id"));
-				System.out.println("Monto: " + resultados.getDouble("monto"));
-				System.out.println("Emisor: " + resultados.getString("nombre_e") + " " + resultados.getString("apellido_e"));
-				System.out.println("Receptor: " + resultados.getString("nombre_r") + " " + resultados.getString("apellido_r"));
-				System.out.println("Fecha: " + resultados.getTimestamp("fecha"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		}
-	};
-	
-	public static void dbVerTodasOperaciones(){
-		try {
-			query = "SELECT *, nombre, apellido FROM deposito, cliente WHERE id_cliente = cliente.id";
-			resultados = DbConnection.dbSelect(query);
-			System.out.println("\nDepositos y extracciones: ");
-			while(resultados.next()) {
-				System.out.println("ID: " + resultados.getInt("id"));
-				System.out.println("Cliente: " + resultados.getString("nombre") + " " + resultados.getString("apellido"));
-				System.out.println("Monto: " + resultados.getDouble("monto"));
-				System.out.println("Fecha: " + resultados.getString("fecha"));
-			};
-			query = "SELECT * FROM transferencia";
-			resultados = DbConnection.dbSelect(query);
-			System.out.println("\nTransferencias: ");
-			while(resultados.next()) {
-				System.out.println("ID: " + resultados.getInt("id"));
-				System.out.println("Monto: " + resultados.getDouble("monto"));
-				System.out.println("ID Emisor: " + resultados.getInt("id_cliente"));
-				System.out.println("ID Receptor: " + resultados.getInt("id_receptor"));
-				System.out.println("Fecha: " + resultados.getString("fecha"));
-			};
+			Double balance = null;
+			if (resultados.next()) {balance = resultados.getDouble("balance");}
+			DbConnection.actualizar(id, "cliente", "balance", Double.toString(balance + diferencia));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DbConnection.cerrarDb();
 		}
 	}
+
+	public static ArrayList<OperacionRecord> dBVerTransferencias(int id){
 	
+		ArrayList<OperacionRecord> transferencias = new ArrayList<OperacionRecord>();
+		
+		try {
+			query = "SELECT transferencia.id, transferencia.monto,\r\n"
+					+ "id_cliente as id_emisor, CONCAT(emisor.nombre,' ',emisor.apellido) as nombre_emisor,\r\n"
+					+ "id_receptor, CONCAT(receptor.nombre,' ',receptor.apellido) as nombre_receptor,\r\n"
+					+ "transferencia.fecha\r\n"
+					+ "FROM transferencia, cliente as emisor, cliente as receptor\r\n"
+					+ "WHERE id_cliente = emisor.id AND id_receptor = receptor.id";
+			
+			if(id > 0) {query += "AND transferencia.id = ?";
+				resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
+			} else {
+				resultados = DbConnection.dbSelect(query);
+			}
+						
+			while(resultados.next()) {
+				transferencias.add(new OperacionRecord(
+						resultados.getInt("id"),
+						resultados.getDouble("monto"),
+						resultados.getInt("id_emisor"),
+						resultados.getString("nombre_emisor"),
+						resultados.getInt("id_receptor"),
+						resultados.getString("nombre_receptor"), 
+						resultados.getString("fecha")
+						));
+			} 
+		} catch (SQLException e) {
+		e.printStackTrace();
+		} finally {
+			DbConnection.cerrarDb();
+		}
+		return transferencias;
+	};
+	
+	public static ArrayList<OperacionRecord> dBVerDepositos(int id){
+	
+		ArrayList<OperacionRecord> depositos = new ArrayList<OperacionRecord>();
+
+		try {
+			query = "SELECT deposito.id as id, monto, id_cliente, CONCAT(nombre, ' ', apellido) as nombre, fecha "
+					+ "FROM deposito, cliente WHERE id_cliente = cliente.id";
+			
+			if(id > 0) { query += "AND deposito.id = ?"; 
+				resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
+			} else {
+				resultados = DbConnection.dbSelect(query);
+			}
+					
+			while(resultados.next()) {
+				depositos.add( new OperacionRecord(
+						resultados.getInt("id"),
+						resultados.getDouble("monto"),
+						resultados.getInt("id_cliente"),
+						resultados.getString("nombre"),
+						resultados.getString("fecha")
+						));
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnection.cerrarDb();
+		}
+		return depositos;
+	};
+	
+	public static ArrayList<OperacionRecord> dbVerDepositosCliente(int id) {
+		
+		ArrayList<OperacionRecord> depositos = new ArrayList<OperacionRecord>();
+
+		try {
+			query = "SELECT deposito.id as id, monto, id_cliente, CONCAT(nombre, ' ', apellido) as nombre, fecha "
+					+ "FROM deposito, cliente WHERE id_cliente = cliente.id AND cliente.id = ?";
+			
+			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
+			
+			while(resultados.next()) {
+				depositos.add( new OperacionRecord(
+						resultados.getInt("id"),
+						resultados.getDouble("monto"),
+						resultados.getInt("id_cliente"),
+						resultados.getString("nombre"),
+						resultados.getString("fecha")
+						));
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnection.cerrarDb();
+		}
+		
+		return depositos;
+	};
+	
+	public static ArrayList<OperacionRecord> dbVerTransferenciasCliente(int id) {
+		
+		ArrayList<OperacionRecord> transferencias = new ArrayList<OperacionRecord>();
+
+		try {
+						
+			query = "SELECT transferencia.id, transferencia.monto,\r\n"
+					+ "id_cliente as id_emisor, CONCAT(emisor.nombre,' ',emisor.apellido) as nombre_emisor,\r\n"
+					+ "id_receptor, CONCAT(receptor.nombre,' ',receptor.apellido) as nombre_receptor,\r\n"
+					+ "transferencia.fecha\r\n"
+					+ "FROM transferencia, cliente as emisor, cliente as receptor\r\n"
+					+ "WHERE id_cliente = emisor.id AND id_receptor = receptor.id AND (emisor.id = ? OR receptor.id = ?)";
+			
+			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id),Integer.toString(id)});
+			
+			while(resultados.next()) {
+				transferencias.add(new OperacionRecord(
+						resultados.getInt("id"),
+						resultados.getDouble("monto"),
+						resultados.getInt("id_emisor"),
+						resultados.getString("nombre_emisor"),
+						resultados.getInt("id_receptor"),
+						resultados.getString("nombre_receptor"), 
+						resultados.getString("fecha")
+						));
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnection.cerrarDb();
+		}
+		return transferencias;
+	};
+	
+	public static ArrayList<OperacionRecord> dbVerTodasOperaciones(int id){
+		
+		ArrayList<OperacionRecord> operaciones = new ArrayList<OperacionRecord>();
+
+		try {
+			
+			if(id != 0) {
+				query = "SELECT deposito.id as id, monto, id_cliente, CONCAT(nombre, ' ', apellido) as nombre, fecha "
+						+ "FROM deposito, cliente WHERE id_cliente = cliente.id AND id_cliente = ? ORDER BY fecha";
+				
+				resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
+			} else {
+				query = "SELECT deposito.id as id, monto, id_cliente, CONCAT(nombre, ' ', apellido) as nombre, fecha "
+						+ "FROM deposito, cliente WHERE id_cliente = cliente.id ORDER BY fecha";
+				
+				resultados = DbConnection.dbSelect(query);
+			}
+			
+			while(resultados.next()) {
+				operaciones.add(new OperacionRecord(
+									resultados.getInt("id"),
+									resultados.getDouble("monto"),
+									resultados.getInt("id_cliente"),
+									resultados.getString("nombre"),
+									resultados.getString("fecha")
+									)
+								);
+			};
+			
+			if (id != 0) {
+				query = "SELECT transferencia.id, transferencia.monto,\r\n"
+						+ "id_cliente as id_emisor, CONCAT(emisor.nombre,' ',emisor.apellido) as nombre_emisor,\r\n"
+						+ "id_receptor, CONCAT(receptor.nombre,' ',receptor.apellido) as nombre_receptor,\r\n"
+						+ "transferencia.fecha\r\n"
+						+ "FROM transferencia, cliente as emisor, cliente as receptor\r\n"
+						+ "WHERE id_cliente = emisor.id AND id_receptor = receptor.id AND (id_cliente = ? OR id_receptor = ?) ORDER BY fecha";
+				
+				resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id), Integer.toString(id)});
+				
+			} else {
+				query = "SELECT transferencia.id, transferencia.monto,\r\n"
+						+ "id_cliente as id_emisor, CONCAT(emisor.nombre,' ',emisor.apellido) as nombre_emisor,\r\n"
+						+ "id_receptor, CONCAT(receptor.nombre,' ',receptor.apellido) as nombre_receptor,\r\n"
+						+ "transferencia.fecha\r\n"
+						+ "FROM transferencia, cliente as emisor, cliente as receptor\r\n"
+						+ "WHERE id_cliente = emisor.id AND id_receptor = receptor.id ORDER BY fecha";
+				
+				resultados = DbConnection.dbSelect(query);
+			}
+			
+			
+			while(resultados.next()) {
+				operaciones.add(new OperacionRecord(
+									resultados.getInt("id"),
+									resultados.getDouble("monto"),
+									resultados.getInt("id_emisor"),
+									resultados.getString("nombre_emisor"),
+									resultados.getInt("id_receptor"),
+									resultados.getString("nombre_receptor"), 
+									resultados.getString("fecha")
+									)		
+								);
+			};
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnection.cerrarDb();
+		}
+		return operaciones;
+	}
+
 }

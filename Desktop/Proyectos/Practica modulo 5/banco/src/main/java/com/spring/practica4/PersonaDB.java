@@ -1,18 +1,21 @@
 
 package com.spring.practica4;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-
-import com.spring.main.restservice.PersonaController;
+import com.spring.main.restservice.PersonaRecord;
 
 public class PersonaDB {
 	
 	private static String query;
 	private static ResultSet resultados;
-	
+	static Random rand = new Random();
+
 	public static String dbSetNombre(Scanner sc, String tipoCuenta, int id) {
 		System.out.println("Ingrese el nombre");
 		String nombre = sc.next();
@@ -41,30 +44,20 @@ public class PersonaDB {
 		System.out.println("Ingrese la nueva contraseña");
 		String password = sc.next();
 		query = "UPDATE `"+tipoCuenta+"` SET password = (?) WHERE `id` = (?)";
-		DbConnection.dbUpdate(query, new String[] {main.SHA3(password), Integer.toString(id)});
+		DbConnection.dbUpdate(query, new String[] {SHA3(password), Integer.toString(id)});
 	};
 
-	public static void dbSetGestor(Scanner sc, int id) {
-		int id_gestor = main.obtenerIdPorConsola(sc);
-		query = "UPDATE `cliente` SET `id_gestor` = (?) WHERE `id` = (?)";
-		DbConnection.dbUpdate(query, new String[] {Integer.toString(id_gestor), Integer.toString(id)});
-	};
-	
-	public static Persona logIn(Scanner sc) {
-		
-		System.out.println("Usuario:");
-		String usuario = sc.next();
-		System.out.println("Contraseña:");
-		String password= sc.next();
+	public static PersonaRecord logIn(String usuario, String password) {
 		
 		try {
 			
 			query = "SELECT id, id_gestor,nombre, apellido, usuario, balance FROM cliente\r\n"
 					+ "WHERE usuario LIKE ? AND password LIKE ?";
 			
-			resultados = DbConnection.dbSelect(query, new String[] {usuario,main.SHA3(password)});
+			resultados = DbConnection.dbSelect(query, new String[] {usuario,SHA3(password)});
+			
 			if (resultados.next()) {
-				return new Cliente(resultados.getInt("id"),
+				return new PersonaRecord(resultados.getInt("id"),
 								   resultados.getInt("id_gestor"),
 								   resultados.getString("nombre"),
 								   resultados.getString("apellido"),
@@ -73,9 +66,9 @@ public class PersonaDB {
 			} else {
 				query = "SELECT id, nombre, apellido, usuario, salario FROM gestor\r\n"
 						+ "WHERE usuario LIKE ? AND password LIKE ?";
-				resultados = DbConnection.dbSelect(query, new String[] {usuario,main.SHA3(password)});
+				resultados = DbConnection.dbSelect(query, new String[] {usuario,SHA3(password)});
 				if (resultados.next()) {
-					return new Gestor(resultados.getInt("id"),
+					return new PersonaRecord(resultados.getInt("id"),
 							   resultados.getString("nombre"),
 							   resultados.getString("apellido"),
 							   resultados.getString("usuario"),
@@ -90,178 +83,205 @@ public class PersonaDB {
 			DbConnection.cerrarDb();
 		};
 		
-		System.out.println("\nUsuario o contraseña incorrectos");
-		return null; 	
-		
-	};
-
-	public static Persona logIn(String usuario, String password) {
-		
-		try {
-			
-			query = "SELECT id, id_gestor,nombre, apellido, usuario, balance FROM cliente\r\n"
-					+ "WHERE usuario LIKE ? AND password LIKE ?";
-			
-			resultados = DbConnection.dbSelect(query, new String[] {usuario,main.SHA3(password)});
-			if (resultados.next()) {
-				return new Cliente(resultados.getInt("id"),
-								   resultados.getInt("id_gestor"),
-								   resultados.getString("nombre"),
-								   resultados.getString("apellido"),
-								   resultados.getString("usuario"),
-								   resultados.getDouble("balance"));
-			} else {
-				query = "SELECT id, nombre, apellido, usuario, salario FROM gestor\r\n"
-						+ "WHERE usuario LIKE ? AND password LIKE ?";
-				resultados = DbConnection.dbSelect(query, new String[] {usuario,main.SHA3(password)});
-				if (resultados.next()) {
-					return new Gestor(resultados.getInt("id"),
-							   resultados.getString("nombre"),
-							   resultados.getString("apellido"),
-							   resultados.getString("usuario"),
-							   resultados.getDouble("salario"));
-				}
-			};
-			
-		}catch(SQLException e){
-		e.printStackTrace();
-			
-		} finally {
-			DbConnection.cerrarDb();
-		};
-		
-		System.out.println("\nUsuario o contraseña incorrectos");
 		return null; 	
 		
 	};
 	
-	public static void dBBorrar(int id, String tipoCuenta) {
-		String query = "DELETE FROM "+tipoCuenta+" WHERE id = ?";
-		DbConnection.dbUpdate(query,new String[] {Integer.toString(id)});
+	public static void dBBorrarCliente(int id) {
+		String query = "UPDATE cliente SET id_gestor = 0, usuario = 'Eliminado', password = ? WHERE id = ?";
+		DbConnection.dbUpdate(query,new String[] { SHA3(Integer.toString(rand.nextInt())), Integer.toString(id)});
 	}
 	
-	public static void dbGetTodos(String tipoCuenta) {
-		
-		if (tipoCuenta.equals("cliente")) {
-			query = "SELECT cliente.id, cliente.nombre, cliente.apellido, cliente.usuario, balance, gestor.nombre, gestor.apellido  FROM cliente, gestor WHERE id_gestor = gestor.id";
-		} else {
-			query = "SELECT id, nombre, apellido, usuario, salario FROM gestor";
-		};
-		
-		resultados = DbConnection.dbSelect(query, new String[] {});
-			
-		try {
-			while(resultados.next()) {
-				System.out.println("\n ID: " + resultados.getInt("id"));
-				System.out.println(" Nombre: " + resultados.getString(2));
-				System.out.println(" Apellido: " + resultados.getString(3));
-				System.out.println(" Usuario: " + resultados.getString(4));
-				if(tipoCuenta.equals("cliente")) {
-					System.out.println(" Balance: " + resultados.getInt(5));
-					System.out.println(" Gestor: " + resultados.getString(6) + " " + resultados.getString(7));
-				} else {
-					System.out.println(" Salario: " + resultados.getInt(5));
-				};
-
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		};
+	public static void dBBorrarGestor(int id) {
+		String query = "UPDATE gestor SET usuario = 'Eliminado', password = ?, salario = 0 WHERE id = ?";
+		DbConnection.dbUpdate(query,new String[] { SHA3(Integer.toString(rand.nextInt())), Integer.toString(id)});
+	}
 	
-	};
-	
-	public static void dbGetPersonaPorId(int id, String tipoCuenta) {
+	public static boolean verificarClientePorId (int id){
 		
-		if (tipoCuenta.equals("cliente")) {
-			query = "SELECT cliente.id, cliente.nombre, cliente.apellido, cliente.usuario, balance, gestor.nombre as nombreGestor, gestor.apellido as apellidoGestor FROM cliente, gestor WHERE id_gestor = gestor.id AND cliente.id = ?";
-		} else {
-			query = "SELECT id, nombre, apellido, usuario, salario FROM gestor WHERE id = ?";
-		};
+		query = "SELECT id FROM cliente WHERE id = ?";
 		
 		resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
-			
+		
 		try {
-			if(resultados.next()) {
-				System.out.println("\n ID: " + resultados.getInt("id"));
-				System.out.println(" Nombre: " + resultados.getString("nombre"));
-				System.out.println(" Apellido: " + resultados.getString("apellido"));
-				System.out.println(" Usuario: " + resultados.getString("usuario"));
-				if(tipoCuenta.equals("cliente")) {
-					System.out.println(" Balance: " + resultados.getInt("balance"));
-					System.out.println(" Gestor: " + resultados.getString("nombreGestor") + " " + resultados.getString("apellidoGestor"));
-				} else {
-					System.out.println(" Salario: " + resultados.getInt("salario"));
-				};
-			} else {
-				System.out.println("Persona no encontrada");
-			}
-			
+			return(resultados.next());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DbConnection.cerrarDb();
-		};
-	};
-
-	public static void dbRegistrar(Scanner sc, Boolean esGestor) {
-
-
-		System.out.println("Nombre: ");
-		String nombre = sc.next();
-		System.out.println("Apellido: ");
-		String apellido = sc.next();
-		System.out.println("Usuario: ");
-		String usuario = sc.next();
-		System.out.println("Contraseña: ");
-		String password = main.SHA3(sc.next());
-		
-		if (esGestor) {
-			DbConnection.dbUpdate("INSERT INTO `gestor` (`id`,`nombre`,`apellido`,`usuario`,`password`,`salario`) VALUES (NULL, ?, ?, ?, ?, ?)", 
-					new String[] {nombre, apellido, usuario, password, "1000"});
-		} else {
-			DbConnection.dbUpdate("INSERT INTO `cliente` (`id`,`id_gestor`,`nombre`,`apellido`,`usuario`,`password`,`balance`) VALUES (NULL, ?, ?, ?, ?, ?, ?)", 
-					new String[] {"2", nombre, apellido, usuario, password,"0"});
 		}
+		
+		return false;
 		
 	}
 	
-	public static void dbRegistrar(Scanner sc, int gestorId) {
-
-		System.out.println("Nombre: ");
-		String nombre = sc.next();
-		System.out.println("Apellido: ");
-		String apellido = sc.next();
-		System.out.println("Usuario: ");
-		String usuario = sc.next();
-		System.out.println("Contraseña: ");
-		String password = main.SHA3(sc.next());
+	public static boolean verificarUsuario(String usuario){
 		
-		DbConnection.dbUpdate("INSERT INTO `cliente` (`id`,`id_gestor`,`nombre`,`apellido`,`usuario`,`password`,`balance`) VALUES (NULL, ?, ?, ?, ?, ?, ?)", 
-		new String[] {Integer.toString(gestorId),nombre, apellido, usuario, password, "250"});	
+		query = "SELECT usuario FROM ((SELECT usuario FROM cliente) UNION (SELECT usuario FROM gestor)) as tb WHERE usuario LIKE (?)";
 		
+		try {
+			if( DbConnection.dbSelect(query, new String[] {usuario} ).next()) {return true;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnection.cerrarDb();
+		}; 
+		
+		return false;
 	}
+	
+	public static boolean dbRegistrar(Boolean esGestor, String nombre, String apellido, String usuario, String password) {
+		if(verificarUsuario(usuario)) {return false;}
+		if (esGestor) {
+			DbConnection.dbUpdate("INSERT INTO `gestor` (`id`,`nombre`,`apellido`,`usuario`,`password`,`salario`) VALUES (NULL, ?, ?, ?, ?, ?)", 
+					new String[] {nombre, apellido, usuario, SHA3(password), "1000"});
+		} else {
+			DbConnection.dbUpdate("INSERT INTO `cliente` (`id`,`id_gestor`,`nombre`,`apellido`,`usuario`,`password`,`balance`) VALUES (NULL, ?, ?, ?, ?, ?, ?)", 
+					new String[] {"2", nombre, apellido, usuario, SHA3(password),"100"});
+		}
+		return true;			
+		}
+	
+	public static String dbRegistrarEnMasa(int cantidad) {
 
-	public static void dbRegistrarEnMasa(int cantidad) {
 
-		Random rand = new Random();
-		String nombre;
-		String apellido;
-		String usuario;
-		String password;
-		String salario;
-		
 		for (int i=0; i<cantidad; i++ ) {
-			nombre = "GestorAleatorio" + rand.nextInt(10000);
-			apellido = "gestorApellido" + rand.nextInt(3000);
-			usuario = rand.nextInt(10000) + "GestorAleatorio";
-			password = main.SHA3("password" + rand.nextInt(50000)); 
-			salario = "" + rand.nextInt(30000);
+			String nombre = "GestorAleatorio" + rand.nextInt(10000);
+			String apellido = "gestorApellido" + rand.nextInt(3000);
+			String usuario = rand.nextInt(10000) + "GestorAleatorio";
+			String password = SHA3("password" + rand.nextInt(50000)); 
+			String salario = "" + rand.nextInt(30000);
 			
 			DbConnection.dbUpdate("INSERT INTO `gestor` (`id`,`nombre`,`apellido`,`usuario`,`password`,`salario`) VALUES (NULL, ?, ?, ?, ?, ?)", 
 					new String[] {nombre, apellido, usuario, password, salario});
 		}
+		return "{\"respuesta\" : \"Gestores creados\"}";
 	};
+
+	public static ArrayList<PersonaRecord> devolverClientes(int id){
+		
+		ArrayList<PersonaRecord> personas = new ArrayList<PersonaRecord>();
+		
+		query = "SELECT * FROM cliente";
+		
+		if(id>0) {
+			query += " WHERE id = ?";
+			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
+		} else {
+			resultados = DbConnection.dbSelect(query);
+		}
+		try {
+			while (resultados.next()) {
+				personas.add(new PersonaRecord(
+						resultados.getInt("id"),
+						resultados.getInt("id_gestor"),
+						resultados.getString("nombre"),
+						resultados.getString("apellido"),
+						resultados.getString("usuario"),
+						resultados.getDouble("balance")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnection.cerrarDb();
+		}
+		
+		return personas;
+	}
+	
+	public static ArrayList<PersonaRecord> devolverGestores(int id){
+		
+		ArrayList<PersonaRecord> personas = new ArrayList<PersonaRecord>();
+		
+		query = "SELECT * FROM gestor";
+		
+		if(id>0) {
+			query += " WHERE id = ?";
+			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
+		} else {
+			resultados = DbConnection.dbSelect(query);
+		}
+		try {
+			while (resultados.next()) {
+				personas.add(new PersonaRecord(
+						resultados.getInt("id"),
+						resultados.getString("nombre"),
+						resultados.getString("apellido"),
+						resultados.getString("usuario"),
+						resultados.getDouble("salario")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnection.cerrarDb();
+		}
+		
+		return personas;
+	}
+	
+	public static ArrayList<PersonaRecord> devolverClientesDeGestor(int id){
+		
+	ArrayList<PersonaRecord> personas = new ArrayList<PersonaRecord>();
+		
+	query = "SELECT * FROM cliente WHERE id_gestor = ?";
+	
+	resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
+
+	try {
+		while (resultados.next()) {
+			personas.add(new PersonaRecord(
+					resultados.getInt("id"),
+					resultados.getInt("id_gestor"),
+					resultados.getString("nombre"),
+					resultados.getString("apellido"),
+					resultados.getString("usuario"),
+					resultados.getDouble("balance")));
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		DbConnection.cerrarDb();
+	}
+	
+	return personas;
+	
+	}
+	
+	public static double getBalanceFromId(int id) {
+		query = "SELECT balance FROM cliente WHERE id = ?";
+		resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)} );
+		double balance = 0;
+		try {
+			resultados.next();		
+			balance = resultados.getDouble("balance");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnection.cerrarDb();
+		}
+		return balance;
+	};
+
+	public static String SHA3(String str) {
+		try {
+		final MessageDigest digest = MessageDigest.getInstance("SHA3-256");
+		final byte[] hashbytes = digest.digest(str.getBytes(StandardCharsets.UTF_8));
+		return bytesToHex(hashbytes);
+		} catch (Exception e) {
+		e.printStackTrace();
+		return null;
+		}
+	}
+	
+	private static String bytesToHex(byte[] hash) {
+		StringBuffer hexString = new StringBuffer();
+		for (int i = 0; i < hash.length; i++) {
+		String hex = Integer.toHexString(0xff & hash[i]);
+		if (hex.length() == 1)
+		hexString.append('0');
+		hexString.append(hex);
+		}
+		return hexString.toString();
+	}
 
 }

@@ -1,0 +1,127 @@
+
+<div  class="contenido">
+
+    <div id="agregarGestor" *ngIf="estado.agregarGestor">
+        <app-registro></app-registro> 
+    </div>
+
+    <div id="obtenerGestores" *ngIf="estado.obtenerGestores">
+       <button (click)="obtenerGestor(0)">Ver todos</button>
+        <label>ID<input type="number" name="id" [(ngModel)]="id"></label><button (click)="obtenerGestor(this.id)">Filtrar</button>
+        <app-fichas></app-fichas>
+    </div>
+
+    <div id="actualizarGestor" *ngIf="estado.actualizarGestor">
+        <label>ID<input type="number" name="id" [(ngModel)]="id"></label><button (click)="actualizarGestor">Aceptar</button>
+        <app-fichas></app-fichas>
+    </div>
+
+    <div id="agregarGestores" *ngIf="estado.agregarGestores">
+        <label>Gestores a agregar<input type="number" name="id" [(ngModel)]="id"></label><button (click)="agregarGestores(this.id)">Aceptar</button>
+        {{respuesta}}
+    </div>
+
+    <div id="verClientesDeGestor" *ngIf="estado.verClientesDeGestor">
+        <label>ID<input type="number" name="id" [(ngModel)]="id"></label><button (click)="verClientesDeGestor(this.id)">Aceptar</button>
+        <app-fichas></app-fichas>
+    </div>
+
+    <div id="agregarCliente" *ngIf="estado.agregarCliente">
+        <app-registro></app-registro> 
+    </div>
+
+    <div id="verCliente" *ngIf="estado.verClientes">
+        <button (click)="verCliente(0)">Ver todos</button>
+        <label>ID<input type="number" name="id" [(ngModel)]="id"></label><button (click)="verCliente(this.id)">Aceptar</button>
+        <app-fichas></app-fichas>
+    </div>
+
+    <div id="actualizarCliente" *ngIf="estado.actualizarCliente">
+        <label>ID<input type="number" name="id" [(ngModel)]="id"></label><button (click)="actualizarCliente">Aceptar</button>
+        <app-fichas></app-fichas> 
+    </div>
+    
+    <div id="misClientes" *ngIf="estado.misClientes">
+        <button (click)="verClientesDeGestor(idUsuarioActivo)">Ver</button> 
+        <app-fichas></app-fichas>
+    </div>
+    
+    <div id="verTodasLasOperaciones" *ngIf="estado.verTodasLasOperaciones">
+        <button (click)="verTodasLasOperaciones()">Ver</button>
+        <app-fichas></app-fichas>
+    </div>
+
+    <div id="verLasOperacionesDeUnUsuario" *ngIf="estado.verLasOperacionesDeUnUsuario">
+        <label>ID<input type="number" name="id" [(ngModel)]="id"></label><button (click)="verLasOperacionesDeUnUsuario(id)">Aceptar</button>
+        <app-fichas></app-fichas>
+    </div>
+
+    <div id="verDepositos" *ngIf="estado.verDepositos">
+        <button (click)="verDepositos(0)">Ver todos</button>
+        <label>ID<input type="number" name="id" [(ngModel)]="id"></label><button (click)="verDepositos(this.id)">Filtrar</button>
+        <app-fichas></app-fichas>
+    </div>
+
+    <div id="verTransferencias" *ngIf="estado.verTransferencias">
+        <button (click)="verTransferencias(0)">Ver todos</button>
+        <label>ID<input type="number" name="id" [(ngModel)]="id"></label><button (click)="verTransferencias(this.id)">Filtrar</button>
+        <app-fichas></app-fichas>
+    </div>
+   
+
+    <div id="verMensaje" *ngIf="estado.verMensajes">
+        <button (click)="verMensajesUsuario(this.usuario)">Ver mensajes de usuario</button>
+        <input type="text" [(ngModel)]="usuario">
+        <button (click)="verMensajes(0)">Ver todos</button>
+        <label>ID<input type="number" name="id" [(ngModel)]="id"></label><button (click)="verMensajes(this.id)">Aceptar</button>
+        <app-fichas></app-fichas>
+    </div>
+
+    <div id="verMisMensajes" *ngIf="estado.verMisMensajes">
+        <button (click)="verMensajesUsuario(this.usuarioUsuarioActivo)">Ver</button>
+        <app-fichas></app-fichas>
+    </div>
+
+    <div id="deposito" *ngIf="estado.deposito">
+        <form (ngSubmit)="realizarDeposito()">
+            {{balance}}
+            <p>Ingrese una cantidad negativa para extraer y positiva para depositar</p>
+            <label>Monto <input type="number" name="monto" [(ngModel)]="monto"></label> <br>
+            <input type="submit" value="Realizar deposito">
+        </form>
+        {{respuesta}}
+    </div>
+
+    <div id="transferencia" *ngIf="estado.transferencia">
+        <form (ngSubmit)="realizarTransferencia()">
+            {{balance}}
+            <label>Monto <input type="number" name="monto" [(ngModel)]="monto"></label> <br>
+            <label>ID receptor <input type="number" name="id_receptor" [(ngModel)]="id_receptor"></label> <br>
+            <input type="submit" value="Realizar transferencia">
+        </form>
+        {{respuesta}}
+    </div>
+
+    <div id="enviarMensaje" *ngIf="estado.enviarMensaje">
+        <form (ngSubmit)="enviarMensaje()">
+            <label>Mensaje </label> <br>
+            <textarea rows="3" cols="3"  name="mensaje" [(ngModel)]="mensaje"></textarea>
+            <label>Usuario receptor <input type="text" name="usuarioReceptor" [(ngModel)]="usuarioReceptor"></label> <br>
+            <input type="submit" value="Enviar mensaje">
+        </form>
+        {{respuesta}}
+    </div>
+
+    <div id="verMisDepositos" *ngIf="estado.verMisDepositos">
+        <button (click)="verDepositosUsuario(this.idUsuarioActivo)">Ver</button>
+        <app-fichas></app-fichas>
+    </div>
+
+    <div id="verMisTransferencias" *ngIf="estado.verMisTransferencias">
+        <button (click)="verTransferenciasUsuario(this.idUsuarioActivo)">Ver</button>
+        <app-fichas></app-fichas>
+    </div>
+
+
+
+</div>

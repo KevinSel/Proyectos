@@ -93,6 +93,17 @@ public class DbConnection {
 			e.printStackTrace();
 		}finally{cerrarDb();};
 	}
+	
+	public static String actualizar(int id, String tabla, String columna, String valorNuevo) {
+		String query = "UPDATE " +tabla+ " SET " +columna+ " = ? WHERE id = ?";
+		
+		if (columna.equals("password")) {valorNuevo = PersonaDB.SHA3(valorNuevo);}
+		
+		DbConnection.dbUpdate(query, new String[] {valorNuevo, Integer.toString(id)});
+		
+		return "Actualizado";
+	}
+	
 
 };
 	

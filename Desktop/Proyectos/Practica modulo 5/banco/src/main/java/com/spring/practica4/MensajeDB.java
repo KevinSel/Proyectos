@@ -3,109 +3,116 @@ package com.spring.practica4;
 import java.sql.ResultSet;
 
 import java.sql.SQLException;
-import java.util.Scanner;
-import java.sql.Timestamp;
+
+import com.spring.main.restservice.MensajeRecord;
+
+import java.util.ArrayList;
 
 public class MensajeDB {
 
 	private static String query;
 	private static ResultSet resultados;
 	
-	public static void dbGetMensajes() {
-			
-			query = "SELECT * FROM mensaje";
-			
+	public static ArrayList<MensajeRecord> dbGetMensajes(int id) {
+		query = "SELECT id, mensaje, us_emisor ,nombre , us_receptor, nombre_r, fecha FROM mensaje\r\n"
+				+ "JOIN\r\n"
+				+ "(\r\n"
+				+ "    (\r\n"
+				+ "     (SELECT usuario as us_e, CONCAT(nombre,\" \",apellido) as nombre FROM cliente)\r\n"
+				+ "     UNION\r\n"
+				+ "     (SELECT usuario as us_e, CONCAT(nombre,\" \",apellido) as nombre FROM gestor)\r\n"
+				+ "    ) as lista1\r\n"
+				+ "    JOIN\r\n"
+				+ "    (\r\n"
+				+ "     (SELECT usuario as us_r, CONCAT(nombre,\" \",apellido) as nombre_r FROM cliente)\r\n"
+				+ "     UNION\r\n"
+				+ "     (SELECT usuario as us_r, CONCAT(nombre,\" \",apellido) as nombre_r FROM gestor)\r\n"
+				+ "    ) as lista2\r\n"
+				+ ")\r\n"
+				+ "WHERE us_emisor = us_e AND us_receptor = us_r";
+		
+		if (id != 0) {query += " AND ID LIKE ?";
+			resultados = DbConnection.dbSelect(query,new String[] {Integer.toString(id)});
+		} else {
 			resultados = DbConnection.dbSelect(query);
-				
-			try {
-				while(resultados.next()) {
-					System.out.println("ID: " + resultados.getInt("id"));
-					System.out.println("Mensaje: " + resultados.getString("mensaje"));
-					System.out.println("Emisor: " + resultados.getString("us_emisor"));
-					System.out.println("Receptor: " + resultados.getString("us_receptor"));
-					System.out.println("Fecha: " + resultados.getString("fecha"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally{
-				DbConnection.cerrarDb();
-			};
-			
 		}
-
-	public static void dbGetUnMensaje(int id) {
+			
+		ArrayList<MensajeRecord> mensajes= new ArrayList<MensajeRecord>();
 		
-		query = "SELECT * FROM mensaje WHERE id = ?";
-		
-		resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
-			
-		try {
-			if(resultados.next()) {
-				System.out.println("ID: " + resultados.getInt(1));
-				System.out.println("Mensaje: " + resultados.getString(2));
-				System.out.println("Emisor: " + resultados.getString(3));
-				System.out.println("Receptor: " + resultados.getString(4));
-				System.out.println("Fecha: " + resultados.getDate(5));
-			} else {
-				System.out.println("Mensaje no encontrado");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		};
-		
-	};
-
-	public static void dbGetMisMensaje(String usuario) {
-			
-		query =	"SELECT * FROM mensaje WHERE us_emisor LIKE ? OR us_receptor LIKE ?";
-			
-		resultados = DbConnection.dbSelect(query, new String[] {usuario, usuario});
-			
 		try {
 			while(resultados.next()) {
-				System.out.println("ID: " + resultados.getInt("id"));
-				System.out.println("Mensaje: " + resultados.getString("mensaje"));
-				System.out.println("Emisor: " + resultados.getString("us_emisor"));
-				System.out.println("Receptor: " + resultados.getString("us_receptor"));
-				System.out.println("Fecha: " + resultados.getString("fecha"));
-			};
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		};
-	}
-	
-	public static void dbNuevoMensaje(Scanner sc, String us_emisor) {
-		
-		System.out.println("Ingresa el nombre de usuario receptor");
-			String us_receptor = sc.next();
-		System.out.println("Escriba su mensaje");
-			String mensaje = sc.next();
-		
-		query = "SELECT usuario FROM \r\n"
-				+ "((SELECT usuario FROM cliente) UNION (SELECT usuario FROM gestor)) as usuarios WHERE usuario LIKE (?)";
-		
-		resultados = DbConnection.dbSelect(query, new String[] {us_receptor});
-			
-		try {
-			if(!resultados.next()) {
-				System.out.println("Usuario no encontrado");
-				return;
+				MensajeRecord mensaje = new MensajeRecord(
+				  resultados.getInt("id"),
+				  resultados.getString("mensaje"),
+				  resultados.getString("us_emisor"),
+				  resultados.getString("nombre"),
+				  resultados.getString("us_receptor"),
+				  resultados.getString("nombre_r"),
+				  resultados.getString("fecha")
+				);
+			 	mensajes.add(mensaje);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
+		} finally{
 			DbConnection.cerrarDb();
-		};
+		}		
+		return mensajes;			
+	}
+	
+	public static ArrayList<MensajeRecord> dbGetMensajesUsuario(String usuario) {
+		query = "SELECT id, mensaje, us_emisor ,nombre , us_receptor, nombre_r, fecha FROM mensaje\r\n"
+				+ "JOIN\r\n"
+				+ "(\r\n"
+				+ "    (\r\n"
+				+ "     (SELECT usuario as us_e, CONCAT(nombre,\" \",apellido) as nombre FROM cliente)\r\n"
+				+ "     UNION\r\n"
+				+ "     (SELECT usuario as us_e, CONCAT(nombre,\" \",apellido) as nombre FROM gestor)\r\n"
+				+ "    ) as lista1\r\n"
+				+ "    JOIN\r\n"
+				+ "    (\r\n"
+				+ "     (SELECT usuario as us_r, CONCAT(nombre,\" \",apellido) as nombre_r FROM cliente)\r\n"
+				+ "     UNION\r\n"
+				+ "     (SELECT usuario as us_r, CONCAT(nombre,\" \",apellido) as nombre_r FROM gestor)\r\n"
+				+ "    ) as lista2\r\n"
+				+ ")\r\n"
+				+ "WHERE us_emisor = us_e AND us_receptor = us_r AND (us_e LIKE ? OR us_r LIKE ?)";
+		
+		resultados = DbConnection.dbSelect(query, new String[] {usuario,usuario});
+			
+		ArrayList<MensajeRecord> mensajes= new ArrayList<MensajeRecord>();
+		
+		try {
+			while(resultados.next()) {
+				MensajeRecord mensaje = new MensajeRecord(
+				  resultados.getInt("id"),
+				  resultados.getString("mensaje"),
+				  resultados.getString("us_emisor"),
+				  resultados.getString("nombre"),
+				  resultados.getString("us_receptor"),
+				  resultados.getString("nombre_r"),
+				  resultados.getString("fecha")
+				);
+			 	mensajes.add(mensaje);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			DbConnection.cerrarDb();
+		}		
+		return mensajes;
+	}
+	
+	public static String dbNuevoMensaje(MensajeRecord mensaje) {
+
+		if (!PersonaDB.verificarUsuario(mensaje.us_receptor())) {return "{\"respuesta\" : \"Usuario no encontrado\"}";};
 			
 		query = "INSERT INTO `mensaje` (`id`,`mensaje`,`us_emisor`,`us_receptor`,`fecha`) VALUES (NULL,?, ?, ?, ?)";
 		
-		DbConnection.dbUpdate(query, new String[] {mensaje, us_emisor, us_receptor, "fecha"});
+		DbConnection.dbUpdate(query, new String[] {mensaje.mensaje(), mensaje.us_emisor(), mensaje.us_receptor(), "fecha"});
 		
-		System.out.println("Mensaje enviado");
+		return "{\"respuesta\" : \"Mensaje enviado\"}";
+		
 		
 	}
 	

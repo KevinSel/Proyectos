@@ -9,9 +9,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class BancoApplication {
 
+	public static boolean sesion = false;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(BancoApplication.class, args);
-		System.out.println("Run");
 	}
 	
 	
@@ -26,7 +27,11 @@ public WebMvcConfigurer corsConfigurer() {
 	};
 }
 	
+public void esSesionValida() {
 	
+}
+
+
 }
 
 

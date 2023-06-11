@@ -1,24 +1,51 @@
 package com.spring.main.restservice;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.spring.practica4.*;
 
 import org.springframework.web.bind.annotation.RequestBody;
-import com.spring.main.restservice.GestorRecord;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.spring.main.BancoApplication;
 
 @RestController
 public class LogInController {
-	
-	public static Persona persona; 
 
+	PersonaRecord personaRecord;
+	
 	@PostMapping(path="/login")
 	@ResponseBody
 	public PersonaRecord logIn(@RequestBody LogIn login) {
-		persona =  PersonaDB.logIn(login.usuario(), login.password());
-			return new PersonaRecord(persona.getId(), persona.getNombre(), persona.getApellido(), persona.getUsuario(), persona.esGestor());
+		personaRecord = PersonaDB.logIn(login.usuario(), login.password());
+		if (personaRecord != null) {BancoApplication.sesion = true;}
+			return personaRecord;
 	}
+	
+	@GetMapping(value="/login/logoff")
+	public void logOff () {
+		BancoApplication.sesion = false;
+		personaRecord = null;
+	}
+	
+	@GetMapping(value="/login/usuario")
+	public PersonaRecord getLoggedUser() {
+		return personaRecord;
+	}
+	
+	@PostMapping(path="/registrarse")
+	@ResponseBody
+	public boolean registrarse(@RequestBody RegistroRecord registro){
+		return PersonaDB.dbRegistrar(registro.regGestor(), registro.nombre(), registro.apellido(), registro.usuario(), registro.password());
+	}
+	
+	@GetMapping(value="/crearGestores")
+	@ResponseBody
+	public String crearGestores(@RequestParam(value="cantidad") int cantidad) {
+		return PersonaDB.dbRegistrarEnMasa(cantidad);
+	}
+	
+	
 }

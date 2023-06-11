@@ -16,16 +16,18 @@ export class LogInComponent {
   sesion: String = "";
 
  logIn(){
-  this.http.serverPostRequest("login",this.usuario,this.password).subscribe(x => 
-   {  this.status.persona = x;
-      
-  })
-  console.log(this.status.persona); 
- }
-
-  constructor(private http: HttpConexionService, private router: Router, private status: StatusService){
-
+  this.http.serverPostRequest("login",this.usuario,this.password).subscribe({
+  next:   (x) => 
+          { if(x == null){this.sesion = "Usuario o contraseña incorrectos"; return} 
+            this.status.persona = x;
+             this.router.navigate([""])  
+          },
+  error: () => {this.sesion = "Usuario o contraseña incorrectos"}
+ })
   }
 
+  constructor(private http: HttpConexionService, private router: Router, private status: StatusService){
+    
+  }
 
 }

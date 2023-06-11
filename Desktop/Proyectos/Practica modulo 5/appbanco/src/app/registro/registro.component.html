@@ -1,1 +1,16 @@
-<p>registro works!</p>
+
+<form (ngSubmit)="registrarse()">
+
+    <label>Nombre       <input type = "text"     name="nombre"   [(ngModel)]="nombre"></label> <br>
+    <label>Apellido     <input type = "text"     name="apellido" [(ngModel)]="apellido"></label> <br>
+    <label>Usuario      <input type = "text"     name="usuario"  [(ngModel)]="usuario"></label> <br>
+    <label>Contraseña   <input type = "password" name="password" [(ngModel)]="password"></label> <br>
+    <label *ngIf="sesionActiva">Gestor       <input type="checkbox" name="regGestor" [(ngModel)]="regGestor"></label> <br>
+
+    <input type="submit" value="Registrar"><br>
+
+</form>
+
+{{respuesta}}
+
+<button (click)="volver('login')" *ngIf="!sesionActiva">Volver</button>

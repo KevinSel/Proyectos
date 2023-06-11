@@ -1,0 +1,57 @@
+
+<div *ngFor="let cliente of clientesAMostrar">
+    ID: {{cliente.id}} <br>
+    ID Gestor: {{cliente.id_gestor}} <br>
+    Nombre: {{cliente.nombre}} <br>
+    Apellido: {{cliente.apellido}} <br>
+    Usuario: {{cliente.usuario}} <br>
+    Balance: {{cliente.balance}} <br>
+</div>
+
+<div *ngFor="let gestor of gestoresAMostrar">
+    ID: {{gestor.id}} <br>
+    Nombre: {{gestor.nombre}} <br>
+    Apellido: {{gestor.apellido}} <br>
+    Usuario: {{gestor.usuario}} <br>
+    Salario: {{gestor.salario}} <br>
+</div>
+
+<div *ngFor="let mensaje of mensajesAMostrar">
+    ID: {{mensaje.id}} <br>
+    Mensaje: {{mensaje.mensaje}} <br>
+    Usuario emisor: {{mensaje.us_emisor}} <br>
+    Nombre emisor: {{mensaje.nombre_emisor}} <br>
+    Usuario receptor: {{mensaje.us_receptor}} <br>
+    Nombre receptor: {{mensaje.nombre_receptor}} <br>
+    Fecha: {{mensaje.fecha}}
+</div>
+
+<div *ngFor="let deposito of depositosAMostrar">
+    Deposito:
+    ID: {{deposito.id}}<br>
+    ID cliente: {{deposito.id_emisor}}<br>
+    Nombre: {{deposito.nombre_emisor}}<br>
+    Monto: {{deposito.monto}}<br>
+    Fecha: {{deposito.fecha}} <br>
+</div>
+
+<div *ngFor="let transferencia of transferenciasAMostrar">
+    Transferencia:
+    ID: {{transferencia.id}}<br>
+    Monto: {{transferencia.monto}}<br>
+    ID cliente: {{transferencia.id_emisor}}<br>
+    Nombre: {{transferencia.nombre_emisor}}<br>
+    ID receptor: {{transferencia.id_receptor}}<br>
+    Nombre : {{transferencia.nombre_receptor}}<br>
+    Fecha: {{transferencia.fecha}} <br>
+</div>
+
+<div *ngFor="let cliente of clienteAActualizar">
+
+
+</div>
+
+<div *ngFor="let gestor of gestorAActualizar">
+
+    
+</div>
