@@ -1,7 +1,5 @@
 package com.spring.practica4;
 
-import java.util.Scanner;
-
 public class ClienteDB extends PersonaDB {
 
 	//public static void dbSetBalance(Scanner sc, int id) {

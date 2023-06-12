@@ -83,5 +83,14 @@ export class HttpConexionService {
     return this.http.get<Transferencia[]>(`${this.baseUrl}transferenciasCliente`, {params:{id}})
   }
 
+  serverPutRequestActualizarCliente(cliente: Cliente){
+    return this.http.put<{respuesta: string}>(`${this.baseUrl}actualizarCliente`, cliente)
+  }
+
+  serverPutRequestActualizarGestor(gestor: Gestor){
+    return this.http.put<{respuesta: string}>(`${this.baseUrl}actualizarGestor`, gestor)
+  }
+
+  serverPutRequestActualizarPassword(){}
 }
 

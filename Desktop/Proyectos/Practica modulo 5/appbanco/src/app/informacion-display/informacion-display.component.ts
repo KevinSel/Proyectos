@@ -3,6 +3,8 @@ import { InformacionService } from '../informacion.service';
 import { HttpConexionService } from '../http-conexion.service';
 import { StatusService } from '../status.service';
 import { Deposito, Persona, Transferencia } from '../persona';
+import { SimpleChanges } from '@angular/core';
+
 @Component({
   selector: 'app-informacion-display',
   templateUrl: './informacion-display.component.html',
@@ -35,7 +37,9 @@ export class InformacionDisplayComponent {
     this.httpCs.serverGetRequestIDGestor(id).subscribe( x => this.informacion.gestoresAMostrar = x)
   }
 
-  actualizarGestor(id: number){}
+  actualizarGestor(id: number){
+    this.httpCs.serverGetRequestIDGestor(id).subscribe( x => this.informacion.gestorAActualizar = x)
+  }
 
   agregarGestores(cantidad: number){
     this.httpCs.serverGetRequestCrearGestores(cantidad).subscribe( x => this.respuestaInicial = x['respuesta']);
@@ -49,7 +53,9 @@ export class InformacionDisplayComponent {
     this.httpCs.serverGetRequestIDCliente(id).subscribe( x => this.informacion.clientesAMostrar = x)
   }
 
-  actualizarCliente(id: number){}
+  actualizarCliente(id: number){
+    this.httpCs.serverGetRequestIDCliente(id).subscribe( x => this.informacion.clienteAActualizar = x)
+  }
 
   verTodasLasOperaciones(){
     this.verDepositos(0)
@@ -103,6 +109,13 @@ export class InformacionDisplayComponent {
     this.httpCs.serverGetRequestUSMensaje(usuario).subscribe(x => this.informacion.mensajesAMostrar = x)
   }
  
+  ngOnChanges(){
+    if(this.estado.misClientes){this.verClientesDeGestor(this.idUsuarioActivo)}
+    if(this.estado.verTodasLasOperaciones){this.verTodasLasOperaciones()}
+    if(this.estado.verMisMensajes){this.verMensajesUsuario(this.usuarioUsuarioActivo)}
+    if(this.estado.verMisDepositos){this.verDepositosUsuario(this.idUsuarioActivo)}
+    if(this.estado.verMisTransferencias){this.verTransferenciasUsuario(this.idUsuarioActivo)}
+  }
 
   constructor (private informacion: InformacionService, private httpCs: HttpConexionService, private status: StatusService) {
     this.idUsuarioActivo = this.status.persona!.id;

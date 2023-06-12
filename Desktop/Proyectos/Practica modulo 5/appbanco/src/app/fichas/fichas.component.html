@@ -47,11 +47,28 @@
 </div>
 
 <div *ngFor="let cliente of clienteAActualizar">
-
-
+    <button (click)="actualizar()">Cargar</button>
+    ID: {{cliente.id}} <br>
+    Balance: {{cliente.balance}} <br>
+    <form  (ngSubmit)="actualizarClienteDesdeForm()">
+        <label>ID Gestor: <input type="number" name="id_gestor" [(ngModel)]="id_gestorForm"></label> <br>
+        <label>Nombre:  <input type="text" name="nombre" [(ngModel)]="nombreForm"></label> <br>
+        <label>Apellido:<input  type="text" name="apellido" [(ngModel)]="apellidoForm"> </label> <br>
+        <label>Usuario: <input  type="text" name="usuario" [(ngModel)]="usuarioForm"></label> <br>
+        <input type="submit" value="actualizar">
+    </form>
+    {{respuesta}}
 </div>
 
 <div *ngFor="let gestor of gestorAActualizar">
-
-    
+    <button (click)="actualizar()">Cargar</button>
+    ID: {{gestor.id}} <br>
+    Salario: {{gestor.salario}} <br>
+    <form (ngSubmit)="actualizarGestorDesdeForm()">
+        <label>Nombre:  <input type="text" name="nombre" [(ngModel)]="nombreForm"></label> <br>
+        <label>Apellido:<input  type="text" name="apellido" [(ngModel)]="apellidoForm"> </label> <br>
+        <label>Usuario: <input  type="text" name="usuario" [(ngModel)]="usuarioForm"></label> <br>
+        <input type="submit" value="actualizar">
+    </form>
+    {{respuesta}}
 </div>

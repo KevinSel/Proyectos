@@ -101,9 +101,9 @@ public class DbConnection {
 		
 		DbConnection.dbUpdate(query, new String[] {valorNuevo, Integer.toString(id)});
 		
-		return "Actualizado";
+		return "{\"respuesta\" : \"Actualizado\"}";
 	}
-	
+
 
 };
 	

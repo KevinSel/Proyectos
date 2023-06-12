@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 import com.spring.main.restservice.PersonaRecord;
@@ -16,37 +17,35 @@ public class PersonaDB {
 	private static ResultSet resultados;
 	static Random rand = new Random();
 
-	public static String dbSetNombre(Scanner sc, String tipoCuenta, int id) {
-		System.out.println("Ingrese el nombre");
-		String nombre = sc.next();
-		query = "UPDATE `"+tipoCuenta+"` SET nombre = (?) WHERE `id` = (?)";
-		DbConnection.dbUpdate(query, new String[] {nombre, Integer.toString(id)});
-		return nombre;
-	};
+	public static String actualizarPassword(HashMap<String,String> datos) {
+		String tipoCuenta = datos.get("tipoCuenta");
+		query = "UPDATE "+tipoCuenta+ " SET password = ? WHERE id = ?";
+	    DbConnection.dbUpdate(query, new String[] {SHA3(datos.get("password")), datos.get("id")});
+		return "{\"respuesta\" : \"Contraseña actualizada\"}";
+	}
 	
-	public static String dbSetApellido(Scanner sc, String tipoCuenta, int id) {
-		System.out.println("Ingrese el apellido");
-		String apellido = sc.next();
-		query = "UPDATE `"+tipoCuenta+"` SET apellido = (?) WHERE `id` = (?)";
-		DbConnection.dbUpdate(query, new String[] {apellido, Integer.toString(id)});
-		return apellido;	
-	};
+	public static String actualizarCliente(HashMap<String, String> datos) {
+		query = "UPDATE cliente SET id_gestor = ?, nombre = ?, apellido = ?, usuario = ?, balance = ? WHERE id = ?";
+		DbConnection.dbUpdate(query, new String[] {datos.get("id_gestor"),
+												   datos.get("nombre"),
+												   datos.get("apellido"),
+												   datos.get("usuario"),
+												   datos.get("balance"),
+												   datos.get("id")});
+		
+		return "{\"respuesta\" : \"Cliente actualizado\"}";
+	}
 	
-	public static String dbSetUsuario(Scanner sc, String tipoCuenta, int id) {
-		System.out.println("Ingrese el usuario");
-		String usuario = sc.next();
-		query = "UPDATE `"+tipoCuenta+"` SET usuario = (?) WHERE `id` = (?)";
-		DbConnection.dbUpdate(query, new String[] {usuario, Integer.toString(id)});
-		return usuario;
-	};
+	public static String actualizarGestor(HashMap<String, String> datos) {
+		query = "UPDATE gestor SET nombre = ?, apellido = ?, usuario = ?, salario = ? WHERE id = ?";
+		DbConnection.dbUpdate(query, new String[] {datos.get("nombre"),
+												   datos.get("apellido"),
+												   datos.get("usuario"),
+												   datos.get("salario"),
+												   datos.get("id")});
+		
+		return "{\"respuesta\" : \"Gestor actualizado\"}";}
 	
-	public static void dbSetContaseña(Scanner sc, String tipoCuenta, int id) {
-		System.out.println("Ingrese la nueva contraseña");
-		String password = sc.next();
-		query = "UPDATE `"+tipoCuenta+"` SET password = (?) WHERE `id` = (?)";
-		DbConnection.dbUpdate(query, new String[] {SHA3(password), Integer.toString(id)});
-	};
-
 	public static PersonaRecord logIn(String usuario, String password) {
 		
 		try {
@@ -143,7 +142,6 @@ public class PersonaDB {
 		}
 	
 	public static String dbRegistrarEnMasa(int cantidad) {
-
 
 		for (int i=0; i<cantidad; i++ ) {
 			String nombre = "GestorAleatorio" + rand.nextInt(10000);

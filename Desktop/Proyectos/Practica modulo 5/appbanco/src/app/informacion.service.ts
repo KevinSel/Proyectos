@@ -13,9 +13,11 @@ depositosAMostrar: Deposito[] = [];
 transferenciasAMostrar: Transferencia[] = [];
 clienteAActualizar: Cliente[] = []
 gestorAActualizar: Gestor[] = []
+respuesta = "";
 
 reset(){
 
+  this.respuesta = "";
   this.clientesAMostrar = [];
   this.gestoresAMostrar = [];
   this.mensajesAMostrar = [];

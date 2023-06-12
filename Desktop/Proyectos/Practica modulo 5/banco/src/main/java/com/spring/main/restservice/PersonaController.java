@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.practica4.DbConnection;
 import com.spring.practica4.PersonaDB;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,10 +43,20 @@ public class PersonaController {
 	public String teeest(@RequestParam String tabla, @RequestParam int id) {
 		return null;}
 	
-	@PutMapping(value="actualizar")
+	@PutMapping(value="actualizarCliente")
 	@ResponseBody
-	public String test(@RequestBody HashMap body) {
-		System.out.println(body.get("id"));
-		return null;}
+	public String actualizarCliente(@RequestBody HashMap<String, String > body) {
+		System.out.println("sad");
+		return PersonaDB.actualizarCliente(body);}
+	
+	@PutMapping(value="actualizarGestor")
+	@ResponseBody
+	public String actualizarGestor(@RequestBody HashMap<String, String > body) {
+		return PersonaDB.actualizarGestor(body);}
+	
+	@PutMapping(value="actualizarPassword")
+	@ResponseBody
+	public String actualizarPassword(@RequestBody HashMap<String, String > body) {
+		return PersonaDB.actualizarPassword(body);}
 	
 }

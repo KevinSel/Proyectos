@@ -35,6 +35,7 @@ export class HomepageComponent {
     this.estado[this.estadoActivo as keyof typeof this.estado] = false;
     this.estado[opcion as keyof typeof this.estado] = true;
     this.estadoActivo = opcion;
+    this.estado = JSON.parse(JSON.stringify(this.estado));
   }
 
   menues = {
