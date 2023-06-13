@@ -1,16 +1,18 @@
 <section class="fichas">
     <div *ngFor="let cliente of clientesAMostrar" class="ficha">
-        <div class="headerFicha"></div>
-        <span>ID: {{cliente.id}}</span>
-        <span>ID Gestor: {{cliente.id_gestor}}</span>
-        <span>Nombre: {{cliente.nombre}}</span>
-        <span>Apellido: {{cliente.apellido}}</span>
-        <span>Usuario: {{cliente.usuario}}</span>
-        <span>Balance: {{cliente.balance}}</span>
+        <div class="headerFicha"><span class="fichaTitulo">Cliente</span></div>
+        <div class="contenedorFicha">
+            <div class="texto"><span>ID</span><span>{{cliente.id}}</span></div>
+            <div class="texto"><span>ID Gestor</span><span>{{cliente.id_gestor}}</span></div>
+            <div class="texto"><span>Nombre</span><span>{{cliente.nombre}}</span></div>
+            <div class="texto"><span>Apellido</span><span> {{cliente.apellido}}</span></div>
+            <div class="texto"><span>Usuario</span><span>{{cliente.usuario}}</span></div>
+            <div class="texto"><span>Balance</span><span>{{cliente.balance}}</span></div>
+        </div>
     </div>
     
     <div *ngFor="let gestor of gestoresAMostrar" class="ficha">
-        <div class="headerFicha"></div>
+        <div class="headerFicha"><span class="fichaTitulo">Gestor</span></div>
         <div class="contenidoFicha">
             <div class="texto"><span>ID</span><span>{{gestor.id}}</span></div>
             <div class="texto"><span>Nombre</span><span>{{gestor.nombre}}</span></div>
@@ -21,36 +23,40 @@
     </div>
     
     <div *ngFor="let mensaje of mensajesAMostrar" class="ficha">
-        <div class="headerFicha"></div>
-        ID: {{mensaje.id}} <br>
-        Mensaje: {{mensaje.mensaje}} <br>
-        Usuario emisor: {{mensaje.us_emisor}} <br>
-        Nombre emisor: {{mensaje.nombre_emisor}} <br>
-        Usuario receptor: {{mensaje.us_receptor}} <br>
-        Nombre receptor: {{mensaje.nombre_receptor}} <br>
-        Fecha: {{mensaje.fecha}}
+        <div class="headerFicha"><span class="fichaTitulo">Mensasaje</span></div>
+        <div class="contenidoFicha">
+            <div class="texto"><span>ID</span><span>{{mensaje.id}}</span></div>
+            <div class="texto"><span>Mensaje</span><span>{{mensaje.mensaje}}</span></div>
+            <div class="texto"><span>Usuario emisor</span><span>{{mensaje.us_emisor}}</span></div>
+            <div class="texto"><span>Nombre emisor</span><span>{{mensaje.nombre_emisor}}</span></div>
+            <div class="texto"><span>Usuario receptor</span><span>{{mensaje.us_receptor}}</span></div>
+            <div class="texto"><span>Nombre receptor</span><span>{{mensaje.nombre_receptor}}</span></div>
+            <div class="texto"><span>Fecha</span><span>{{mensaje.fecha}}</span></div>
+        </div>
     </div>
     
     <div *ngFor="let deposito of depositosAMostrar" class="ficha">
-        <div class="headerFicha"></div>
-        Deposito:
-        ID: {{deposito.id}}<br>
-        ID cliente: {{deposito.id_emisor}}<br>
-        Nombre: {{deposito.nombre_emisor}}<br>
-        Monto: {{deposito.monto}}<br>
-        Fecha: {{deposito.fecha}} <br>
+        <div class="headerFicha"><span class="fichaTitulo">Deposito</span></div>
+        <div class="contenidoFicha">
+            <div class="texto"><span>ID</span><span>{{deposito.id}}</span></div>
+            <div class="texto"><span>ID cliente</span><span>{{deposito.id_emisor}}</span></div>
+            <div class="texto"><span>Nombre</span><span>{{deposito.nombre_emisor}}</span></div>
+            <div class="texto"><span>Monto</span><span>{{deposito.monto}}</span></div>
+            <div class="texto"><span>Fecha</span><span>{{deposito.fecha}}</span></div>
+        </div>
     </div>
     
     <div *ngFor="let transferencia of transferenciasAMostrar" class="ficha">
-        <div class="headerFicha"></div>
-        Transferencia:
-        ID: {{transferencia.id}}<br>
-        Monto: {{transferencia.monto}}<br>
-        ID cliente: {{transferencia.id_emisor}}<br>
-        Nombre: {{transferencia.nombre_emisor}}<br>
-        ID receptor: {{transferencia.id_receptor}}<br>
-        Nombre : {{transferencia.nombre_receptor}}<br>
-        Fecha: {{transferencia.fecha}} <br>
+        <div class="headerFicha"> <span class="fichaTitulo">Transferencia</span></div>
+        <div class="contenidoFicha">
+            <div class="texto"><span>ID</span><span>{{transferencia.id}}</span></div>
+            <div class="texto"><span>Monto</span><span>{{transferencia.monto}}</span></div>
+            <div class="texto"><span>ID cliente</span><span>{{transferencia.id_emisor}}</span></div>
+            <div class="texto"><span>Nombre</span><span>{{transferencia.nombre_emisor}}</span></div>
+            <div class="texto"><span>ID receptor</span><span>{{transferencia.id_receptor}}</span></div>
+            <div class="texto"><span>Nombre</span><span>{{transferencia.nombre_receptor}}</span></div>
+            <div class="texto"><span>Fecha</span><span>{{transferencia.fecha}}</span></div>
+        </div>
     </div>
     
     <div *ngFor="let cliente of clienteAActualizar" class="ficha">

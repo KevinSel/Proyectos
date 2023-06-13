@@ -1,0 +1,22 @@
+
+#registro{
+    height:100%;
+    width:30%;
+    display:flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.form{
+    margin-top:40px;
+    display:flex;
+    flex-direction: column;
+    gap:5vh;
+}
+
+.label{
+    display:flex;
+    gap:10px;
+    justify-content: space-between;
+    width: 20vw;
+}

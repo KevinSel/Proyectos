@@ -1,7 +1,3 @@
-/* * {
-    border: 1px solid red;
-}  */
-
 .menuGeneral{
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -10,9 +6,9 @@
 .contenido{
     grid-column: 2;
     height:80vh;
-    overflow:hidden;
-    max-width:95%;
+    width:95%;
     margin: 0 auto;
+    transform: translateY(-20px);
 }
 .menuGeneral button{
     width: 50%;

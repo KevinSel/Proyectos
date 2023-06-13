@@ -1,13 +1,9 @@
 .ficha{
     border: 1px solid black;
-    height: 15vh;
-    margin: 10px 0 10px 0;
-    max-width: 30vw;
-    margin:0;
+    padding: 0px 0 10px 0;
 }
 .fichas{
     height:100%;
-    overflow-y: auto;
     display:flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -17,19 +13,22 @@
     display:flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 95%;
+    gap:15px;
 }
 .headerFicha{
-    height:5%;
     background-color: rgb(168, 168, 214);
 }
 .texto{
     display:flex;
     justify-content: space-between;
+    margin: 2px 0 2px 0;
 }
 .texto>span{
-    margin: 0 10px 0 10px;
+    margin: 0px 10px 0px 10px;
 }
 .texto>span:last-of-type{
     color:rgb(110, 110, 72);
+}
+.fichaTitulo{
+    margin: 5px 0 15px 3px
 }
