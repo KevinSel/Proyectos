@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { InformacionService } from '../informacion.service';
 import { HttpConexionService } from '../http-conexion.service';
-import { Cliente, Gestor } from '../persona';
+import { StatusService } from '../status.service';
 
 @Component({
   selector: 'app-fichas',
@@ -11,14 +11,20 @@ import { Cliente, Gestor } from '../persona';
 
 export class FichasComponent {
 
-  id_gestorForm = 0;
-  nombreForm: String = "";
-  apellidoForm: String = "";
-  usuarioForm: String = "";
-  passwordForm = "";
+  password = "";
+
+ @Input() formData = {
+    id_gestorForm: 0,
+    nombreForm: "",
+    apellidoForm: "",
+    usuarioForm: "",
+  }
+
 
   @Input() estado = {actualizarCliente: false,
-                    actualizarGestor: false};
+                    actualizarGestor: false,
+                    actualizarClienteLogeado: false,
+                    actualizarGestorLogeado: false};
 
  get clientesAMostrar(){
   return this.info.clientesAMostrar
@@ -67,38 +73,29 @@ get usuarioG(){
 }
 
  actualizarClienteDesdeForm(){
-  this.info.clienteAActualizar[0].id_gestor = this.id_gestorForm
-  this.info.clienteAActualizar[0].nombre = this.nombreForm
-  this.info.clienteAActualizar[0].apellido = this.apellidoForm
-  this.info.clienteAActualizar[0].usuario = this.usuarioForm
-
+  this.info.clienteAActualizar[0].id_gestor = this.formData.id_gestorForm
+  this.info.clienteAActualizar[0].nombre = this.formData.nombreForm
+  this.info.clienteAActualizar[0].apellido = this.formData.apellidoForm
+  this.info.clienteAActualizar[0].usuario = this.formData.usuarioForm
   this.httpCs.serverPutRequestActualizarCliente(this.info.clienteAActualizar[0]).subscribe(x => this.info.respuesta = x.respuesta) 
  }
 
  actualizarGestorDesdeForm(){
-  this.info.gestorAActualizar[0].nombre = this.nombreForm
-  this.info.gestorAActualizar[0].apellido = this.apellidoForm
-  this.info.gestorAActualizar[0].usuario = this.usuarioForm
-  
+  this.info.gestorAActualizar[0].nombre = this.formData.nombreForm
+  this.info.gestorAActualizar[0].apellido = this.formData.apellidoForm
+  this.info.gestorAActualizar[0].usuario = this.formData.usuarioForm
   this.httpCs.serverPutRequestActualizarGestor(this.info.gestorAActualizar[0]).subscribe( x => this.info.respuesta = x.respuesta)
  }
 
-  constructor (private info: InformacionService, private httpCs: HttpConexionService) {
-   
-  }
+ actualizarPassword(tipoCuenta: string){
+  this.httpCs.serverPutRequestActualizarPassword(tipoCuenta, this.password, this.status.persona!.id).subscribe(x => this.info.respuesta = x.respuesta)
+ }
 
-  actualizar(){
-    if(this.estado.actualizarCliente){
-      this.id_gestorForm = this.info.clienteAActualizar[0].id_gestor;
-      this.nombreForm = this.info.clienteAActualizar[0].nombre;
-      this.apellidoForm = this.info.clienteAActualizar[0].apellido;
-      this.usuarioForm = this.info.clienteAActualizar[0].usuario;
-    }
-    if(this.estado.actualizarGestor){
-      this.nombreForm = this.info.gestorAActualizar[0].nombre;
-      this.apellidoForm = this.info.gestorAActualizar[0].apellido;
-      this.usuarioForm = this.info.gestorAActualizar[0].usuario;
-    }
+ eliminarUsuario(usuario: String){
+  this.httpCs.serverPutRequestBorrarUsuario(usuario).subscribe(x => this.info.respuesta = x.respuesta)
+ }
+  constructor (private info: InformacionService, private httpCs: HttpConexionService, private status: StatusService) {
+   
   }
 
 }

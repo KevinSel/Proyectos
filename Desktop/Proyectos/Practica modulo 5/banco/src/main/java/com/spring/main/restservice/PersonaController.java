@@ -46,7 +46,6 @@ public class PersonaController {
 	@PutMapping(value="actualizarCliente")
 	@ResponseBody
 	public String actualizarCliente(@RequestBody HashMap<String, String > body) {
-		System.out.println("sad");
 		return PersonaDB.actualizarCliente(body);}
 	
 	@PutMapping(value="actualizarGestor")
@@ -58,5 +57,10 @@ public class PersonaController {
 	@ResponseBody
 	public String actualizarPassword(@RequestBody HashMap<String, String > body) {
 		return PersonaDB.actualizarPassword(body);}
+	
+	@PutMapping(value="borrarUsuario")
+	@ResponseBody
+	public String borrarUsuario(@RequestBody HashMap<String, String> usuario) {
+		return PersonaDB.borrarUsuario(usuario.get("usuario"));}
 	
 }

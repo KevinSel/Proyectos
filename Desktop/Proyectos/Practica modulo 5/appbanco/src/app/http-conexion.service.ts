@@ -6,7 +6,6 @@ import { Gestor } from './persona';
 import { Mensaje } from './persona';
 import { Deposito } from './persona';
 import { Transferencia } from './persona';
-import { subscriptionLogsToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 @Injectable({
   providedIn: 'root'
@@ -91,6 +90,13 @@ export class HttpConexionService {
     return this.http.put<{respuesta: string}>(`${this.baseUrl}actualizarGestor`, gestor)
   }
 
-  serverPutRequestActualizarPassword(){}
+  serverPutRequestActualizarPassword(tipoCuenta: string, password:  string, id: number){
+    return this.http.put<{respuesta: string}>(`${this.baseUrl}actualizarPassword`, { tipoCuenta: tipoCuenta, password: password, id: id})
+  }
+
+  serverPutRequestBorrarUsuario(usuario: String){
+    return this.http.put<{respuesta: string}>(`${this.baseUrl}borrarUsuario`, {usuario: usuario})
+  }
+
 }
 

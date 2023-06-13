@@ -2,8 +2,6 @@ import { Component, Input} from '@angular/core';
 import { InformacionService } from '../informacion.service';
 import { HttpConexionService } from '../http-conexion.service';
 import { StatusService } from '../status.service';
-import { Deposito, Persona, Transferencia } from '../persona';
-import { SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-informacion-display',
@@ -15,7 +13,7 @@ export class InformacionDisplayComponent {
   @Input() estado: any = {};
 
   respuestaInicial = "";
-  id = 0;
+  id = 1;
   idUsuarioActivo = 0;
   usuario = "";
   usuarioUsuarioActivo = "";
@@ -37,10 +35,6 @@ export class InformacionDisplayComponent {
     this.httpCs.serverGetRequestIDGestor(id).subscribe( x => this.informacion.gestoresAMostrar = x)
   }
 
-  actualizarGestor(id: number){
-    this.httpCs.serverGetRequestIDGestor(id).subscribe( x => this.informacion.gestorAActualizar = x)
-  }
-
   agregarGestores(cantidad: number){
     this.httpCs.serverGetRequestCrearGestores(cantidad).subscribe( x => this.respuestaInicial = x['respuesta']);
   }
@@ -51,10 +45,6 @@ export class InformacionDisplayComponent {
 
   verCliente(id: number){
     this.httpCs.serverGetRequestIDCliente(id).subscribe( x => this.informacion.clientesAMostrar = x)
-  }
-
-  actualizarCliente(id: number){
-    this.httpCs.serverGetRequestIDCliente(id).subscribe( x => this.informacion.clienteAActualizar = x)
   }
 
   verTodasLasOperaciones(){
@@ -89,14 +79,14 @@ export class InformacionDisplayComponent {
 
   realizarDeposito(){
     this.httpCs.serverPostDeposito(this.monto, this.idUsuarioActivo).subscribe( x => this.respuestaInicial = x.respuesta)
-    if(-this.monto < -this.balanceInicial){this.monto = 0}
+    if(-this.monto > this.balanceInicial){this.monto = 0}
     this.status.persona!.balance! += this.monto
     this.balanceInicial += this.monto
   }
 
   realizarTransferencia(){
     this.httpCs.serverPostTransferencia(this.monto, this.idUsuarioActivo, this.id_receptor).subscribe(x=> this.respuestaInicial = x.respuesta)
-    if(-this.monto < -this.balanceInicial || this.monto < 0){this.monto = 0}
+    if(this.monto > this.balanceInicial || this.monto < 0){this.monto = 0}
     this.status.persona!.balance! -= this.monto
     this.balanceInicial -= this.monto
   }
@@ -108,14 +98,61 @@ export class InformacionDisplayComponent {
   verMensajesUsuario(usuario: string){
     this.httpCs.serverGetRequestUSMensaje(usuario).subscribe(x => this.informacion.mensajesAMostrar = x)
   }
- 
+  actualizarClienteLogeado(){
+    this.actualizarCliente(this.idUsuarioActivo)
+  }
+
+  actualizarGestorLogeado(){
+    this.actualizarGestor(this.idUsuarioActivo)
+  }
+
+  actualizarGestor(id: number){
+    this.httpCs.serverGetRequestIDGestor(id).subscribe(
+      (x) => {this.informacion.gestorAActualizar = x
+      this.formData.nombreForm = this.informacion.gestorAActualizar[0].nombre as string;
+      this.formData.apellidoForm = this.informacion.gestorAActualizar[0].apellido as string;
+      this.formData.usuarioForm = this.informacion.gestorAActualizar[0].usuario as string;
+    })
+  }
+
+  actualizarCliente(id: number){
+    this.httpCs.serverGetRequestIDCliente(id).subscribe(
+      (x) => {this.informacion.clienteAActualizar = x
+      this.formData.id_gestorForm = this.informacion.clienteAActualizar[0].id_gestor;
+      this.formData.nombreForm = this.informacion.clienteAActualizar[0].nombre as string;
+      this.formData.apellidoForm = this.informacion.clienteAActualizar[0].apellido as string;
+      this.formData.usuarioForm = this.informacion.clienteAActualizar[0].usuario as string;
+    })
+  }
+
+  mayorQueCero(){
+    if(this.id < 1){
+      this.id = 1;
+    }
+  }
+
+  formData = {
+    id_gestorForm: 0,
+    nombreForm: "",
+    apellidoForm: "",
+    usuarioForm: "",
+    passwordForm: "",
+  }
+
+
   ngOnChanges(){
     if(this.estado.misClientes){this.verClientesDeGestor(this.idUsuarioActivo)}
     if(this.estado.verTodasLasOperaciones){this.verTodasLasOperaciones()}
     if(this.estado.verMisMensajes){this.verMensajesUsuario(this.usuarioUsuarioActivo)}
     if(this.estado.verMisDepositos){this.verDepositosUsuario(this.idUsuarioActivo)}
     if(this.estado.verMisTransferencias){this.verTransferenciasUsuario(this.idUsuarioActivo)}
+    if(this.estado.actualizarClienteLogeado){
+      this.actualizarClienteLogeado()}
+    if(this.estado.actualizarGestorLogeado){
+      this.actualizarGestorLogeado()}
   }
+
+  
 
   constructor (private informacion: InformacionService, private httpCs: HttpConexionService, private status: StatusService) {
     this.idUsuarioActivo = this.status.persona!.id;

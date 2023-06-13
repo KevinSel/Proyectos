@@ -19,7 +19,7 @@ public class PersonaDB {
 
 	public static String actualizarPassword(HashMap<String,String> datos) {
 		String tipoCuenta = datos.get("tipoCuenta");
-		query = "UPDATE "+tipoCuenta+ " SET password = ? WHERE id = ?";
+		query = "UPDATE " +tipoCuenta+ " SET password = ? WHERE id = ?";
 	    DbConnection.dbUpdate(query, new String[] {SHA3(datos.get("password")), datos.get("id")});
 		return "{\"respuesta\" : \"Contraseña actualizada\"}";
 	}
@@ -260,6 +260,24 @@ public class PersonaDB {
 		return balance;
 	};
 
+	public static String borrarUsuario(String usuario) {
+		
+		query = "UPDATE gestor SET `password` = \"Eliminado\", usuario = CONCAT(usuario, \"(Eliminado)\"), salario = 0"
+				+ " WHERE usuario LIKE ?";
+		
+		DbConnection.dbUpdate(query, new String[] {usuario});
+		
+		query = "UPDATE cliente SET `password` = \"Eliminado\", usuario = CONCAT(usuario, \"(Eliminado)\"), balance = 0"
+				+ " id_gestor = 2 WHERE usuario LIKE ?";
+		
+		DbConnection.dbUpdate(query, new String[] {usuario});
+
+		return  "{\"respuesta\" : \"Usuario eliminado\"}";
+		
+	}
+	
+		
+	
 	public static String SHA3(String str) {
 		try {
 		final MessageDigest digest = MessageDigest.getInstance("SHA3-256");

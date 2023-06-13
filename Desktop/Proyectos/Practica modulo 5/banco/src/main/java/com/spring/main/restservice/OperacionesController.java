@@ -22,7 +22,7 @@ public class OperacionesController {
 	
 	@PostMapping("/nuevoDeposito")
 	@ResponseBody
-	public String nuevaOperacion(@RequestBody OperacionRecord deposito) {
+	public String nuevoDeposito(@RequestBody OperacionRecord deposito) {
 		return OperacionesDB.dBNuevoDeposito(deposito);}
 	
 	@GetMapping("/transferencia")

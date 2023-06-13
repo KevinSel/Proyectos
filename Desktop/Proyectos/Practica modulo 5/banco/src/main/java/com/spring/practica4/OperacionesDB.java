@@ -73,7 +73,7 @@ public class OperacionesDB {
 					+ "FROM transferencia, cliente as emisor, cliente as receptor\r\n"
 					+ "WHERE id_cliente = emisor.id AND id_receptor = receptor.id";
 			
-			if(id > 0) {query += "AND transferencia.id = ?";
+			if(id > 0) {query += " AND transferencia.id = ?";
 				resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
 			} else {
 				resultados = DbConnection.dbSelect(query);
@@ -106,7 +106,7 @@ public class OperacionesDB {
 			query = "SELECT deposito.id as id, monto, id_cliente, CONCAT(nombre, ' ', apellido) as nombre, fecha "
 					+ "FROM deposito, cliente WHERE id_cliente = cliente.id";
 			
-			if(id > 0) { query += "AND deposito.id = ?"; 
+			if(id > 0) { query += " AND deposito.id = ?"; 
 				resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
 			} else {
 				resultados = DbConnection.dbSelect(query);

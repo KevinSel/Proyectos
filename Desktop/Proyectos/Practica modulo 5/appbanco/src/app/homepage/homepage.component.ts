@@ -12,6 +12,8 @@ import { InformacionService } from '../informacion.service';
 export class HomepageComponent {
 
   cerrarSesion(){
+    this.informacion.reset()
+    Object.keys(this.menues).map( key => this.menues[key as keyof typeof this.menues] = false)
     this.httpCs.serverGetRequest("login/logoff").subscribe(() => {this.router.navigate(["login"])});
     this.status.persona = null;
   }
@@ -66,7 +68,6 @@ export class HomepageComponent {
     verTransferencias: false,
     verDepositos: false,
     enviarMensaje: false,
-    verMensaje: false,
     verMisMensajes: false,
     cambiarNombre: false,
     cambiarApellido: false,
@@ -78,6 +79,11 @@ export class HomepageComponent {
     verMisDepositos:false, 
     transferencia: false,
     deposito: false,
+    miCuentaGestor: false,
+    miCuentaCliente: false,
+    actualizarClienteLogeado: false,
+    actualizarGestorLogeado: false,
+    verMensajes: false,
   }
 
 
