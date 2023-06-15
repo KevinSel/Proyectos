@@ -153,14 +153,14 @@ export class InformacionDisplayComponent {
   }
 
   
-
   constructor (private informacion: InformacionService, private httpCs: HttpConexionService, private status: StatusService) {
-    this.idUsuarioActivo = this.status.persona!.id;
-    this.usuarioUsuarioActivo = this.status.persona!.usuario as string;
-    if(!this.status.persona!.esGestor){
-      this.balanceInicial = this.status.persona!.balance as number
+    if(this.status.persona != null){
+      this.idUsuarioActivo = this.status.persona!.id as number;
+      this.usuarioUsuarioActivo = this.status.persona!.usuario as string;
+      if(!this.status.persona!.esGestor){
+        this.balanceInicial = this.status.persona!.balance as number
+      }
     }
-    
   }
 
 }

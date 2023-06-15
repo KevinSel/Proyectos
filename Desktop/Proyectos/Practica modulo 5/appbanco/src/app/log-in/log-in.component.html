@@ -1,25 +1,22 @@
-
-
-<section class="logInWindow">
-    <header class="logInHeader">¡Bienvenido!</header>
-    <form (ngSubmit)="logIn()">
-        <label>Usuario <br> <input type="text" name="usuario" [(ngModel)]="usuario"></label> <br>
+<section id="LogInContainer">
+    <div id="LogInWindow">
+        <header><h1>¡Bienvenido!</h1></header>
+        <form (ngSubmit)="logIn()" id="form">
         
-        <label>Contraseña <br> <input type="password" name="password" [(ngModel)]="password"></label> <br>
-        
-        <input type="submit" value="ingresar"> <br>
+            <label><span class="inputLabelText">Usuario</span>
+            <input type="text" name="usuario" [(ngModel)]="usuario"> 
+            </label>
+            
+            <label><span  class="inputLabelText">Contraseña</span>
+            <input type="password" name="password" [(ngModel)]="password">
+            </label> 
 
-        {{sesion}}
+            <input type="submit" value="ingresar" class="boton">
+    
+            <a routerLink="../registrarse"><button class="boton">Registrarse</button></a>
 
-    </form>
+            <span>{{respuesta}}</span>
 
-    <a routerLink="../registrarse"><button>Registrarse</button></a>
-
-    <p>¿Olvidaste tu usuario?</p>
-    <p>¿Olvidaste tu contraseña?</p>
-
-   
-
-   
-
+        </form>
+    </div>
 </section>

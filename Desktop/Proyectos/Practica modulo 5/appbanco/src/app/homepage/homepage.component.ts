@@ -3,6 +3,7 @@ import { StatusService } from '../status.service';
 import { Router } from '@angular/router';
 import { HttpConexionService } from '../http-conexion.service';
 import { InformacionService } from '../informacion.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-homepage',
@@ -11,15 +12,38 @@ import { InformacionService } from '../informacion.service';
 })
 export class HomepageComponent {
 
-  cerrarSesion(){
-    this.informacion.reset()
-    Object.keys(this.menues).map( key => this.menues[key as keyof typeof this.menues] = false)
-    this.httpCs.serverGetRequest("login/logoff").subscribe(() => {this.router.navigate(["login"])});
-    this.status.persona = null;
+  constructor(private router:Router, private status:StatusService, private httpCs:HttpConexionService, private informacion:InformacionService){
+  }
+
+  get nombre(){
+      return this.status.persona?.nombre;
   }
 
   esGestor(){
-   return this.status.persona!.esGestor
+      return this.status.persona?.esGestor;
+   }
+
+   esCliente(){
+      return !this.status.persona?.esGestor;
+    } 
+
+   cerrarSesion(){
+    this.informacion.reset()
+    Object.keys(this.menues).map( key => this.menues[key as keyof typeof this.menues] = false)
+    forkJoin([
+      this.httpCs.serverGetRequest("login/logoff"),
+      this.router.navigate(["login"])
+    ]).subscribe(() => {
+      this.status.persona = null;
+    });
+
+  }
+  seleccionar(opcion: String){
+    this.informacion.reset();
+    this.estado[this.estadoActivo as keyof typeof this.estado] = false;
+    this.estado[opcion as keyof typeof this.estado] = true;
+    this.estadoActivo = opcion;
+    this.estado = JSON.parse(JSON.stringify(this.estado));
   }
 
   reset(entrarAMenu: String, salirDeMenu: String){
@@ -28,16 +52,6 @@ export class HomepageComponent {
     this.menues[salirDeMenu as keyof typeof this.menues] = false;
     let keys = Object.keys(this.estado) as Array<keyof typeof this.estado>;;
     keys.map((key)=>{this.estado[key] = false})
-
-    
-  }
-
-  seleccionar(opcion: String){
-    this.informacion.reset();
-    this.estado[this.estadoActivo as keyof typeof this.estado] = false;
-    this.estado[opcion as keyof typeof this.estado] = true;
-    this.estadoActivo = opcion;
-    this.estado = JSON.parse(JSON.stringify(this.estado));
   }
 
   menues = {
@@ -50,7 +64,6 @@ export class HomepageComponent {
     cliente : true,
     cliente1_1 : false,
   }
-
 
   estadoActivo: String = "";
   estado= {
@@ -85,10 +98,5 @@ export class HomepageComponent {
     actualizarGestorLogeado: false,
     verMensajes: false,
   }
-
-
-  constructor(private router:Router, private status:StatusService, private httpCs:HttpConexionService, private informacion:InformacionService){
-  }
-
 
 }

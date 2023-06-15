@@ -13,13 +13,13 @@ export class StatusService {
   persona: usuario = null;
 
   sesionActiva(){
-    this.http.serverGetRequest("login/usuario").subscribe( x => {this.persona = x; console.log(this.persona);
+    this.http.serverGetRequest("login/usuario").subscribe( x => {this.persona = x;
     if(this.persona == null){this.router.navigate(["login"])}
     })
   }
   
   sesionNoActiva(){
-    this.http.serverGetRequest("login/usuario").subscribe( x => {this.persona = x; console.log(this.persona);
+    this.http.serverGetRequest("login/usuario").subscribe( x => {this.persona = x;
       if(this.persona != null){this.router.navigate([""])}
       })
   }

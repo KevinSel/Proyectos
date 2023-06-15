@@ -13,16 +13,16 @@ export class LogInComponent {
 
   usuario: String = "";
   password: String = "";
-  sesion: String = "";
+  respuesta: String = "";
 
  logIn(){
   this.http.serverPostRequest("login",this.usuario,this.password).subscribe({
   next:   (x) => 
-          { if(x == null){this.sesion = "Usuario o contraseña incorrectos"; return} 
+          { if(x == null){this.respuesta = "Usuario o contraseña incorrectos"; return} 
             this.status.persona = x;
              this.router.navigate([""])  
           },
-  error: () => {this.sesion = "Usuario o contraseña incorrectos"}
+  error: () => {this.respuesta = "Usuario o contraseña incorrectos"}
  })
   }
 
@@ -31,3 +31,4 @@ export class LogInComponent {
   }
 
 }
+  

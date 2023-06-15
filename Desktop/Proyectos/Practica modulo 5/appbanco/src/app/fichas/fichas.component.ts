@@ -88,7 +88,7 @@ get usuarioG(){
  }
 
  actualizarPassword(tipoCuenta: string){
-  this.httpCs.serverPutRequestActualizarPassword(tipoCuenta, this.password, this.status.persona!.id).subscribe(x => this.info.respuesta = x.respuesta)
+  this.httpCs.serverPutRequestActualizarPassword(tipoCuenta, this.password, this.status.persona!.id as number).subscribe(x => this.info.respuesta = x.respuesta)
  }
 
  eliminarUsuario(usuario: String){
