@@ -99,7 +99,6 @@
             <h2>Enviar mensaje</h2>
             <form (ngSubmit)="enviarMensaje()"  class="tipoForm">
                 <textarea rows="4" cols="3"  name="mensaje" [(ngModel)]="mensaje" style="resize: none;" placeholder="Limite: 200 caracteres"></textarea>
-
                 <label ><span class="labelSpan">Usuario receptor</span><br><input type="text" name="usuarioReceptor" [(ngModel)]="usuarioReceptor"></label>
                 <input type="submit" value="Enviar mensaje">
                 <span class="respuesta">{{respuesta}}</span>

@@ -26,6 +26,7 @@ button{
     border: 1px solid black;
 }
 .componente{
+    display: block;
     height:95%;
     width:100%;
 }

@@ -11,18 +11,14 @@ import { StatusService } from '../status.service';
 export class InformacionDisplayComponent {
 
   constructor (private informacion: InformacionService, private httpCs: HttpConexionService, private status: StatusService) {
-    this.idUsuarioActivo = this.status.persona?.id as number;
-    this.usuarioUsuarioActivo = this.status.persona?.usuario as string;
   }
 
   @Input() estado: any = {};
 
-  usuarioUsuarioActivo = "";
   usuario = "";
   respuestaInicial = "";
   usuarioReceptor = "";
   mensaje = "";
-  idUsuarioActivo = 0;
   id = 1;
   id_receptor = 0;
   balanceInicial = 0;
@@ -68,7 +64,7 @@ export class InformacionDisplayComponent {
   }
 
   actualizarGestorLogeado(){
-    this.actualizarGestor(this.idUsuarioActivo)
+    this.actualizarGestor(this.status.persona?.id as number)
   }
 
   agregarGestores(cantidad: number){
@@ -90,11 +86,11 @@ export class InformacionDisplayComponent {
   }
 
   actualizarClienteLogeado(){
-    this.actualizarCliente(this.idUsuarioActivo)
+    this.actualizarCliente(this.status.persona?.id as number)
   }
 
   enviarMensaje(){
-    this.httpCs.serverPostMensaje(this.mensaje, this.usuarioUsuarioActivo,this.usuarioReceptor).subscribe(x => this.respuestaInicial = x.respuesta)
+    this.httpCs.serverPostMensaje(this.mensaje, this.status.persona?.usuario as string,this.usuarioReceptor).subscribe(x => this.respuestaInicial = x.respuesta)
   }
 
   verMensajes(id: number){
@@ -106,14 +102,14 @@ export class InformacionDisplayComponent {
   }
 
   realizarDeposito(){
-    this.httpCs.serverPostDeposito(this.monto, this.idUsuarioActivo).subscribe( x => this.respuestaInicial = x.respuesta)
+    this.httpCs.serverPostDeposito(this.monto, this.status.persona?.id as number).subscribe( x => this.respuestaInicial = x.respuesta)
     if(-this.monto > this.balanceInicial){this.monto = 0}
     this.status.persona!.balance! += this.monto
     this.balanceInicial += this.monto
   }
 
   realizarTransferencia(){
-    this.httpCs.serverPostTransferencia(this.monto, this.idUsuarioActivo, this.id_receptor).subscribe(x=> this.respuestaInicial = x.respuesta)
+    this.httpCs.serverPostTransferencia(this.monto, this.status.persona?.id as number, this.id_receptor).subscribe(x=> this.respuestaInicial = x.respuesta)
     if(this.monto > this.balanceInicial || this.monto < 0){this.monto = 0}
     this.status.persona!.balance! -= this.monto
     this.balanceInicial -= this.monto
@@ -146,11 +142,11 @@ export class InformacionDisplayComponent {
   }
 
   ngOnChanges(){
-    if(this.estado.misClientes){this.verClientesDeGestor(this.idUsuarioActivo)}
+    if(this.estado.misClientes){this.verClientesDeGestor(this.status.persona?.id as number)}
     if(this.estado.verTodasLasOperaciones){this.verTodasLasOperaciones()}
-    if(this.estado.verMisMensajes){this.verMensajesUsuario(this.usuarioUsuarioActivo)}
-    if(this.estado.verMisDepositos){this.verDepositosUsuario(this.idUsuarioActivo)}
-    if(this.estado.verMisTransferencias){this.verTransferenciasUsuario(this.idUsuarioActivo)}
+    if(this.estado.verMisMensajes){this.verMensajesUsuario(this.status.persona?.usuario as string)}
+    if(this.estado.verMisDepositos){this.verDepositosUsuario(this.status.persona?.id as number)}
+    if(this.estado.verMisTransferencias){this.verTransferenciasUsuario(this.status.persona?.id as number)}
     if(this.estado.actualizarClienteLogeado){
       this.actualizarClienteLogeado()}
     if(this.estado.actualizarGestorLogeado){

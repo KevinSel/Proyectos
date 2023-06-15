@@ -1,12 +1,22 @@
-.ficha{
-    border: 1px solid black;
-    padding: 0px 0 10px 0;
-}
+
 .fichas{
     display:flex;
+    max-height: 80vh;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    padding-right: 15px;
     gap:15px;
+    overflow-y: auto;
+    width: 100%;
+}
+.ficha{
+    border: 1px solid black;
+    padding: 0px 0px 10px 0px;
+}
+h3{
+    margin-top: 0;
+    padding: 3px 0 3px 5px;
+    background-color: rgb(168, 168, 214);
 }
 .contenidoFicha{
     display:flex;
@@ -14,9 +24,7 @@
     justify-content: space-evenly;
     gap:15px;
 }
-.headerFicha{
-    background-color: rgb(168, 168, 214);
-}
+
 .texto{
     display:flex;
     justify-content: space-between;
@@ -25,15 +33,90 @@
 .texto>span{
     margin: 0px 10px 0px 10px;
 }
-.texto>span:last-of-type{
-    color:rgb(110, 110, 72);
-}
 .fichaTitulo{
     margin: 5px 0 15px 3px
 }
+
 .fichaActualizar{
+    align-items: center;
+    display:flex;
+    width:50%;
+    margin:0 auto;
+}
+.actualizarVentana{
+    margin: 0 auto;
+    width: 100%;
+}
+.fichaActualizar h3{
+    background-color: rgb(245, 248, 208);
+    border:1px solid rgb(226, 233, 127);
+    border-bottom: 0;
+    margin:0;
+    padding:10px;
+    text-align: center;
+}
+.formFichaActualizar{
+    align-items: center;
+    border: 1px solid rgb(168, 168, 214);
+    border-top: 0;
     display:flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap:15px;
+    justify-content: space-evenly;
+}
+.fichaActualizar span{
+    display:block;
+    font-size: 1.15rem;
+    margin: 9px auto;
+    width: 75%;
+}
+.fichaActualizarTexto{
+    font-size: 1.15rem;
+    margin: 9px auto;
+    width: 75%;
+}
+.fichaActualizar button, .fichaActualizar input {
+    display: block;
+    width: 75%;
+}
+.fichaActualizar .actualizarInput{
+    box-sizing: border-box;
+    font-size: 1.15rem;
+    padding: 15px;    
+}
+.formFichaActualizar label{
+    width: 100%
+}
+.fichaActualizar input, .fichaActualizar button{
+    height: 2.5vh;
+    margin: 10px auto;
+    padding: 0;
+}
+.fichaActualizar input{
+    width: 75%;
+}
+.boton{
+    background-color:rgb(245, 248, 208);
+    border:1px solid black;
+    min-height: 3vh;
+} 
+.boton:hover{
+    background-color:rgb(226, 233, 127);
+    border:1px solid black;
+    transition-duration: 0.5s;
+}
+#eliminar{
+    width:30%;
+}
+#eliminar{
+    background-color:rgb(228, 142, 142);
+    border:1px solid black;
+    transition-duration: 0.3s;
+}
+#eliminar:hover{
+    background-color:red;
+    border:1px solid black;
+    transition-duration: 0.3s;
+}
+#respuesta{
+    text-align: center;
 }

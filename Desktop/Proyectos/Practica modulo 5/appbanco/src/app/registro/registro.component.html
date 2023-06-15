@@ -10,6 +10,7 @@
             <label *ngIf="sesionActiva"><span class="inputLabelText">Gestor</span><input type="checkbox" name="regGestor" [(ngModel)]="regGestor"></label> 
             <input type="submit" value="Registrar" class="boton">
             <div id="fit"><button (click)="volver('login')" *ngIf="!sesionActiva" class="boton">Volver</button></div>
+            <div>{{respuesta}}</div>
         </form>
     </div>
 </section>
