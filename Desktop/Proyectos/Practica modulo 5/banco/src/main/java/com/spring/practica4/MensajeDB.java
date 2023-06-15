@@ -13,6 +13,21 @@ public class MensajeDB {
 	private static String query;
 	private static ResultSet resultados;
 	
+	public static String dbNuevoMensaje(MensajeRecord mensaje) {
+
+		if (!PersonaDB.verificarUsuario(mensaje.us_receptor())) {return "{\"respuesta\" : \"Usuario no encontrado\"}";};
+			
+		query = "INSERT INTO `mensaje` (`id`,`mensaje`,`us_emisor`,`us_receptor`,`fecha`) VALUES (NULL,?, ?, ?, ?)";
+		
+		try {
+			DbConnection.dbUpdate(query, new String[] {mensaje.mensaje(), mensaje.us_emisor(), mensaje.us_receptor(), "fecha"});
+		} catch(SQLException e) {
+			return "{\"respuesta\" : \"Error\"}";
+		} finally { DbConnection.cerrarDb();}
+
+		return "{\"respuesta\" : \"Mensaje enviado\"}";
+	}
+	
 	public static ArrayList<MensajeRecord> dbGetMensajes(int id) {
 		query = "SELECT id, mensaje, us_emisor ,nombre , us_receptor, nombre_r, fecha FROM mensaje\r\n"
 				+ "JOIN\r\n"
@@ -31,15 +46,18 @@ public class MensajeDB {
 				+ ")\r\n"
 				+ "WHERE us_emisor = us_e AND us_receptor = us_r";
 		
-		if (id != 0) {query += " AND ID LIKE ?";
-			resultados = DbConnection.dbSelect(query,new String[] {Integer.toString(id)});
-		} else {
-			resultados = DbConnection.dbSelect(query);
-		}
+
 			
 		ArrayList<MensajeRecord> mensajes= new ArrayList<MensajeRecord>();
 		
 		try {
+			
+			if (id != 0) {query += " AND ID LIKE ?";
+				resultados = DbConnection.dbSelect(query,new String[] {Integer.toString(id)});
+			} else {
+				resultados = DbConnection.dbSelect(query);
+			};
+			
 			while(resultados.next()) {
 				MensajeRecord mensaje = new MensajeRecord(
 				  resultados.getInt("id"),
@@ -50,10 +68,12 @@ public class MensajeDB {
 				  resultados.getString("nombre_r"),
 				  resultados.getString("fecha")
 				);
-			 	mensajes.add(mensaje);
+			 mensajes.add(mensaje);
+			 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		} finally{
 			DbConnection.cerrarDb();
 		}		
@@ -78,11 +98,13 @@ public class MensajeDB {
 				+ ")\r\n"
 				+ "WHERE us_emisor = us_e AND us_receptor = us_r AND (us_e LIKE ? OR us_r LIKE ?)";
 		
-		resultados = DbConnection.dbSelect(query, new String[] {usuario,usuario});
 			
 		ArrayList<MensajeRecord> mensajes= new ArrayList<MensajeRecord>();
 		
 		try {
+			
+			resultados = DbConnection.dbSelect(query, new String[] {usuario,usuario});
+
 			while(resultados.next()) {
 				MensajeRecord mensaje = new MensajeRecord(
 				  resultados.getInt("id"),
@@ -97,23 +119,10 @@ public class MensajeDB {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally{
-			DbConnection.cerrarDb();
-		}		
+			return null;
+		} finally{DbConnection.cerrarDb();}	
+		
 		return mensajes;
-	}
-	
-	public static String dbNuevoMensaje(MensajeRecord mensaje) {
-
-		if (!PersonaDB.verificarUsuario(mensaje.us_receptor())) {return "{\"respuesta\" : \"Usuario no encontrado\"}";};
-			
-		query = "INSERT INTO `mensaje` (`id`,`mensaje`,`us_emisor`,`us_receptor`,`fecha`) VALUES (NULL,?, ?, ?, ?)";
-		
-		DbConnection.dbUpdate(query, new String[] {mensaje.mensaje(), mensaje.us_emisor(), mensaje.us_receptor(), "fecha"});
-		
-		return "{\"respuesta\" : \"Mensaje enviado\"}";
-		
-		
 	}
 	
 }

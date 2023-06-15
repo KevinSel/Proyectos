@@ -2,7 +2,6 @@ package com.spring.main.restservice;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.spring.practica4.*;
 
@@ -17,14 +16,13 @@ public class LogInController {
 	PersonaRecord personaRecord;
 	
 	@PostMapping(path="/login")
-	@ResponseBody
 	public PersonaRecord logIn(@RequestBody LogIn login) {
 		personaRecord = PersonaDB.logIn(login.usuario(), login.password());
 		if (personaRecord != null) {BancoApplication.sesion = true;}
 			return personaRecord;
 	}
 	
-	@GetMapping(value="/login/logoff")
+	@GetMapping("/login/logoff")
 	public void logOff () {
 		BancoApplication.sesion = false;
 		personaRecord = null;
@@ -35,14 +33,12 @@ public class LogInController {
 		return personaRecord;
 	}
 	
-	@PostMapping(path="/registrarse")
-	@ResponseBody
+	@PostMapping("/registrarse")
 	public boolean registrarse(@RequestBody RegistroRecord registro){
 		return PersonaDB.dbRegistrar(registro.regGestor(), registro.nombre(), registro.apellido(), registro.usuario(), registro.password());
 	}
 	
 	@GetMapping(value="/crearGestores")
-	@ResponseBody
 	public String crearGestores(@RequestParam(value="cantidad") int cantidad) {
 		return PersonaDB.dbRegistrarEnMasa(cantidad);
 	}

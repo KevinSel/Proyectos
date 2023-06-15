@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.practica4.MensajeDB;
@@ -13,19 +12,16 @@ import com.spring.practica4.MensajeDB;
 public class MensajeController {
 	
 	@GetMapping(value="/mensajes")
-	@ResponseBody
 	public ArrayList<MensajeRecord> devolverMensajes(@RequestParam(value = "id", defaultValue="0") int id) {
       	return MensajeDB.dbGetMensajes(id);
 	};
 	
 	@GetMapping(value="/mensajesUsuario")
-	@ResponseBody
 	public ArrayList<MensajeRecord> devolverMensajesUsuario(@RequestParam(value="usuario")String usuario){
 		return MensajeDB.dbGetMensajesUsuario(usuario);
 	}
 	
 	@PostMapping(value="/agregarMensaje")
-	@ResponseBody
 	public String agregarMensaje(@RequestBody MensajeRecord mensaje) {
 		return MensajeDB.dbNuevoMensaje(mensaje);
 	}

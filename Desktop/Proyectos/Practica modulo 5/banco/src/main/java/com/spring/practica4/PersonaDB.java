@@ -20,36 +20,50 @@ public class PersonaDB {
 	public static String actualizarPassword(HashMap<String,String> datos) {
 		String tipoCuenta = datos.get("tipoCuenta");
 		query = "UPDATE " +tipoCuenta+ " SET password = ? WHERE id = ?";
-	    DbConnection.dbUpdate(query, new String[] {SHA3(datos.get("password")), datos.get("id")});
+	    try {
+			DbConnection.dbUpdate(query, new String[] {SHA3(datos.get("password")), datos.get("id")});
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "{\"respuesta\" : \"Error\"}";
+		} finally {DbConnection.cerrarDb();}
 		return "{\"respuesta\" : \"Contraseña actualizada\"}";
 	}
 	
 	public static String actualizarCliente(HashMap<String, String> datos) {
 		query = "UPDATE cliente SET id_gestor = ?, nombre = ?, apellido = ?, usuario = ?, balance = ? WHERE id = ?";
-		DbConnection.dbUpdate(query, new String[] {datos.get("id_gestor"),
-												   datos.get("nombre"),
-												   datos.get("apellido"),
-												   datos.get("usuario"),
-												   datos.get("balance"),
-												   datos.get("id")});
-		
+		try {
+			DbConnection.dbUpdate(query, new String[] {datos.get("id_gestor"),
+													   datos.get("nombre"),
+													   datos.get("apellido"),
+													   datos.get("usuario"),
+													   datos.get("balance"),
+													   datos.get("id")});
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "{\"respuesta\" : \"Error\"}";
+		} finally {DbConnection.cerrarDb();}
 		return "{\"respuesta\" : \"Cliente actualizado\"}";
 	}
 	
 	public static String actualizarGestor(HashMap<String, String> datos) {
 		query = "UPDATE gestor SET nombre = ?, apellido = ?, usuario = ?, salario = ? WHERE id = ?";
-		DbConnection.dbUpdate(query, new String[] {datos.get("nombre"),
-												   datos.get("apellido"),
-												   datos.get("usuario"),
-												   datos.get("salario"),
-												   datos.get("id")});
+		try {
+			DbConnection.dbUpdate(query, new String[] {datos.get("nombre"),
+													   datos.get("apellido"),
+													   datos.get("usuario"),
+													   datos.get("salario"),
+													   datos.get("id")});
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "{\"respuesta\" : \"Error\"}";
+		} finally {DbConnection.cerrarDb();}
 		
-		return "{\"respuesta\" : \"Gestor actualizado\"}";}
+		return "{\"respuesta\" : \"Gestor actualizado\"}";
+	}
 	
 	public static PersonaRecord logIn(String usuario, String password) {
 		
 		try {
-			
 			query = "SELECT id, id_gestor,nombre, apellido, usuario, balance FROM cliente\r\n"
 					+ "WHERE usuario LIKE ? AND password LIKE ?";
 			
@@ -77,41 +91,24 @@ public class PersonaDB {
 			
 		}catch(SQLException e){
 		e.printStackTrace();
-			
 		} finally {
 			DbConnection.cerrarDb();
 		};
-		
 		return null; 	
-		
 	};
-	
-	public static void dBBorrarCliente(int id) {
-		String query = "UPDATE cliente SET id_gestor = 0, usuario = 'Eliminado', password = ? WHERE id = ?";
-		DbConnection.dbUpdate(query,new String[] { SHA3(Integer.toString(rand.nextInt())), Integer.toString(id)});
-	}
-	
-	public static void dBBorrarGestor(int id) {
-		String query = "UPDATE gestor SET usuario = 'Eliminado', password = ?, salario = 0 WHERE id = ?";
-		DbConnection.dbUpdate(query,new String[] { SHA3(Integer.toString(rand.nextInt())), Integer.toString(id)});
-	}
-	
+
 	public static boolean verificarClientePorId (int id){
 		
 		query = "SELECT id FROM cliente WHERE id = ?";
 		
-		resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
-		
 		try {
+			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
 			return(resultados.next());
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		}
+		} finally {DbConnection.cerrarDb();}
 		
 		return false;
-		
 	}
 	
 	public static boolean verificarUsuario(String usuario){
@@ -119,27 +116,29 @@ public class PersonaDB {
 		query = "SELECT usuario FROM ((SELECT usuario FROM cliente) UNION (SELECT usuario FROM gestor)) as tb WHERE usuario LIKE (?)";
 		
 		try {
-			if( DbConnection.dbSelect(query, new String[] {usuario} ).next()) {return true;}
+			if(DbConnection.dbSelect(query, new String[] {usuario} ).next()) {return true;}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		}; 
+		} finally {DbConnection.cerrarDb();}; 
 		
 		return false;
 	}
 	
 	public static boolean dbRegistrar(Boolean esGestor, String nombre, String apellido, String usuario, String password) {
 		if(verificarUsuario(usuario)) {return false;}
-		if (esGestor) {
-			DbConnection.dbUpdate("INSERT INTO `gestor` (`id`,`nombre`,`apellido`,`usuario`,`password`,`salario`) VALUES (NULL, ?, ?, ?, ?, ?)", 
-					new String[] {nombre, apellido, usuario, SHA3(password), "1000"});
-		} else {
-			DbConnection.dbUpdate("INSERT INTO `cliente` (`id`,`id_gestor`,`nombre`,`apellido`,`usuario`,`password`,`balance`) VALUES (NULL, ?, ?, ?, ?, ?, ?)", 
-					new String[] {"2", nombre, apellido, usuario, SHA3(password),"100"});
-		}
+		try {
+			if (esGestor) {
+				DbConnection.dbUpdate("INSERT INTO `gestor` (`id`,`nombre`,`apellido`,`usuario`,`password`,`salario`) VALUES (NULL, ?, ?, ?, ?, ?)", 
+						new String[] {nombre, apellido, usuario, SHA3(password), "1000"});
+			} else {
+				DbConnection.dbUpdate("INSERT INTO `cliente` (`id`,`id_gestor`,`nombre`,`apellido`,`usuario`,`password`,`balance`) VALUES (NULL, ?, ?, ?, ?, ?, ?)", 
+						new String[] {"2", nombre, apellido, usuario, SHA3(password),"100"});
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {DbConnection.cerrarDb();}
 		return true;			
-		}
+	}
 	
 	public static String dbRegistrarEnMasa(int cantidad) {
 
@@ -150,8 +149,13 @@ public class PersonaDB {
 			String password = SHA3("password" + rand.nextInt(50000)); 
 			String salario = "" + rand.nextInt(30000);
 			
-			DbConnection.dbUpdate("INSERT INTO `gestor` (`id`,`nombre`,`apellido`,`usuario`,`password`,`salario`) VALUES (NULL, ?, ?, ?, ?, ?)", 
-					new String[] {nombre, apellido, usuario, password, salario});
+			try {
+				DbConnection.dbUpdate("INSERT INTO `gestor` (`id`,`nombre`,`apellido`,`usuario`,`password`,`salario`) VALUES (NULL, ?, ?, ?, ?, ?)", 
+						new String[] {nombre, apellido, usuario, password, salario});
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return "{\"respuesta\" : \"Error\"}";
+			} finally {DbConnection.cerrarDb();}
 		}
 		return "{\"respuesta\" : \"Gestores creados\"}";
 	};
@@ -161,14 +165,14 @@ public class PersonaDB {
 		ArrayList<PersonaRecord> personas = new ArrayList<PersonaRecord>();
 		
 		query = "SELECT * FROM cliente";
-		
-		if(id>0) {
-			query += " WHERE id = ?";
-			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
-		} else {
-			resultados = DbConnection.dbSelect(query);
-		}
+
 		try {
+			if(id>0) {
+				query += " WHERE id = ?";
+				resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
+			} else {
+				resultados = DbConnection.dbSelect(query);
+			}
 			while (resultados.next()) {
 				personas.add(new PersonaRecord(
 						resultados.getInt("id"),
@@ -180,10 +184,7 @@ public class PersonaDB {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		}
-		
+		} finally {DbConnection.cerrarDb();}
 		return personas;
 	}
 	
@@ -192,14 +193,14 @@ public class PersonaDB {
 		ArrayList<PersonaRecord> personas = new ArrayList<PersonaRecord>();
 		
 		query = "SELECT * FROM gestor";
-		
-		if(id>0) {
-			query += " WHERE id = ?";
-			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
-		} else {
-			resultados = DbConnection.dbSelect(query);
-		}
+	
 		try {
+			if(id>0) {
+				query += " WHERE id = ?";
+				resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
+			} else {
+				resultados = DbConnection.dbSelect(query);
+			}
 			while (resultados.next()) {
 				personas.add(new PersonaRecord(
 						resultados.getInt("id"),
@@ -210,9 +211,7 @@ public class PersonaDB {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		}
+		} finally {DbConnection.cerrarDb();}
 		
 		return personas;
 	}
@@ -222,10 +221,9 @@ public class PersonaDB {
 	ArrayList<PersonaRecord> personas = new ArrayList<PersonaRecord>();
 		
 	query = "SELECT * FROM cliente WHERE id_gestor = ?";
-	
-	resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
 
 	try {
+		resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
 		while (resultados.next()) {
 			personas.add(new PersonaRecord(
 					resultados.getInt("id"),
@@ -237,9 +235,7 @@ public class PersonaDB {
 		}
 	} catch (SQLException e) {
 		e.printStackTrace();
-	} finally {
-		DbConnection.cerrarDb();
-	}
+	} finally {DbConnection.cerrarDb();}
 	
 	return personas;
 	
@@ -247,36 +243,39 @@ public class PersonaDB {
 	
 	public static double getBalanceFromId(int id) {
 		query = "SELECT balance FROM cliente WHERE id = ?";
-		resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)} );
 		double balance = 0;
 		try {
+			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)} );
 			resultados.next();		
 			balance = resultados.getDouble("balance");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			DbConnection.cerrarDb();
-		}
+		} finally {DbConnection.cerrarDb();}
 		return balance;
 	};
 
-	public static String borrarUsuario(String usuario) {
-		
-		query = "UPDATE gestor SET `password` = \"Eliminado\", usuario = CONCAT(usuario, \"(Eliminado)\"), salario = 0"
-				+ " WHERE usuario LIKE ?";
-		
-		DbConnection.dbUpdate(query, new String[] {usuario});
-		
-		query = "UPDATE cliente SET `password` = \"Eliminado\", usuario = CONCAT(usuario, \"(Eliminado)\"), balance = 0"
-				+ " id_gestor = 2 WHERE usuario LIKE ?";
-		
-		DbConnection.dbUpdate(query, new String[] {usuario});
-
-		return  "{\"respuesta\" : \"Usuario eliminado\"}";
-		
-	}
 	
+	//Borrar --- Los datos no se borran, se hacen inaccesibles para no perder el rastro de las operaciones y mensajes.
+	
+	public static String borrarUsuario(String usuario) {		
+		try {
+			query = "UPDATE gestor SET `password` = \"Eliminado\", usuario = Eliminado, salario = 0"
+					+ " WHERE usuario LIKE ?";
+			DbConnection.dbUpdate(query, new String[] {usuario});
+			
+			query = "UPDATE cliente SET `password` = \"Eliminado\", usuario = Eliminado, balance = 0"
+					+ " id_gestor = 2 WHERE usuario LIKE ?";
+			DbConnection.dbUpdate(query, new String[] {usuario});
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return  "{\"respuesta\" : \"Error\"}";
+		} finally {DbConnection.cerrarDb();}
+
+		return  "{\"respuesta\" : \"Usuario eliminado\"}";	
+	}
 		
+	//SHA3 ---
 	
 	public static String SHA3(String str) {
 		try {

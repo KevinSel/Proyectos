@@ -9,18 +9,11 @@ import { StatusService } from '../status.service';
 })
 export class RegistroComponent {
 
-  nombre = "";
-  usuario = "";
-  apellido = "";
-  password = "";
-  regGestor = false;
+  constructor(private http: HttpClient, private router: Router, private status: StatusService){}
 
-  sesionActiva = false;
-
-  respuesta = "";
-
-  volver(url: String){
-    this.router.navigate([url])
+  
+  ngOnInit(){
+    this.status.persona == null? this.sesionActiva = false: this.sesionActiva = true;
   }
 
   registrarse(){
@@ -33,10 +26,15 @@ export class RegistroComponent {
     );
   };
 
-  constructor(private http: HttpClient, private router: Router, private status: StatusService){}
-
-  ngOnInit(){
-    this.status.persona == null? this.sesionActiva = false: this.sesionActiva = true;
+  volver(url: String){
+    this.router.navigate([url])
   }
+  nombre = "";
+  usuario = "";
+  apellido = "";
+  password = "";
+  respuesta = "";
+  regGestor = false;
+  sesionActiva = false;
 
 }

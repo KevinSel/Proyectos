@@ -59,34 +59,34 @@
         </div>
     </div>
     
-    <div *ngFor="let cliente of clienteAActualizar" class="ficha">
-        <div class="headerFicha"></div>
-        ID: {{cliente.id}} <br>
-        Balance: {{cliente.balance}} <br>
-        <form  (ngSubmit)="actualizarClienteDesdeForm()">
-            <label>ID Gestor: <input type="number" name="id_gestor" [(ngModel)]="formData.id_gestorForm"></label> <br>
-            <label>Nombre:  <input type="text" name="nombre" [(ngModel)]="formData.nombreForm"></label> <br>
-            <label>Apellido:<input  type="text" name="apellido" [(ngModel)]="formData.apellidoForm"> </label> <br>
-            <label>Usuario: <input  type="text" name="usuario" [(ngModel)]="formData.usuarioForm"></label> <br>
+    <div *ngFor="let cliente of clienteAActualizar" class="fichaActualizar">
+        <div class="headerFicha"> <span class="fichaTitulo">Actualizar Cliente</span></div>
+        <form  (ngSubmit)="actualizarClienteDesdeForm()" class="contenidoFicha">
+            <span>ID: {{cliente.id}} </span>
+            <span> Balance: {{cliente.balance}}</span>
+            <label>ID Gestor: <input type="number" name="id_gestor" [(ngModel)]="formData.id_gestorForm"></label>
+            <label>Nombre:  <input type="text" name="nombre" [(ngModel)]="formData.nombreForm"></label> 
+            <label>Apellido:<input  type="text" name="apellido" [(ngModel)]="formData.apellidoForm"> </label> 
+            <label>Usuario: <input  type="text" name="usuario" [(ngModel)]="formData.usuarioForm"></label> 
             <input type="submit" value="actualizar">
+            <input type="password" name="password" [(ngModel)]="password" placeholder="Nueva contraseña"> <button (click)="actualizarPassword('cliente')">Actualizar contraseña</button>
+            <button (click)="eliminarUsuario(formData.usuarioForm)">Eliminar usuario</button>
+            <span>{{respuesta}}</span>
         </form>
-        <input type="password" name="password" [(ngModel)]="password"> <button (click)="actualizarPassword('cliente')">Actualizar contraseña</button>
-        <button (click)="eliminarUsuario(formData.usuarioForm)">Eliminar usuario</button>
-        {{respuesta}}
     </div>
     
-    <div *ngFor="let gestor of gestorAActualizar" class="ficha">
-        <div class="headerFicha"></div>
-        ID: {{gestor.id}} <br>
-        Salario: {{gestor.salario}} <br>
-        <form (ngSubmit)="actualizarGestorDesdeForm()">
-            <label>Nombre:  <input type="text" name="nombre" [(ngModel)]="formData.nombreForm"></label> <br>
-            <label>Apellido:<input  type="text" name="apellido" [(ngModel)]="formData.apellidoForm"> </label> <br>
-            <label>Usuario: <input  type="text" name="usuario" [(ngModel)]="formData.usuarioForm"></label> <br>
-            <input type="submit" value="actualizar">
+    <div *ngFor="let gestor of gestorAActualizar" class="fichaActualizar">
+        <div class="headerFicha"> <span class="fichaTitulo">Actualizar Gestor</span></div>
+        <form (ngSubmit)="actualizarGestorDesdeForm()" class="contenidoFicha">
+            <span>ID: {{gestor.id}}</span>
+            <label>Nombre:  <input type="text" name="nombre" [(ngModel)]="formData.nombreForm"></label> 
+            <label>Apellido:<input  type="text" name="apellido" [(ngModel)]="formData.apellidoForm"> </label> 
+            <label>Usuario: <input  type="text" name="usuario" [(ngModel)]="formData.usuarioForm"></label> 
+            <span>Salario: {{gestor.salario}} </span>
+            <input type="submit" value="Actualizar">
+            <input type="password" name="password" [(ngModel)]="password" placeholder="Nueva contraseña"> <button (click)="actualizarPassword('gestor')">Actualizar contraseña</button>
+            <button (click)="eliminarUsuario(formData.usuarioForm)">Eliminar usuario</button>
+            <span>{{respuesta}}</span>
         </form>
-        <input type="password" name="password" [(ngModel)]="password"> <button (click)="actualizarPassword('gestor')">Actualizar contraseña</button>
-        <button (click)="eliminarUsuario(formData.usuarioForm)">Eliminar usuario</button>
-        {{respuesta}}
     </div>
 </section>

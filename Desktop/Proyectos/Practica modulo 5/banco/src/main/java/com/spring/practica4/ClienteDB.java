@@ -1,18 +1,21 @@
 package com.spring.practica4;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class ClienteDB extends PersonaDB {
 
-	//public static void dbSetBalance(Scanner sc, int id) {
-	//	System.out.println("Ingrese el balance");
-	//	double balance = main.obtenerDoublePorConsola(sc);
-	//	String query = "UPDATE `cliente` SET balance = (?) WHERE `id` = ?";
-	//	DbConnection.dbUpdate(query, new String[] {Double.toString(balance), Integer.toString(id)});
-	//};
-	
-	public static void dbSumarBalance(int id, double monto) {
-		String query = "UPDATE `cliente` SET balance = balance + (?) WHERE `id` = ?";
-		DbConnection.dbUpdate(query, new String[] {Double.toString(monto), Integer.toString(id)});
-	};
-	
+	public static void sumarBalance(double diferencia, int id) {
+		String query = "SELECT balance FROM cliente WHERE id = ?";
+		ResultSet resultados;
+		try {
+			resultados = DbConnection.dbSelect(query, new String[] {Integer.toString(id)});
+			Double balance = null;
+			if (resultados.next()) {balance = resultados.getDouble("balance");}
+			DbConnection.actualizar(id, "cliente", "balance", Double.toString(balance + diferencia));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {DbConnection.cerrarDb();}
+	}
 	
 }

@@ -3,10 +3,9 @@
     padding: 0px 0 10px 0;
 }
 .fichas{
-    height:100%;
     display:flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
     gap:15px;
 }
 .contenidoFicha{
@@ -31,4 +30,10 @@
 }
 .fichaTitulo{
     margin: 5px 0 15px 3px
+}
+.fichaActualizar{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap:15px;
 }
