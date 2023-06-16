@@ -14,8 +14,6 @@ public class BancoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BancoApplication.class, args);
 	}
-	
-	
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {

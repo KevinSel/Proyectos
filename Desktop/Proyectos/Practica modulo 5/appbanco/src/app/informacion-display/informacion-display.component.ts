@@ -115,11 +115,13 @@ export class InformacionDisplayComponent {
     this.balanceInicial -= this.monto
   }
 
+  //Probar mejor implementacion con fork. 
   verTodasLasOperaciones(){
     this.verDepositos(0)
     setTimeout(() =>  this.verTransferencias(0), 15)
   }
 
+    //Probar mejor implementacion con fork.
   verLasOperacionesDeUnUsuario(id: number){
     this.verDepositosUsuario(id)
     setTimeout(() => this.verTransferenciasUsuario(id) , 15)
