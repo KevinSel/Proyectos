@@ -1,0 +1,16 @@
+<section [ngClass]="{'regContainerNoLogeado': !sesionActiva, 'regContainerLogeado': sesionActiva}" id="regContainer">
+    <div id="regWindow">
+        <header *ngIf="!sesionActiva"><h1>Registrarse</h1></header>
+        <header *ngIf="sesionActiva"><h1>Registrar usuario</h1></header>
+        <form (ngSubmit)="registrarse()" id="form">
+            <label ><span class="inputLabelText">Nombre</span>       <input type = "text"     name="nombre"   [(ngModel)]="nombre"></label> 
+            <label ><span class="inputLabelText">Apellido</span>     <input type = "text"     name="apellido" [(ngModel)]="apellido"></label> 
+            <label ><span class="inputLabelText">Usuario</span>      <input type = "text"     name="usuario"  [(ngModel)]="usuario"></label> 
+            <label ><span class="inputLabelText">Contraseña</span>   <input type = "password" name="password" [(ngModel)]="password"></label> 
+            <label *ngIf="sesionActiva"><span class="inputLabelText">Gestor</span><input type="checkbox" name="regGestor" [(ngModel)]="regGestor"></label> 
+            <input type="submit" value="Registrar" class="boton">
+            <div id="fit"><button (click)="volver('login')" *ngIf="!sesionActiva" class="boton">Volver</button></div>
+            <div>{{respuesta}}</div>
+        </form>
+    </div>
+</section>

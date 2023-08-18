@@ -1,0 +1,89 @@
+.centrarContenido{
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width:100%;
+}
+#contenido{
+    height: 90%;
+    width: 90%;
+}
+.botonesArriba{
+    display:flex;
+    gap: 30px;
+    justify-content: flex-start;
+    align-items:center;
+    height:5%;
+    width:100%;
+}
+button, input{
+    padding: 5px;
+}
+button{
+    background-color: rgb(245, 248, 208);
+    border: 1px solid black;
+}
+.componente{
+    display: block;
+    height:95%;
+    width:100%;
+}
+.idInput{
+    max-width: 50px;   
+}
+.labelContainer{
+    background-color:rgb(191, 191, 231) ;
+}
+.labelContainer label span{
+    padding: 0 10px 0 10px;
+}
+.tipoForm{
+    border: 1px solid rgb(168, 168, 214);
+    border-top: 0;
+    display:flex;
+    flex-direction: column;
+    font-size: 1.3rem;
+    gap:30px;
+    height:100%;
+    justify-content: space-around;
+    margin: 0 auto;
+    width:50%;
+}
+.tipoForm > * {
+    margin: 10px 15px 0px 15px;
+}
+h2{ 
+    background-color:rgb(245, 248, 208);
+    border:1px solid rgb(226, 233, 127);
+    border-bottom: 0;
+    margin: 0 auto;
+    padding: 5px 0 5px 0;
+    text-align: center;
+    width:50%;
+}
+.labelSpan{
+    margin-bottom: 10px;
+}
+.textoContenedor{
+    display:flex;
+    justify-content: space-between;
+}
+.tipoForm input[type="submit"]{
+    background-color: rgb(245, 248, 208);
+}
+.tipoForm input[type="submit"]:hover{
+    background-color:rgb(226, 233, 127);
+    transition-duration: 0.5s;
+}
+.respuesta{
+    margin:0 auto;
+    margin-bottom: 15px;
+    text-align: center;
+}
+textarea{
+    box-sizing: border-box;
+    font-size: 1.3rem;
+    padding:10px;
+}

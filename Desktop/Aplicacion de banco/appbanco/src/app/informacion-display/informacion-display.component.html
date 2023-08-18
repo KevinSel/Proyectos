@@ -1,0 +1,113 @@
+
+<section  class="centrarContenido">
+    <div id="contenido"> 
+
+        <div id="obtenerGestores" *ngIf="estado.obtenerGestores"  class="botonesArriba">
+            <button (click)="obtenerGestor(0)">Ver todos</button>
+            <div class="labelContainer">
+                <label><span >ID</span> <input type="number" name="id" [(ngModel)]="id" (input)="mayorQueCero()"  class="idInput"></label><button (click)="obtenerGestor(this.id)">Filtrar</button>
+            </div>
+        </div>
+
+        <div id="actualizarGestor" *ngIf="estado.actualizarGestor" class="botonesArriba">
+            <div class="labelContainer">
+                <label><span >ID</span> <input type="number" name="id" [(ngModel)]="id" (input)="mayorQueCero()"  class="idInput"></label><button (click)="actualizarGestor(this.id)">Filtrar</button>
+            </div>
+        </div>
+
+        <div id="agregarGestores" *ngIf="estado.agregarGestores" class="botonesArriba">
+            <div class="labelContainer"> 
+                <label><span >Cantidad</span> <input type="number" name="id" [(ngModel)]="id" (input)="mayorQueCero()"  class="idInput"></label><button (click)="agregarGestores(this.id)">Crear</button>
+            </div>
+            {{respuesta}}
+        </div>
+
+        <div id="verClientesDeGestor" *ngIf="estado.verClientesDeGestor" class="botonesArriba">
+            <div class="labelContainer">
+                <label><span >ID</span><input type="number" name="id" [(ngModel)]="id" (input)="mayorQueCero()"  class="idInput"></label><button (click)="verClientesDeGestor(this.id)">Buscar</button>
+            </div>
+        </div>
+
+        <div id="verCliente" *ngIf="estado.verClientes" class="botonesArriba">
+            <button (click)="verCliente(0)">Ver todos</button>
+            <div class="labelContainer">
+                <label><span >ID</span><input type="number" name="id" [(ngModel)]="id" (input)="mayorQueCero()" class="idInput"></label><button (click)="verCliente(this.id)">Filtrar</button>
+            </div>
+        </div>
+
+        <div id="actualizarCliente" *ngIf="estado.actualizarCliente" class="botonesArriba">
+            <div class="labelContainer">
+                <label><span >ID</span><input type="number" name="id" [(ngModel)]="id" (input)="mayorQueCero()" class="idInput"></label><button (click)="actualizarCliente(this.id)">Filtrar</button>
+            </div>
+        </div>
+
+        <div id="verLasOperacionesDeUnUsuario" *ngIf="estado.verLasOperacionesDeUnUsuario" class="botonesArriba">
+            <div class="labelContainer">
+                <label><span>ID</span><input type="number" name="id" [(ngModel)]="id" (input)="mayorQueCero()" class="idInput"></label><button (click)="verLasOperacionesDeUnUsuario(id)">Filtrar</button>
+            </div>
+        </div>
+
+        <div id="verDepositos" *ngIf="estado.verDepositos" class="botonesArriba">
+            <button (click)="verDepositos(0)">Ver todos</button>
+            <div class="labelContainer">
+                <label><span >ID</span><input type="number" name="id" [(ngModel)]="id" (input)="mayorQueCero()" class="idInput"></label><button (click)="verDepositos(this.id)">Filtrar</button>
+            </div>
+        </div>
+
+        <div id="verTransferencias" *ngIf="estado.verTransferencias" class="botonesArriba">
+            <button (click)="verTransferencias(0)">Ver todos</button>
+            <div class="labelContainer">
+                <label><span >ID</span><input type="number" name="id" [(ngModel)]="id" (input)="mayorQueCero()" class="idInput"></label><button (click)="verTransferencias(this.id)">Filtrar</button>
+            </div>
+        </div>
+
+        <div id="verMensajes" *ngIf="estado.verMensajes" class="botonesArriba">
+            <button (click)="verMensajes(0)">Ver todos</button>
+            <div class="labelContainer">
+                <span >Usuario</span>
+                <input type="text" [(ngModel)]="usuario">
+                <button (click)="verMensajesUsuario(this.usuario)">Filtrar</button>
+            </div>
+            <div class="labelContainer">
+                <label><span >ID</span><input type="number" name="id" [(ngModel)]="id" (input)="mayorQueCero()" class="idInput"> </label><button (click)="verMensajes(this.id)">Filtrar</button>
+            </div>
+        </div>
+
+        <div id="deposito" *ngIf="estado.deposito" >
+            <h2>Realizar deposito</h2>
+            <form (ngSubmit)="realizarDeposito()"  class="tipoForm">
+                <span>Ingrese una cantidad negativa para extraer y positiva para depositar</span>
+                <div class="textoContenedor"><span>Balance</span><span>{{balance}}</span></div>
+                <label><span class="labelSpan">Monto</span><br><input type="number" name="monto" [(ngModel)]="monto"></label>
+                <input type="submit" value="Realizar deposito">
+                <span class="respuesta">{{respuesta}}</span>
+            </form>
+        </div>
+
+        <div id="transferencia" *ngIf="estado.transferencia">
+            <h2>Realizar transferencia</h2>
+            <form (ngSubmit)="realizarTransferencia()"  class="tipoForm">
+                <div class="textoContenedor"><span>Balance</span><span>{{balance}}</span></div>
+                <label><span class="labelSpan">Monto</span><br><input type="number" name="monto" [(ngModel)]="monto"></label>
+                <label><span class="labelSpan">ID receptor</span><br><input type="number" name="id_receptor" [(ngModel)]="id_receptor" ></label>
+                <input type="submit" value="Realizar transferencia">
+                <span class="respuesta">{{respuesta}}</span> 
+            </form>
+        </div>
+
+        <div id="enviarMensaje" *ngIf="estado.enviarMensaje">
+            <h2>Enviar mensaje</h2>
+            <form (ngSubmit)="enviarMensaje()"  class="tipoForm">
+                <textarea rows="4" cols="3"  name="mensaje" [(ngModel)]="mensaje" style="resize: none;" placeholder="Limite: 200 caracteres"></textarea>
+                <label ><span class="labelSpan">Usuario receptor</span><br><input type="text" name="usuarioReceptor" [(ngModel)]="usuarioReceptor"></label>
+                <input type="submit" value="Enviar mensaje">
+                <span class="respuesta">{{respuesta}}</span>
+            </form>
+        </div>
+
+        <app-registro class="componente" *ngIf="estado.agregarGestor || estado.agregarCliente"></app-registro> 
+
+        <app-fichas class="componente" [estado]="estado" [formData]="formData" ></app-fichas>
+
+    </div>
+</section>

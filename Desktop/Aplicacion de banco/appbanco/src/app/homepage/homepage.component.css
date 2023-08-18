@@ -1,0 +1,46 @@
+section{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    height: 97vh;
+}
+.contenidoDimensiones{
+    height:85vh;
+    width:50vw;
+}
+.menu{
+    align-items: center;
+    display:flex;
+    flex-direction: column;
+    height:100%;
+    justify-content: space-evenly;
+}
+.menuContenedor{
+    grid-column: 1/2;
+    height:100%;
+}
+#informacionDisplayComponentContenedor{
+    grid-column:2/3;
+    height:100%;
+    margin: 0 auto;
+}
+#informacionDisplayComponent{
+    display:block;
+    width:100%;
+    height:100%;
+}
+.menuContenedor button{
+    background: radial-gradient(white 30%,rgb(127, 127, 219));
+    border:0;
+    border-radius: 100px;
+    height:7%;
+    width: 50%;
+}
+.menuContenedor button:hover{
+    background: radial-gradient(white 30%,rgb(255, 0, 0));
+    transform: translateX(30px);
+    transition-duration: 1s;
+}
+.menuContenedor .botonSeleccionado{
+    background: radial-gradient(white 30%,red);
+    transform: translateX(30px);
+}

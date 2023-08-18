@@ -1,0 +1,100 @@
+<section class="fichas">
+    <div *ngFor="let cliente of clientesAMostrar" class="ficha">
+        <header><h3>Cliente</h3></header>
+        <div class="contenedorFicha">
+            <div class="texto"><span>ID</span><span>{{cliente.id}}</span></div>
+            <div class="texto"><span>ID Gestor</span><span>{{cliente.id_gestor}}</span></div>
+            <div class="texto"><span>Nombre</span><span>{{cliente.nombre}}</span></div>
+            <div class="texto"><span>Apellido</span><span> {{cliente.apellido}}</span></div>
+            <div class="texto"><span>Usuario</span><span>{{cliente.usuario}}</span></div>
+            <div class="texto"><span>Balance</span><span>{{cliente.balance}}</span></div>
+        </div>
+    </div>
+    
+    <div *ngFor="let gestor of gestoresAMostrar" class="ficha">
+        <header><h3>Gestor</h3></header>
+        <div class="contenidoFicha">
+            <div class="texto"><span>ID</span><span>{{gestor.id}}</span></div>
+            <div class="texto"><span>Nombre</span><span>{{gestor.nombre}}</span></div>
+            <div class="texto"><span>Apellido</span><span> {{gestor.apellido}}</span></div>
+            <div class="texto"><span>Usuario</span><span>{{gestor.usuario}}</span></div>
+            <div class="texto"><span>Salario</span><span>{{gestor.salario}}</span></div>
+        </div>
+    </div>
+    
+    <div *ngFor="let mensaje of mensajesAMostrar" class="ficha">
+        <header><h3>Mensaje</h3></header>
+        <div class="contenidoFicha">
+            <div class="texto"><span>ID</span><span>{{mensaje.id}}</span></div>
+            <div class="texto"><span>Mensaje</span><span>{{mensaje.mensaje}}</span></div>
+            <div class="texto"><span>Usuario emisor</span><span>{{mensaje.us_emisor}}</span></div>
+            <div class="texto"><span>Nombre emisor</span><span>{{mensaje.nombre_emisor}}</span></div>
+            <div class="texto"><span>Usuario receptor</span><span>{{mensaje.us_receptor}}</span></div>
+            <div class="texto"><span>Nombre receptor</span><span>{{mensaje.nombre_receptor}}</span></div>
+            <div class="texto"><span>Fecha</span><span>{{mensaje.fecha}}</span></div>
+        </div>
+    </div>
+    
+    <div *ngFor="let deposito of depositosAMostrar" class="ficha">
+        <header><h3>Deposito</h3></header>
+        <div class="contenidoFicha">
+            <div class="texto"><span>ID</span><span>{{deposito.id}}</span></div>
+            <div class="texto"><span>ID cliente</span><span>{{deposito.id_emisor}}</span></div>
+            <div class="texto"><span>Nombre</span><span>{{deposito.nombre_emisor}}</span></div>
+            <div class="texto"><span>Monto</span><span>{{deposito.monto}}</span></div>
+            <div class="texto"><span>Fecha</span><span>{{deposito.fecha}}</span></div>
+        </div>
+    </div>
+    
+    <div *ngFor="let transferencia of transferenciasAMostrar" class="ficha">
+        <header><h3>Transferencia</h3></header>
+        <div class="contenidoFicha">
+            <div class="texto"><span>ID</span><span>{{transferencia.id}}</span></div>
+            <div class="texto"><span>Monto</span><span>{{transferencia.monto}}</span></div>
+            <div class="texto"><span>ID cliente</span><span>{{transferencia.id_emisor}}</span></div>
+            <div class="texto"><span>Nombre</span><span>{{transferencia.nombre_emisor}}</span></div>
+            <div class="texto"><span>ID receptor</span><span>{{transferencia.id_receptor}}</span></div>
+            <div class="texto"><span>Nombre</span><span>{{transferencia.nombre_receptor}}</span></div>
+            <div class="texto"><span>Fecha</span><span>{{transferencia.fecha}}</span></div>
+        </div>
+    </div>
+    
+    <div *ngFor="let cliente of clienteAActualizar" class="fichaActualizar">
+        <div class="actualizarVentana">
+            <header><h3>Actualizar cliente</h3></header>
+            <form  (ngSubmit)="actualizarClienteDesdeForm()" class="formFichaActualizar">
+                <div class="fichaActualizarTexto">ID {{cliente.id}}</div>
+                <div class="fichaActualizarTexto">Balance {{cliente.balance}}</div>
+                <label><span>ID Gestor</span><input type="number" name="id_gestor" [(ngModel)]="formData.id_gestorForm" class="actualizarInput"></label>
+                <label><span>Nombre</span><input type="text" name="nombre" [(ngModel)]="formData.nombreForm"  class="actualizarInput"></label> 
+                <label><span>Apellido</span><input  type="text" name="apellido" [(ngModel)]="formData.apellidoForm"  class="actualizarInput"> </label> 
+                <label><span>Usuario</span><input  type="text" name="usuario" [(ngModel)]="formData.usuarioForm"  class="actualizarInput"></label> 
+                <input type="submit" value="actualizar" class="boton">
+                <input type="password" name="password" [(ngModel)]="password" placeholder="Nueva contraseña" class="actualizarInput" *ngIf="estado.actualizarClienteLogeado">
+                <button (click)="actualizarPassword('cliente')"  class="boton" *ngIf="estado.actualizarClienteLogeado">Actualizar contraseña</button>
+                <button (click)="eliminarUsuario(formData.usuarioForm)"  class="boton" id="eliminar">Eliminar usuario</button>
+                <span>{{respuesta}}</span>
+            </form>
+        </div>
+    </div>
+    
+    <div *ngFor="let gestor of gestorAActualizar" class="fichaActualizar">
+        <div class="actualizarVentana">
+            <header><h3>Actualizar Gestor</h3></header>
+            <form (ngSubmit)="actualizarGestorDesdeForm()" class="formFichaActualizar">
+                <div class="fichaActualizarTexto">ID {{gestor.id}}</div>
+                <div class="fichaActualizarTexto">Salario {{gestor.salario}}</div>
+                <label><span>Nombre</span><input type="text" name="nombre" [(ngModel)]="formData.nombreForm" class="actualizarInput"></label> 
+                <label><span>Apellido</span><input  type="text" name="apellido" [(ngModel)]="formData.apellidoForm" class="actualizarInput"> </label> 
+                <label><span>Usuario</span> <input  type="text" name="usuario" [(ngModel)]="formData.usuarioForm" class="actualizarInput"></label> 
+                <input type="submit" value="Actualizar" class="boton">
+                <input type="password" name="password" [(ngModel)]="password" placeholder="Nueva contraseña" class="actualizarInput" *ngIf="estado.actualizarGestorLogeado">
+                <button (click)="actualizarPassword('gestor')" class="boton" *ngIf="estado.actualizarGestorLogeado">Actualizar contraseña</button>
+                <button (click)="eliminarUsuario(formData.usuarioForm)" class="boton" id="eliminar">Eliminar usuario</button>
+                <div class="fichaActualizarTexto" id="respuesta">{{respuesta}}</div>
+            </form>
+        </div>
+    </div>
+
+</section>
+

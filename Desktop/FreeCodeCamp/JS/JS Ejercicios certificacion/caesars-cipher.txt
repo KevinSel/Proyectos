@@ -1,0 +1,29 @@
+// One of the simplest and most widely known ciphers is a Caesar cipher, also known as a shift cipher. In a shift cipher the meanings of the letters are shifted by some set amount.
+
+// A common modern use is the ROT13 cipher, where the values of the letters are shifted by 13 places. Thus A ↔ N, B ↔ O and so on.
+
+// Write a function which takes a ROT13 encoded string as input and returns a decoded string.
+
+// All letters will be uppercase. Do not transform any non-alphabetic character (i.e. spaces, punctuation), but do pass them on.
+
+
+//Plan:
+//Split the string to make work easier
+//Run a loop-like function in every element. If it's a letter, shift, if's not
+// do nothing, add to string. Reduce is convenient to save the string value.
+
+//To shift I will use UTF-16 which is used in javascript with fromCharCode and charCodeAt methods. Substract 13. For the first 13 letters is necessary to add 26 (add 13).
+
+
+function rot13(str) {
+  return str.split("")
+  .reduce((acc,x)=>{let l = x.charCodeAt();
+  if (/[A-Z]/.test(x)){
+    if(l>77){l = String.fromCharCode(l-13);}
+    else{l = String.fromCharCode(l+13);};
+    return acc + l;
+  };
+  return acc + x;},"");
+};
+
+rot13("SERR PBQR PNZC");
